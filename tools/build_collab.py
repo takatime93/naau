@@ -6,6 +6,7 @@ product name, tracked capitals, and the two names stacked in black.
 import sys
 sys.path.insert(0, sys.argv[2])
 import common as C
+import ink as K
 from common import D, L, ab, fitw, pf, ph, still, sec
 C.SITE = sys.argv[1]
 
@@ -24,6 +25,40 @@ def soapbox(width, style=""):
               f'<p style="right:[[60]]; bottom:[[60]]; text-align:right; font-family:Inter; font-size:[[24]]; letter-spacing:.2em; line-height:1.8">ORGANIC KOMBUCHA<br>COLD PROCESSED BAR SOAP</p>',
               width, f"background:{PEACH}; color:{INK}; {style}")
 
+
+GREEN = "#144948"
+ART_SVG = lambda w="200px", ink=None: f'<svg viewBox="0 0 200 200" style="width:{w}"><image href="assets/collab/kombar-artwork.svg" x="0" y="0" width="200" height="200"/></svg>'
+
+def seal(w, ink=INK):
+    return K.ring_badge(w, "NAʻAU × IVYCOAST · KOM’BAR · KOMBUCHA SOAP · ", '<image href="assets/collab/kombar-artwork.svg" x="22" y="22" width="156" height="156"/>',
+                        ink=ink, font="Inter, sans-serif", size=12)
+
+def soap_band(width):
+    rows = [("WITH", "NAʻAU KOMBUCHA + SCOBY"), ("MADE BY", "IVYCOAST, BY HAND"), ("CURED", "［　］ WEEKS"), ("WEIGHT", "［　］ G"), ("全成分", "［TO CONFIRM］")]
+    dl = ('<dl class="spec-rows" style="position:static; font-size:[[30]]; letter-spacing:.06em; border-bottom:1px solid rgba(30,30,30,.35)">'
+          + "".join(f'<dt style="padding:[[12]] [[30]] [[12]] 0; border-color:rgba(30,30,30,.35); opacity:.65">{a}</dt><dd style="padding:[[12]] 0; border-color:rgba(30,30,30,.35)">{b}</dd>' for a, b in rows) + '</dl>')
+    return ab(1, 1.25, f'<p style="left:[[80]]; top:[[80]]; font-family:Inter; font-weight:700; font-size:[[110]]; line-height:1">KOM’BAR</p>'
+              f'<p class="mono" style="left:[[80]]; top:[[210]]; font-size:[[26]]; letter-spacing:.14em">ORGANIC KOMBUCHA SOAP</p>'
+              f'<div style="right:[[80]]; top:[[70]]; width:[[210]]; transform:rotate(-8deg)">{seal("100%")}</div>'
+              f'<div style="left:[[80]]; right:[[80]]; top:[[420]]">{dl}</div>'
+              f'<div style="left:[[80]]; bottom:[[80]]">{lockup("[[200]]", "[[250]]", gap="[[14]]", align="flex-start")}</div>',
+              width, f"background:{PEACH}; color:{INK}")
+
+def unboxing():
+    tissue = K.pattern([ART_SVG, lambda w, ink: seal("200px")], INK, gap=170, seed=2)
+    return ab(16, 10,
+              f'<div style="left:[[300]]; top:[[60]]; width:[[640]]; height:[[500]]; background:#EFE7DC; box-shadow:inset 0 0 0 [[14]] #E2D6C6, 0 [[16]] [[40]] rgba(60,40,30,.25)">'
+              f'<div style="position:absolute; inset:[[14]]; overflow:hidden; opacity:.9">{tissue}</div></div>'
+              f'<div style="left:[[40]]; top:[[90]]; width:[[330]]; height:[[440]]; background:{PEACH}; transform:rotate(-6deg); box-shadow:0 [[14]] [[34]] rgba(60,40,30,.25); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:[[30]]">'
+              f'<div style="width:[[190]]">{seal("100%")}</div>{lockup("[[120]]", "[[150]]", gap="[[10]]", align="center")}</div>'
+              f'<div class="col" style="left:[[640]]; top:[[170]]; width:[[300]]; height:[[420]]; background:{GREEN}; color:#F3F0EA; transform:rotate(7deg); padding:[[34]]; gap:[[16]]; box-shadow:0 [[14]] [[30]] rgba(20,40,40,.3)">'
+              f'<div style="width:[[150]]; align-self:center; filter:invert(1) brightness(1.8)">{ART_SVG("100%")}</div>'
+              f'<p style="font-family:var(--sans); font-weight:700; font-size:[[20]]; text-align:center; white-space:nowrap">ありがとうございます。</p>'
+              f'<p style="font-family:var(--lat); font-size:[[15]]; line-height:1.5; text-align:center">Kombucha brewed in Nagoya, cured into soap by hand. We hope it brings a slow minute to your day.</p>'
+              f'<div style="margin-top:auto; display:flex; justify-content:center; gap:[[14]]; align-items:center">{NAAU("[[80]]", "ffffff")}<span style="font-size:[[16]]">×</span>{IVY("white", "[[100]]")}</div></div>'
+              f'<div style="left:[[430]]; top:[[330]]; width:[[230]]; transform:rotate(-3deg)">{soapbox("100%")}</div>',
+              "100%", "background:#D9CEC0", cls="flat")
+
 # ------------------------------------------------------------------ hero, in the package's language
 hero = (f'<header class="kb"><div class="wrap kb-grid">'
         f'<p class="kb-name">KOM’BAR</p>'
@@ -31,7 +66,7 @@ hero = (f'<header class="kb"><div class="wrap kb-grid">'
         f'<div class="kb-side"><p class="kb-eyebrow">naʻau × Ivycoast · 2026</p>'
         f'<div class="kb-mid"><p class="kb-jp">発酵が生み出す美しさ。</p><p class="kb-en">A cold-process bar soap made with naʻau’s kombucha and the SCOBY that brews it.</p></div>'
         f'<div class="kb-foot"><p class="kb-caps">ORGANIC KOMBUCHA<br>COLD PROCESSED BAR SOAP</p>'
-        f'<div class="kb-lock">{NAAU("118px")}{IVY("dark", "150px")}</div></div></div>'
+        f'<div style="display:flex; align-items:flex-end; gap:22px"><div style="width:112px; transform:rotate(-10deg)">{seal("100%")}</div><div class="kb-lock">{NAAU("118px")}{IVY("dark", "150px")}</div></div></div></div>'
         f'</div></header>')
 
 intro = ('<section class="wrap kb-intro">'
@@ -100,6 +135,9 @@ assets = ('<div class="grid g3">'
           + pf(carousel, "How it’s made, carousel", "Kombucha → SCOBY → soap, with photographs from both studios.", "1/1", pstyle="gap:3%")
           + pf(counter, "Counter card, A6", "At the naʻau counter and Ivycoast stockists.", "1/1")
           + pf(still("collab", "gift", "1/1", label="current", zoom=2.0), "Proposal · gift set", "A bottle of naʻau with KOM’BAR, for the holidays.", plate=False)
+          + '</div><div class="grid g-wide" style="margin-top:clamp(20px,3vw,36px)">'
+          + pf(unboxing(), "Proposal · the box, opened", "Peach lid with the joint seal, tissue printed with the artwork, a thank-you card in Ivycoast green.", plate=False)
+          + pf(soap_band("78%"), "Soap band", "A paper band for the bare bar at markets: typed details, the seal.", "0.6/1")
           + '</div>')
 
 # ------------------------------------------------------------------ 04 language
@@ -123,14 +161,14 @@ def tie(bg, inner, label, note, link):
 sb = lambda: soapbox("100%")
 ties = ('<div class="grid g3">'
         + tie("#FFFFFF", f'<div style="left:[[150]]; right:[[150]]; top:[[260]]">{sb()}</div><div class="row" style="left:0; right:0; bottom:[[220]]; justify-content:center; gap:[[40]]">{NAAU("[[200]]")}<span style="font-size:[[40]]">×</span>{IVY("dark", "[[250]]")}</div>',
-              "白 Shiro", "White and plain, so the peach package leads. The script and the Ivycoast serif contrast clearly; neither overpowers.", "current.html")
+              "Current identity", "White and plain, so the peach package leads. The script and the Ivycoast serif contrast clearly; neither overpowers.", "current.html")
         + tie("#2B2926", f'<div class="fill" style="padding:[[60]]"><div style="height:100%; border:1px solid #EFEBE2; outline:1px solid #EFEBE2; outline-offset:[[-14]]"></div></div>'
                          f'<div style="left:[[190]]; right:[[190]]; top:[[250]]">{sb()}</div><div class="row" style="left:0; right:0; bottom:[[220]]; justify-content:center; gap:[[40]]; color:#EFEBE2">{L(D["lenora"], "efebe2", "[[210]]")}<span style="font-size:[[40]]">×</span>{IVY("white", "[[250]]")}</div>',
-              "一本 Ippon", "The most luxurious pairing, but two high-contrast serifs side by side can blur. Keep naʻau on sumi and Ivycoast on its own paper.", "lenora.html")
+              "Concept A · Lenora", "The most luxurious pairing, but two high-contrast serifs side by side can blur. Keep naʻau on sumi and Ivycoast on its own paper.", "lenora.html")
         + tie("#FAF7F1", f'<div style="right:[[90]]; top:[[110]]; width:[[520]]">{sb()}</div>'
                          f'<div style="left:[[90]]; top:[[560]]; width:[[560]]; padding:[[50]]; background:#FFFFFF; transform:rotate(-3deg); box-shadow:0 8px 20px rgba(58,54,49,.12)"><p class="hand" style="font-size:[[46]]; line-height:1.8; color:#3A3631">kombuchaから、<br>石鹸ができました。<br>— kimy</p></div>'
                          f'<div class="row" style="left:[[90]]; bottom:[[100]]; gap:[[40]]">{L(D["ogg"], "3a3631", "[[220]]")}<span style="font-size:[[40]]">×</span>{IVY("dark", "[[250]]")}</div>',
-              "間 Ma", "The warmest fit: Ogg’s calligraphic serif and Ivycoast’s flared serif feel related but distinct, and kimy’s notes add the maker’s voice.", "ogg.html")
+              "Concept B · Ogg", "The warmest fit: Ogg’s calligraphic serif and Ivycoast’s flared serif feel related but distinct, and kimy’s notes add the maker’s voice.", "ogg.html")
         + '</div>')
 
 # ------------------------------------------------------------------ 06 roles

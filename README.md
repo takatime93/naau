@@ -7,9 +7,9 @@ A static site presenting three brand directions for naʻau kombucha (Nagoya), pr
 | File | What it shows |
 |---|---|
 | `index.html` | Overview: what we heard, research findings, colour options, the directions, decisions needed |
-| `current.html` | Direction 0 — 白 Shiro: naʻau's current script logo, white and minimal |
-| `lenora.html` | Direction 1 — 一本 Ippon: Lenora, sumi and framed atelier (palette A, Sumi & Kinari) |
-| `ogg.html` | Direction 2 — 間 Ma: Ogg, airy and hand-made (palette D, Gofun & Ōdo) |
+| `current.html` | Current identity: naʻau's script logo as it is, white and minimal |
+| `lenora.html` | Concept A · Lenora: sumi, framed atelier, camellia and seal (palette A, Sumi & Kinari) |
+| `ogg.html` | Concept B · Ogg: airy and hand-made, block prints and kimy's notes (palette D, Gofun & Ōdo) |
 | `*-home.html`, `*-product.html` | Responsive home and product page mockups for each direction |
 | `collab.html` | naʻau × Ivycoast: KOM'BAR, planned assets, website language, how it ties to each direction |
 
@@ -33,6 +33,7 @@ python3 build_collab.py .. .
 ```
 
 - `common.py` holds the shared pieces: navigation, section headers, artboards and the still-life scenes.
+- `ink.py` holds the hand-made marks: block-print motifs, the fine-line camellia, stamps and seals, the postage-stamp frame and the red-pen loop.
 - Print and social pieces are artboards: sizes written as `[[n]]` are thousandths of the artboard's width, so each piece keeps its proportions at any screen size.
 - Photography is drawn as SVG still lifes to show the lighting and props for each direction. They stand in for a real photo shoot.
 
@@ -40,4 +41,5 @@ python3 build_collab.py .. .
 
 - The Lenora and Ogg wordmarks are images made from unlicensed font settings, shown for discussion. License the fonts before any real use, or keep the page unlisted.
 - Text in ［brackets］ is placeholder content for naʻau to fill in: flavours, prices, dates, address, ingredients.
-- Handwriting in the Ma direction is a stand-in font (Klee One) until kimy's handwriting is scanned.
+- Handwriting in Concept B uses stand-in fonts (Klee One, and Yomogi for the red pen) until kimy's handwriting is scanned.
+- The prints, camellia and seals are drawn for the concept; final versions would be cut, drawn and carved by hand.

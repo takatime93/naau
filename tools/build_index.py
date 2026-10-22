@@ -6,11 +6,11 @@ from common import D, L, still, sec, chips
 C.SITE = sys.argv[1]
 
 PALETTES = [
- ("S", "白", "Shiro", "naʻau today", "Plain white and ink, as naʻau looks today. The glass and the photographs bring the colour.",
+ ("S", "白と墨", "White & Ink", "Current identity", "Plain white and ink, as naʻau looks today. The glass and the photographs bring the colour.",
   [("White", "#FFFFFF", "Ground", 3), ("Ink", "#1E1E1E", "Text · 16.9:1", 2), ("Grey", "#6B6B6B", "Small text · 5.3:1", 1), ("Mist", "#F1F1EF", "Photo backdrops", 2), ("Amber glass", "#8E4E1F", "From the bottle", 1.2)]),
- ("A", "墨と生成り", "Sumi & Kinari", "Ippon", "Near-monochrome. Ink on washi; the amber bottle is the only warmth.",
+ ("A", "墨と生成り", "Sumi & Kinari", "Concept A", "Near-monochrome. Ink on washi; the amber bottle is the only warmth.",
   [("Kinari", "#EFEBE2", "Ground", 3), ("Sumi", "#2B2926", "Text · 12.2:1", 2), ("Keshizumi", "#524E4D", "Rules · 6.9:1", 1), ("Rikyū-shiracha", "#B3ADA0", "Secondary", 1), ("Usuzumi", "#A3A3A2", "Tint", 1)]),
- ("D", "胡粉と黄土", "Gofun & Ōdo", "Ma", "Lighter and airier. Morning light through shōji; ochre rhymes with the glass.",
+ ("D", "胡粉と黄土", "Gofun & Ōdo", "Concept B", "Lighter and airier. Morning light through shōji; ochre rhymes with the glass.",
   [("Gofun", "#FAF7F1", "Ground", 3), ("Ink", "#3A3631", "Text · 11.2:1", 2), ("Ōdo", "#C39143", "Fills only", 1.5), ("Ōdo text", "#8A6A3A", "Accent text · 4.7:1", 1), ("Neri", "#EDE4CD", "Tint", 1.5)]),
  ("B", "柿渋と土", "Kakishibu & Earth", "Alternative, warmer", "Persimmon-tanned paper and a clay storehouse. Swap in for any direction.",
   [("Raw linen", "#E9E0CF", "Ground", 3), ("Kenpō brown", "#3B2B22", "Text · 10.3:1", 2), ("Kakishibu", "#9F563A", "Accent · large text", 1.2), ("Namakabe", "#94846A", "Decoration", 1), ("Kurumi", "#A86F4C", "Support", 1)]),
@@ -48,9 +48,9 @@ RESEARCH = [
 ]
 
 COVERS = [
- ("current", "#FFFFFF", "#1E1E1E", L(D["current"], "1e1e1e", "46%"), "白 Shiro", "Direction 0 · naʻau today", "kimy’s script as it is: white, ink, centred, photo-led, round sticker labels."),
- ("lenora", "#2B2926", "#EFEBE2", L(D["lenora"], "efebe2", "56%"), "一本 Ippon", "Direction 1 · Lenora", "A made-to-order atelier: sumi, double-rule frames, batch numerals, labels made out to one person."),
- ("ogg", "#FAF7F1", "#3A3631", L(D["ogg"], "3a3631", "56%"), "間 Ma", "Direction 2 · Ogg", "Airy and hand-made: vertical Japanese, kimy’s handwritten notes, band labels and string tags."),
+ ("current", "#FFFFFF", "#1E1E1E", L(D["current"], "1e1e1e", "46%"), "Current identity", "kimy’s script, as it is", "kimy’s script as it is: white, ink, centred, photo-led, round sticker labels."),
+ ("lenora", "#2B2926", "#EFEBE2", L(D["lenora"], "efebe2", "56%"), "Concept A · Lenora", "Bottled for one", "A made-to-order atelier: sumi, double-rule frames, batch numerals, labels made out to one person."),
+ ("ogg", "#FAF7F1", "#3A3631", L(D["ogg"], "3a3631", "56%"), "Concept B · Ogg", "The pause", "Airy and hand-made: vertical Japanese, kimy’s handwritten notes, band labels and string tags."),
 ]
 
 hero = ('<header class="wrap" style="padding-top:clamp(56px,8vw,112px)">'
@@ -91,7 +91,7 @@ dirs = ('<div class="grid g3">' + "".join(
 
 decisions = '<ol class="decide">' + "".join(f'<li><span>{i:02d}</span><p>{t}</p></li>' for i, t in enumerate([
     "Choose a direction, and a palette for it.",
-    "If Ippon or Ma: license the font for logo use (Lenora needs the Logo and Merchandise add-ons; Ogg’s desktop licence covers logos) and confirm trademark registration in Japan in writing with the foundry.",
+    "If Concept A or B: license the font for logo use (Lenora needs the Logo and Merchandise add-ons; Ogg’s desktop licence covers logos) and confirm trademark registration in Japan in writing with the foundry.",
     "Confirm with 名古屋市保健所 how the kombucha may be described (heated or not) and the 一括表示 wording.",
     "Send scans of kimy’s handwriting and plan a photography day: hands, tea, the pour, the brewing table.",
     "Choose the shop platform (BASE handles クール便 and PayPay) and set up LINE."], 1)) + '</ol>'

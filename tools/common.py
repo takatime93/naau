@@ -5,23 +5,24 @@ as [[n]] and they become container units, so a piece keeps its proportions at an
 Stills: SVG still-life scenes stand in for photography, lit and propped per direction.
 """
 import os, re
+import ink
 
 SITE = None
 
 FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
          '<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Shippori+Mincho+B1:wght@500;700'
-         '&family=Zen+Old+Mincho:wght@400;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&family=Klee+One:wght@400;600'
-         '&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">')
+         '&family=Zen+Old+Mincho:wght@400;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&family=Klee+One:wght@400;600&family=Yomogi'
+         '&family=Inter:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">')
 
 FIT = ('<script>function fit(){document.querySelectorAll("[data-fit]").forEach(function(p){var f=p.querySelector("iframe");'
        'f.style.transform="scale("+(p.clientWidth/+p.dataset.fit)+")";});}addEventListener("resize",fit);addEventListener("load",fit);fit();</script>')
 
 D = {
- "current": dict(key="current", cls="d-current", nav="naʻau today", name="Shiro", kanji="白", logo="current-lockup", small="current-naau", ink="1e1e1e",
+ "current": dict(key="current", cls="d-current", nav="Current identity", name="Current identity", logo="current-lockup", small="current-naau", ink="1e1e1e",
                  glass=["#8E4E1F", "#6F3B17", "#A8692A"], cap="#1E1E1E"),
- "lenora": dict(key="lenora", cls="d-lenora", nav="Lenora", name="Ippon", kanji="一本", logo="lenora", small="lenora", ink="2b2926",
+ "lenora": dict(key="lenora", cls="d-lenora", nav="Concept A · Lenora", name="Concept A · Lenora", logo="lenora", small="lenora", ink="2b2926",
                 glass=["#9C5B22", "#7A4519", "#B57A3C"], cap="#141312"),
- "ogg": dict(key="ogg", cls="d-ogg", nav="Ogg", name="Ma", kanji="間", logo="ogg", small="ogg", ink="3a3631",
+ "ogg": dict(key="ogg", cls="d-ogg", nav="Concept B · Ogg", name="Concept B · Ogg", logo="ogg", small="ogg", ink="3a3631",
              glass=["#A8692A", "#8A5220", "#C08040"], cap="#3A3631"),
 }
 ORDER = ["current", "lenora", "ogg"]
@@ -36,7 +37,7 @@ def L(d, color, width, small=False, style=""):
 
 # ------------------------------------------------------------------ page chrome
 def nav(active):
-    items = [("index", "Overview")] + [(k, f'{D[k]["kanji"]} {D[k]["name"]}') for k in ORDER] + [("collab", "naʻau × Ivycoast")]
+    items = [("index", "Overview")] + [(k, D[k]["nav"]) for k in ORDER] + [("collab", "naʻau × Ivycoast")]
     lis = "".join(f'<li><a href="{f}.html"' + (' aria-current="page"' if f == active else '') + f'>{t}</a></li>' for f, t in items)
     return (f'<nav class="sitenav" aria-label="Concept sections"><div class="wrap"><a class="brand" href="index.html">naʻau <span>brand concepts</span></a>'
             f'<ul>{lis}</ul></div></nav>')
@@ -44,7 +45,7 @@ def nav(active):
 def page(fname, title, cls, body, script="", extra_head=""):
     html = (f'<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">'
             f'<title>{title}</title>{FONTS}<link rel="stylesheet" href="assets/css/site.css">{extra_head}</head>'
-            f'<body class="{cls}">{body}{script}</body></html>\n')
+            f'<body class="{cls}">{ink.DEFS}{body}{script}</body></html>\n')
     open(os.path.join(SITE, fname), "w").write(U(html))
 
 def sec(num, title, desc, content, cls="", sid=""):
@@ -140,7 +141,7 @@ def _label(dk, fl, no):
                 f'<text x="50" y="198" font-family="EB Garamond" font-style="italic" font-size="6.4" text-anchor="middle" fill="#2B2926">kombucha</text>'
                 f'<text x="50" y="222" font-family="Zen Old Mincho" font-size="4.6" letter-spacing=".8" text-anchor="middle" fill="#2B2926">{fl}</text>'
                 f'<line x1="30" y1="256" x2="70" y2="256" stroke="#2B2926" stroke-width=".5"/>'
-                f'<text x="50" y="267" font-family="Zen Old Mincho" font-size="5" text-anchor="middle" fill="#2B2926">［お名前］様</text>')
+                f'<text x="50" y="267" font-family="Zen Old Mincho" font-size="5" text-anchor="middle" fill="#2B2926">［お名前］様</text><rect x="68" y="258" width="9" height="13" rx="4.5" fill="#9B3A25" opacity=".92"/>')
     if dk == "ogg":
         return (f'<rect x="0" y="176" width="100" height="62" fill="#FAF7F1"/>'
                 f'<text x="11" y="200" font-family="Zen Old Mincho" font-size="13" text-anchor="middle" fill="#3A3631">間</text>'
@@ -205,7 +206,7 @@ def _card(n, x, by, w, h, s, inner_svg, rot=-4, fill="#FBF8F2"):
     return (f'<g transform="translate({x},{by}) rotate({rot})"><rect x="6" y="8" width="{w}" height="{h}" fill="#000" opacity="{s["shadow"] * .9:.2f}" filter="url(#bs{n})"/>'
             f'<rect width="{w}" height="{h}" fill="{fill}"/>{inner_svg}</g>')
 
-def still(dk, kind="range", ratio="4/3", cap="", flavours=("［フレーバー］", "［フレーバー］", "［限定］"), label=None, pos="50% 50%", zoom=None, cy=None, note=False):
+def still(dk, kind="range", ratio="4/3", cap="", flavours=("［フレーバー］", "［フレーバー］", "［限定］"), label=None, pos="50% 50%", zoom=None, cy=None, note=False, tone=None):
     """An SVG still life. dk picks the light and props; label picks the bottle label (defaults to dk)."""
     _uid[0] += 1; n = _uid[0]
     s = SCENES[dk]
@@ -276,7 +277,8 @@ def still(dk, kind="range", ratio="4/3", cap="", flavours=("［フレーバー�
     svg = (f'<svg viewBox="{800 - vw / 2:.0f} {c - vh / 2:.0f} {vw:.0f} {vh:.0f}" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Photography direction: {cap or kind}">'
            f'<defs>{defs}{"".join(grads)}</defs>{bg}{"".join(objs)}</svg>')
     capt = f'<span class="still-cap" style="color:{s["cap_ink"]}">Photo direction · {cap}</span>' if cap else ""
-    return f'<div class="still" style="aspect-ratio:{ratio}; --pos:{pos}">{svg}{capt}</div>'
+    toned = "filter:grayscale(1) sepia(.42) contrast(1.12) brightness(.97);" if tone == "sepia" else ""
+    return f'<div class="still" style="aspect-ratio:{ratio}; --pos:{pos}; {toned}">{svg}{capt}</div>'
 
 def ph(dk, kind, left, top, width, ratio="1/1", **kw):
     """A still placed inside an artboard."""
