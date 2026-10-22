@@ -264,3 +264,53 @@ footer.site { padding: 28px 0 48px; color: var(--muted); font-size: 13px; }
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .4  0 0 0 0 .36  0 0 0 0 .3  0 0 0 .7 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
 
 @media (max-width: 640px) { .sitenav { position: static; } }
+
+/* ---------------------------------------------------------------- collaboration v3 */
+.kb-wm { align-self: stretch; width: clamp(48px, 6.2vw, 92px); display: flex; align-items: center; }
+.kb-wm svg { height: 100%; width: auto !important; max-height: 640px; }
+.lead-p { font-size: clamp(19px, 1.7vw, 23px); line-height: 1.5; max-width: 820px; margin-bottom: clamp(28px, 4vw, 48px); }
+.kel-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(14px, 1.8vw, 24px); }
+@media (max-width: 960px) { .kel-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .kel-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.kel { margin: 0; display: flex; flex-direction: column; gap: 10px; }
+.kel-card { position: relative; aspect-ratio: 4 / 5; padding: 14% 12% 12%; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.kel-n { position: absolute; left: 10px; top: 8px; font-family: Inter, sans-serif; font-size: 12px; letter-spacing: .12em; }
+.kel-jp { position: absolute; right: 10px; top: 6px; font-family: var(--sans); font-weight: 700; font-size: 16px; }
+.kel-art { height: 100%; width: 100%; display: flex; align-items: center; justify-content: center; }
+.kel figcaption { display: flex; flex-direction: column; gap: 2px; font-size: 14px; line-height: 1.4; }
+.kel figcaption b { font-weight: 500; font-size: 15px; }
+.kel figcaption span { color: var(--muted); }
+.rules { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(14px, 1.8vw, 24px); }
+@media (max-width: 760px) { .rules { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.rule-ex { margin: 0; display: flex; flex-direction: column; gap: 10px; }
+.rule-ex figcaption { font-size: 14px; line-height: 1.45; display: flex; gap: 8px; align-items: baseline; }
+.rule-ex .ok, .rule-ex .no { flex: none; font-family: Inter, sans-serif; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; padding: 2px 7px; border-radius: 99px; }
+.rule-ex .ok { background: #144948; color: #F6F1E9; }
+.rule-ex .no { background: #C2603F; color: #fff; }
+.pairs { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; margin-top: 14px; }
+@media (max-width: 760px) { .pairs { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.pair-sw { aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 10px; overflow: hidden; }
+.pair-sw svg { flex: 1 1 auto; min-height: 0; }
+.pair-sw span { font-family: Inter, sans-serif; font-size: 10px; letter-spacing: .06em; text-align: center; }
+.caro { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; }
+@media (max-width: 760px) { .caro { grid-template-columns: repeat(5, 64vw); overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 8px; } .caro > div { scroll-snap-align: start; } }
+.brw { border-bottom: 1px solid var(--rule); }
+.brw-h, .brw-r { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr) minmax(0, 1.4fr); gap: 8px 32px; padding: 14px 0; border-top: 1px solid var(--rule); }
+.brw-h { font-family: Inter, sans-serif; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+.brw-r span:first-child { color: var(--muted); }
+.brw-r span:nth-child(2) { font-weight: 500; }
+@media (max-width: 760px) { .brw-h { display: none; } .brw-r { grid-template-columns: minmax(0, 1fr); } }
+.browser > .ab { border-radius: 0 0 8px 8px; }
+
+/* collaboration hero v4: the wordmark and one element, not the box front */
+.kb2 { background: var(--peach); color: #1E1E1E; overflow: hidden; }
+.kb2-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(24px, 5vw, 80px); align-items: end; padding-top: clamp(48px, 7vw, 96px); }
+.kb2-text { display: flex; flex-direction: column; gap: 18px; padding-bottom: clamp(48px, 7vw, 96px); }
+.kb2-wm { width: min(100%, 520px); margin-top: 10px; }
+.kb2-def { font-family: Inter, sans-serif; font-size: 15px; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 18px; }
+.kb2-def b { font-weight: 700; }
+.kb2-lock { gap: 18px; align-items: center; margin-top: 18px; }
+.kb2-art { align-self: end; margin-bottom: -9%; }
+@media (max-width: 860px) { .kb2-grid { grid-template-columns: minmax(0, 1fr); } .kb2-text { padding-bottom: 0; } .kb2-art { width: 78%; justify-self: end; } }
+.kb2-lock { display: flex; flex-wrap: wrap; }
+.kb2-lock span { font-size: 18px; }

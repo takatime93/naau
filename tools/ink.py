@@ -21,12 +21,6 @@ DEFS = ('<svg width="0" height="0" style="position:absolute" aria-hidden="true">
         '<feTurbulence type="fractalNoise" baseFrequency=".3" numOctaves="3" seed="5" result="g"/>'
         '<feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -12 0 0 0 8.7" result="holes"/>'
         '<feComposite in="ink" in2="holes" operator="in"/></filter>'
-        '<filter id="crayon" x="-5%" y="-10%" width="110%" height="120%">'
-        '<feTurbulence type="fractalNoise" baseFrequency=".09" numOctaves="2" seed="3" result="w"/>'
-        '<feDisplacementMap in="SourceGraphic" in2="w" scale="3" xChannelSelector="R" yChannelSelector="G" result="ink"/>'
-        '<feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="8" result="g"/>'
-        '<feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -9 0 0 0 6.1" result="holes"/>'
-        '<feComposite in="ink" in2="holes" operator="in"/></filter>'
         '</defs></svg>')
 
 _n = [0]
@@ -61,12 +55,6 @@ def jar(w, ink="currentColor"):
             + "".join(f'<circle cx="{x}" cy="{y}" r="{r}" stroke="none"/>' for x, y, r in ((84, 160, 3.6), (108, 146, 2.4), (126, 174, 3), (98, 182, 2), (142, 140, 2.4), (70, 150, 1.8))))
     return _svg("0 0 200 200", _carved(shape, cuts, ink), w, label="block-print fermenting jar")
 
-def yunomi(w, ink="currentColor"):
-    shape = '<path d="M34 64 H166 Q166 132 146 160 Q140 168 128 168 H72 Q60 168 54 160 Q34 132 34 64Z"/><rect x="76" y="168" width="48" height="10" rx="2"/>'
-    cuts = "".join(f'<path d="M{40 + i * 2} {84 + i * 14} Q100 {90 + i * 14} {160 - i * 2} {84 + i * 14}" stroke-width="3" fill="none"/>' for i in range(5))
-    steam = f'<g filter="url(#brush)" fill="none" stroke="{ink}" stroke-width="3" stroke-linecap="round"><path d="M100 50 C92 40 108 32 100 20 C94 12 104 6 100 2"/></g>'
-    return _svg("0 0 200 200", _carved(shape, cuts, ink) + steam, w, label="block-print tea cup")
-
 def leaf(w, ink="currentColor"):
     teeth = []
     for side in (1, -1):
@@ -97,17 +85,7 @@ def sun(w, ink="currentColor"):
     cuts = '<circle cx="100" cy="100" r="24" stroke-width="3" fill="none"/><circle cx="100" cy="100" r="9" stroke-width="2.6" fill="none"/>'
     return _svg("0 0 200 200", _carved(shape, cuts, ink) + f'<g filter="url(#lino)">{rays}</g>', w, label="block-print sun")
 
-MOTIFS = {"bottle": bottle, "jar": jar, "yunomi": yunomi, "leaf": leaf, "bubbles": bubbles, "sun": sun}
-
-# ------------------------------------------------------------------ brush pictograms (how to enjoy)
-def picto(kind, w, ink="currentColor"):
-    paths = {
-        "chill": '<path d="M70 40 V150 Q70 168 100 168 Q130 168 130 150 V40"/><path d="M60 40 H140"/><path d="M84 70 L96 82 L84 94 M116 70 L104 82 L116 94"/>',
-        "still": '<path d="M70 168 H130 V96 Q130 80 114 72 V36 H86 V72 Q70 80 70 96 Z"/><path d="M40 120 Q50 110 40 100 M160 120 Q150 110 160 100"/>',
-        "pour": '<path d="M60 100 H140 L132 170 H68 Z"/><path d="M100 30 Q104 60 100 90"/><path d="M72 128 H128"/>',
-        "listen": '<circle cx="100" cy="100" r="58"/><path d="M76 108 Q100 126 124 108"/><circle cx="80" cy="88" r="2"/><circle cx="120" cy="88" r="2"/>',
-    }[kind]
-    return _svg("0 0 200 200", f'<g filter="url(#brush)" fill="none" stroke="{ink}" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">{paths}</g>', w)
+MOTIFS = {"bottle": bottle, "jar": jar, "leaf": leaf, "bubbles": bubbles, "sun": sun}
 
 # ------------------------------------------------------------------ fine-line tea branch (Concept A)
 def tea_branch(w, ink="currentColor", sw=1.1):
@@ -144,14 +122,6 @@ def tea_branch(w, ink="currentColor", sw=1.1):
     return _svg("40 36 140 192", body, w, label="fine-line tea branch with a camellia flower")
 
 # ------------------------------------------------------------------ stamps
-def ring_badge(w, top, centre_svg="", ink="currentColor", font="'IBM Plex Mono', monospace", size=13, rings=True):
-    p = _id("rp")
-    body = (f'<defs><path id="{p}" d="M100 100 m-74 0 a74 74 0 1 1 148 0 a74 74 0 1 1 -148 0"/></defs>'
-            f'<g filter="url(#seal)">' + (f'<circle cx="100" cy="100" r="92" fill="none" stroke="{ink}" stroke-width="2.4"/><circle cx="100" cy="100" r="56" fill="none" stroke="{ink}" stroke-width="1.4"/>' if rings else '') +
-            f'<text font-family="{font}" font-size="{size}" letter-spacing="{size * .32:.1f}" fill="{ink}"><textPath href="#{p}" startOffset="0" textLength="458" lengthAdjust="spacing">{top}</textPath></text></g>'
-            f'<g transform="translate(60 60) scale(.4)">{centre_svg}</g>')
-    return _svg("0 0 200 200", body, w)
-
 def hanko(w, text="一本", ink="#9B3A25"):
     chars = "".join(f'<text x="50" y="{58 + i * 50}" font-family="\'Shippori Mincho B1\'" font-weight="700" font-size="44" text-anchor="middle" fill="#fff">{c}</text>' for i, c in enumerate(text))
     m = _id("hm")
@@ -160,42 +130,67 @@ def hanko(w, text="一本", ink="#9B3A25"):
             f'<g filter="url(#seal)"><rect x="4" y="4" width="92" height="132" rx="42" fill="{ink}" mask="url(#{m})"/></g>')
     return _svg("0 0 100 140", body, w, label=f"seal: {text}")
 
-def frame_stamp(w, title, side, centre_svg, ink="currentColor"):
-    body = (f'<g filter="url(#seal)" fill="none" stroke="{ink}" stroke-width="3"><rect x="6" y="6" width="228" height="180"/></g>'
-            f'<g filter="url(#brush)"><text x="20" y="40" font-family="\'IBM Plex Mono\', monospace" font-weight="500" font-size="22" letter-spacing="3" fill="{ink}">{title}</text>'
-            f'<text x="212" y="58" font-family="\'IBM Plex Mono\', monospace" font-weight="500" font-size="18" letter-spacing="4" fill="{ink}" style="writing-mode:vertical-rl">{side}</text></g>'
-            f'<g transform="translate(46 54) scale(.66)">{centre_svg}</g>')
-    return _svg("0 0 240 192", body, w)
 
-def pattern(motifs, ink, w="100%", h="100%", gap=150, seed=1):
-    """A stamped all-over pattern for tissue or wrapping paper."""
-    import random
-    r = random.Random(seed)
+def kakuin(w, cols=("名古屋", "手仕込"), ink="currentColor"):
+    """A square seal: kanji in columns read right to left, cut in relief inside a worn border."""
+    n = max(len(c) for c in cols)
+    cell = 100 / n
+    text = ""
+    for ci, col in enumerate(cols):
+        x = 100 - (ci + .5) * (100 / len(cols)) + 10
+        for ri, ch in enumerate(col):
+            text += f'<text x="{x:.1f}" y="{10 + (ri + .82) * cell:.1f}" font-family="\'Shippori Mincho B1\'" font-weight="700" font-size="{cell * .86:.1f}" text-anchor="middle" fill="{ink}">{ch}</text>'
+    body = (f'<g filter="url(#seal)"><rect x="3" y="3" width="114" height="114" rx="9" fill="none" stroke="{ink}" stroke-width="6"/>'
+            f'<path d="M60 8 V112" stroke="{ink}" stroke-width="1.6"/>{text}</g>')
+    return _svg("0 0 120 120", body, w, label="seal: " + " ".join(cols))
+
+# ------------------------------------------------------------------ Concept A: the drop, taken from the wordmark's ʻokina
+DROP = "M10 1 C10 1 2 13 2 19.5 A8 8 0 0 0 18 19.5 C18 13 10 1 10 1Z"
+
+def drop(w, ink="currentColor", fill=False, sw=.6):
+    body = f'<path d="{DROP}" fill="{ink if fill else "none"}" stroke="{ink}" stroke-width="{sw}"/>'
+    return _svg("0 0 20 29", body, w)
+
+def drops(w, days=14, filled=14, ink="currentColor", label=True):
+    """The fermentation count: one drop per day, filled up to the day it was bottled."""
+    gap = 26
+    body = "".join(f'<path transform="translate({i * gap} 0)" d="{DROP}" fill="{ink if i < filled else "none"}" stroke="{ink}" stroke-width=".9"/>' for i in range(days))
+    if label:
+        body += (f'<text x="0" y="46" font-family="\'IBM Plex Mono\', monospace" font-size="9" letter-spacing="2" fill="{ink}" opacity=".7">DAY 01</text>'
+                 f'<text x="{(days - 1) * gap + 20}" y="46" text-anchor="end" font-family="\'IBM Plex Mono\', monospace" font-size="9" letter-spacing="2" fill="{ink}" opacity=".7">{days:02d} · BOTTLED</text>')
+    return _svg(f"-1 0 {(days - 1) * gap + 22} {50 if label else 30}", body, w, label=f"{filled} of {days} days")
+
+# ------------------------------------------------------------------ Concept B: what is in kimy's jar, and the days it takes
+def scoby(w, ink="currentColor"):
+    shape = '<path d="M100 18 C150 16 186 52 184 100 C186 150 148 184 100 182 C50 186 14 148 16 100 C14 52 52 18 100 18Z"/>'
+    rings = "".join(f'<path d="M100 {100 - r} C{100 + r * 1.1} {100 - r * .96} {100 + r * 1.02} {100 + r * 1.06} 100 {100 + r} C{100 - r * 1.08} {100 + r} {100 - r * .98} {100 - r * 1.04} 100 {100 - r}Z" stroke-width="{2.4 + (i % 2)}" fill="none"/>'
+                    for i, r in enumerate((66, 50, 36, 22)))
+    cuts = rings + "".join(f'<circle cx="{x}" cy="{y}" r="{r}" stroke="none"/>' for x, y, r in ((72, 70, 3), (132, 84, 2.4), (120, 140, 3.2), (78, 128, 2), (100, 100, 5)))
+    return _svg("0 0 200 200", _carved(shape, cuts, ink), w, label="block-print SCOBY, seen from above")
+
+def moon(w, f, ink="currentColor"):
+    """A waxing moon, f = 0 (new) to 1 (full), printed as a block."""
+    rx = abs(1 - 2 * f) * 70
+    lit = f'<path d="M100 30 A70 70 0 0 1 100 170 A{rx:.1f} 70 0 0 {0 if f < .5 else 1} 100 30Z"/>' if f > 0 else ""
+    body = f'<g filter="url(#lino)"><circle cx="100" cy="100" r="70" fill="none" stroke="{ink}" stroke-width="5"/><g fill="{ink}">{lit}</g></g>'
+    return _svg("0 0 200 200", body, w)
+
+def calendar(w, ink="currentColor", days=14, cols=7):
+    """Fourteen days as a waxing moon, new to full: the half-month a batch takes."""
     cells = ""
-    for row in range(8):
-        for col in range(8):
-            fn = motifs[(row * 2 + col * 3 + seed) % len(motifs)]
-            x = col * gap + (gap / 2 if row % 2 else 0) + r.uniform(-12, 12)
-            y = row * gap * .82 + r.uniform(-10, 10)
-            rot = r.uniform(-24, 24)
-            cells += f'<g transform="translate({x:.0f} {y:.0f}) rotate({rot:.0f} 50 50) scale(.36)">{fn("200px", ink).replace("<svg ", "<svg width=\"200\" height=\"200\" ")}</g>'
-    return f'<svg viewBox="0 0 {gap * 6} {gap * 5}" preserveAspectRatio="xMidYMid slice" style="width:{w}; height:{h}; display:block" aria-hidden="true">{cells}</svg>'
+    for d in range(days):
+        x, y = (d % cols) * 120, (d // cols) * 150
+        cells += (f'<g transform="translate({x + 10} {y + 10}) scale(.5)">{moon("200px", (d + 1) / days, ink).replace("<svg ", "<svg width=\"200\" height=\"200\" ")}</g>'
+                  f'<text x="{x + 60}" y="{y + 132}" text-anchor="middle" font-family="\'IBM Plex Mono\', monospace" font-size="13" letter-spacing="2" fill="{ink}">{d + 1:02d}</text>')
+    return _svg(f"0 0 {cols * 120} {(days + cols - 1) // cols * 150}", cells, w, label="fourteen days as moon phases")
 
-def pen_ellipse(w, ink="#B8352B"):
-    """A quick loop drawn round something with a felt pen."""
-    return _svg("0 0 300 100", f'<g filter="url(#brush)"><path d="M262 30 C230 6 70 4 26 30 C-4 50 22 86 120 90 C210 94 296 78 288 46 C282 24 214 14 168 16" fill="none" stroke="{ink}" stroke-width="3" stroke-linecap="round"/></g>', w)
+# ------------------------------------------------------------------ the Japanese round date stamp (日付印)
+def date_stamp(w, top="名古屋", date="26.10.22", bottom="CURE 01", ink="currentColor"):
+    body = (f'<g filter="url(#seal)"><circle cx="60" cy="60" r="55" fill="none" stroke="{ink}" stroke-width="3"/>'
+            f'<path d="M8 46 H112 M8 74 H112" stroke="{ink}" stroke-width="2"/>'
+            f'<text x="60" y="36" text-anchor="middle" font-family="\'Shippori Mincho B1\'" font-weight="700" font-size="17" fill="{ink}">{top}</text>'
+            f'<text x="60" y="67" text-anchor="middle" font-family="\'IBM Plex Mono\', monospace" font-weight="500" font-size="17" letter-spacing="1" fill="{ink}">{date}</text>'
+            f'<text x="60" y="95" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="11" letter-spacing="2" fill="{ink}">{bottom}</text></g>')
+    return _svg("0 0 120 120", body, w, label=f"date stamp {date}")
 
-def perforated(w, ratio_h, inner, paper="#F2EFE8", tooth=14):
-    """A postage stamp: perforated paper edge around an image."""
-    W, H = 1000, 1000 * ratio_h
-    r = tooth * .42
-    nx, ny = int(W // tooth), int(H // tooth)
-    sx, sy = W / nx, H / ny
-    holes = "".join(f'<circle cx="{(i + .5) * sx:.1f}" cy="0" r="{r}"/><circle cx="{(i + .5) * sx:.1f}" cy="{H}" r="{r}"/>' for i in range(nx))
-    holes += "".join(f'<circle cx="0" cy="{(j + .5) * sy:.1f}" r="{r}"/><circle cx="{W}" cy="{(j + .5) * sy:.1f}" r="{r}"/>' for j in range(ny))
-    m = _id("pm")
-    paper_svg = (f'<svg viewBox="0 0 {W} {H:.0f}" preserveAspectRatio="none" style="position:absolute; inset:0; width:100%; height:100%" aria-hidden="true">'
-                 f'<mask id="{m}"><rect width="{W}" height="{H:.0f}" fill="#fff"/><g fill="#000">{holes}</g></mask>'
-                 f'<rect width="{W}" height="{H:.0f}" fill="{paper}" mask="url(#{m})"/></svg>')
-    return (f'<div style="position:relative; width:{w}; aspect-ratio:1/{ratio_h}; filter:drop-shadow(0 2px 3px rgba(0,0,0,.12))">{paper_svg}'
-            f'<div style="position:absolute; inset:7%; overflow:hidden">{inner}</div></div>')
+MOTIFS.update({"scoby": scoby})

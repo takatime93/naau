@@ -165,30 +165,30 @@ def side(text, pos, size="[[20]]", font="'IBM Plex Mono', monospace"):
             f'text-transform:uppercase; opacity:.75; white-space:nowrap">{text}</span>')
 
 def p_dir():
-    hero_ab = ab(16, 10, frame(spread(["Kombucha", "·", "Nagoya", "·", "No. 027"], "[[17]]", "opacity:.7") + K.tea_branch("[[104]]", KIN, 1.0) +
-                               f'{L(P, "efebe2", "50%")}<span class="mono" style="font-size:[[16]]; letter-spacing:.3em; opacity:.7">BOTTLED FOR ONE</span>'
-                               + side("一本", "left:[[26]]", "[[24]]", SHIP) + side("名古屋", "right:[[26]]", "[[24]]", SHIP) + seal("[[64]]", "right:[[80]]; bottom:[[64]]"),
+    hero_ab = ab(16, 10, frame(f'<span class="mono" style="font-size:[[16]]; letter-spacing:.3em; opacity:.7">NO. 027 · BOTTLED FOR ONE</span>' +
+                               f'{L(P, "efebe2", "52%")}<div style="width:[[300]]">{K.drops("100%", 14, 14, KIN)}</div>'
+                               + seal("[[64]]", "right:[[80]]; bottom:[[64]]"),
                                pad="[[36]]", inner_pad="[[46]] [[90]] [[50]]"),
                  "min(100%,760px)", f"background:{SUMI}; color:{KIN}", cls="flat")
     hero = (f'<header class="wrap" style="padding-top:clamp(56px,8vw,110px); display:flex; flex-direction:column; align-items:center; text-align:center; gap:26px">'
             f'<p class="eyebrow">Concept A · Lenora</p>{hero_ab}'
             f'<h1 style="margin:14px 0 0; font-weight:400; font-size:clamp(30px,3.6vw,46px); line-height:1.15">Bottled for one</h1>'
-            f'<p style="max-width:620px; color:var(--muted)">A made-to-order atelier. Sumi grounds and strict symmetry inside a fine double rule. A fine-line camellia, the tea plant’s own flower, and typewritten batch details; every label is made out to one person and stamped with a vermilion 一本 seal, the only colour besides the amber glass.</p></header>'
+            f'<p style="max-width:620px; color:var(--muted)">A made-to-order atelier. Sumi grounds and strict symmetry inside a fine double rule. The drop from the wordmark becomes the count of fermenting days, one per day, filled when the batch is bottled; every label is made out to one person and stamped with a vermilion 一本 seal, the only colour besides the amber glass.</p></header>'
             f'<div class="wrap" style="margin-top:clamp(40px,6vw,72px)">{still("lenora", "single", "21/9", "one shaft of evening light", zoom=1.5)}</div>')
     idn = '<div class="grid g3">' + "".join([
-        pf(ab(4, 3, frame(spread(["No. 027", "330 ml"], "[[20]]", "opacity:.7") + K.tea_branch("[[140]]", INK, 1.1) + f'{L(P, "2b2926", "54%")}<span class="eyebrow" style="font-size:[[22]]; color:{MUTE}">Listen to your naʻau</span>'
+        pf(ab(4, 3, frame(f'<span class="eyebrow" style="font-size:[[22]]; color:{MUTE}">Listen to your naʻau</span>{L(P, "2b2926", "58%")}<div style="width:[[330]]">{K.drops("100%", 14, 14, INK)}</div>'
                           + seal("[[73]]", "right:[[54]]; bottom:[[46]]"), inner_pad="[[50]] [[70]] [[56]]"), "100%", f"background:{KIN}; color:{INK}", cls="flat"),
-           "Framed", "Centred, double rule, the camellia above the mark. The default."),
+           "Framed", "Centred, double rule, the day count under the mark. The default."),
         pf(ab(4, 3, f'<div class="fill col" style="align-items:flex-start; justify-content:space-between; padding:[[64]] [[70]]"><span class="mono" style="font-size:[[20]]; letter-spacing:.3em; opacity:.7">NOW POURING</span>'
                     f'<span style="font-family:var(--lat); font-size:[[260]]; line-height:.85">027</span>'
                     f'<div style="width:100%; display:flex; justify-content:space-between; align-items:flex-end; gap:[[40]]">' + specrows([("TEA", "［茶葉］"), ("DAYS", "14")], "[[20]]", "rgba(239,235,226,.4)", "[[10]]", "flex:1") +
                     f'{L(P, "efebe2", "[[230]]")}</div></div>' + seal("[[80]]", "right:[[70]]; top:[[60]]"), "100%", f"background:{INK}; color:{KIN}", cls="flat"),
            "Numeral", "The batch number as the headline, details typed beneath."),
-        pf(ab(4, 3, f'<div style="left:[[60]]; right:[[60]]; top:[[50]]">{spread(["Listen", "to", "your", "naʻau"], "[[22]]")}</div>' + side("Kombucha", "left:[[34]]") + side("Nagoya", "right:[[34]]") +
-                    f'<div style="left:50%; top:[[120]]; transform:translateX(-50%)">{K.tea_branch("[[190]]", KIN, 1.0)}</div>'
-                    f'<div class="col" style="left:0; right:0; bottom:[[44]]; align-items:center; gap:[[26]]">{L(P, "efebe2", "42%")}<span class="mono" style="font-size:[[14]]; letter-spacing:.3em; opacity:.6">BOTTLED FOR ONE · 一本</span></div>',
+        pf(ab(4, 3, f'<div style="left:[[40]]; bottom:[[-90]]">{K.tea_branch("[[420]]", KIN, 1.0)}</div>'
+                    f'<div class="col" style="right:[[70]]; bottom:[[64]]; align-items:flex-end; gap:[[18]]">{L(P, "efebe2", "[[300]]")}'
+                    f'<span class="mono" style="font-size:[[16]]; letter-spacing:.3em; opacity:.6">CAMELLIA SINENSIS · 茶の花</span></div>' + seal("[[74]]", "right:[[70]]; top:[[60]]"),
                     "100%", f"background:{SUMI}; color:{KIN}", cls="flat"),
-           "Poster", "Spaced words across the top, vertical side lines, the camellia at the centre."),
+           "Botanical", "The tea flower drawn large and cropped; the mark small in the corner."),
     ]) + '</div>'
     pal = (chips([("Sumi", "#2B2926", "Ground · 12.2:1 on kinari", 3), ("Kinari", "#EFEBE2", "Labels, type on sumi", 2), ("Keshizumi", "#524E4D", "Rules", 1), ("Usuzumi", "#A39E95", "Captions on sumi", 1),
                   ("Amber glass", "#9C5B22", "From the bottle", 1), ("Shu", SEAL, "The seal only", .7)]),
@@ -196,9 +196,9 @@ def p_dir():
     typ = spec([("Wordmark", L(P, "efebe2", "170px"), "Lenora, with a water-drop ʻokina"),
                 ("Japanese", f'<p style="font-family:{SHIP}; font-weight:700; font-size:22px; line-height:1.8">一滴から、からだの声を。</p>', "Shippori Mincho B1, Bold"),
                 ("Details", '<p class="mono" style="font-size:15px; letter-spacing:.08em; line-height:1.9">NO. 027 · 330 ML<br>FERMENTED 14 DAYS</p>', "IBM Plex Mono, typed details"),
-                ("Seal and line", f'<div style="display:flex; align-items:center; gap:22px; color:{KIN}">{K.tea_branch("64px", KIN, 1.2)}{K.hanko("44px")}</div>', "Camellia line drawing · 一本 seal")])
+                ("Drop and seal", f'<div style="display:flex; flex-direction:column; gap:14px; color:{KIN}"><div style="width:180px">{K.drops("100%", 14, 9, KIN, label=False)}</div>{K.hanko("40px")}</div>', "Day count from the ʻokina · 一本 seal")])
     lw = fitw(1, .75, .82)
-    front = ab(3, 4, frame(spread(["No. 027", "330 ml"], "[[30]]", "opacity:.75") + K.tea_branch("[[210]]", INK, 1.2) + f'{L(P, "2b2926", "72%")}'
+    front = ab(3, 4, frame(spread(["No. 027", "330 ml"], "[[30]]", "opacity:.75") + f'<div style="width:[[200]]; margin-top:[[30]]">{K.drop("100%", INK, sw=.5)}</div>{L(P, "2b2926", "72%")}'
                            f'<span style="font-family:var(--lat); font-style:italic; font-size:[[54]]; margin-top:[[-16]]">kombucha</span>'
                            + specrows([("TEA", "［茶葉］"), ("FERMENTED", "14 DAYS"), ("BOTTLED", "2026 · 10 · 22"), ("FOR", '<span class="jp">［お名前］様</span>')], "[[30]]", "rgba(43,41,38,.45)", "[[13]]")
                            + seal("[[153]]", "right:[[60]]; bottom:[[150]]"), inner_pad="[[76]] [[64]] [[70]]"), lw, f"background:{KIN}; color:{INK}")
@@ -206,7 +206,7 @@ def p_dir():
                           f'<p class="jp" style="position:static; font-size:[[38]]; line-height:1.7; text-align:left">{C.HANDLING}</p>'
                           + specrows([("No.", "＿＿＿"), ("瓶詰め", "＿＿＿")], "[[32]]", "rgba(43,41,38,.45)", "[[12]]"), inner_pad="[[80]] [[64]]"), lw, f"background:{KIN}; color:{INK}")
     gift = ab(4, 3, f'<div class="fill" style="background:{INK}"></div>'
-              f'<div style="left:[[110]]; top:50%; transform:translateY(-50%)">{K.tea_branch("[[150]]", KIN, 1.1)}</div>'
+              f'<div style="left:[[90]]; top:50%; transform:translateY(-50%); width:[[150]]">{K.drop("100%", KIN, sw=.35)}</div>'
               f'<div class="ab flat" style="left:50%; top:50%; transform:translate(-50%,-50%); width:[[330]]; aspect-ratio:3/4; background:{KIN}; color:{INK}; box-shadow:0 10px 24px rgba(0,0,0,.4)">'
               + frame(f'<span class="eyebrow" style="font-size:[[60]]; color:{MUTE}">Made out to</span><span class="jp" style="font-size:[[120]]">［お名前］様</span>{L(P, "2b2926", "62%")}', pad="[[60]]", inner_pad="[[120]] [[60]]") + '</div>'
               + seal("[[102]]", "right:[[120]]; bottom:[[110]]"), "78%")
@@ -214,9 +214,9 @@ def p_dir():
             '<div class="grid g3" style="margin-top:clamp(20px,3vw,36px)">' +
             pf(front, "Front label", "Typed batch details, the owner’s name, the seal pressed by hand at the counter.", "1/1") +
             pf(back, "Back label", "一括表示 inside the same double rule, 8 pt minimum.", "1/1") +
-            pf(gift, "Gift box", "Sumi board, the camellia in line, a framed card made out to the recipient.", "1/1") + '</div>')
+            pf(gift, "Gift box", "Sumi board, one drop in hairline, a framed card made out to the recipient.", "1/1") + '</div>')
     a5w = fitw(4 / 3, 148 / 210, .82)
-    fl_f = ab(148, 210, frame(spread(["An evening", "at the counter"], "[[24]]", "opacity:.7") + K.tea_branch("[[200]]", KIN, 1.2) +
+    fl_f = ab(148, 210, frame(spread(["An evening", "at the counter"], "[[24]]", "opacity:.7") + f'<div style="width:[[560]]">{K.drops("100%", 14, 14, KIN)}</div>' +
                               f'<span style="font-family:var(--lat); font-size:[[230]]; line-height:.85">027</span><p style="font-family:{SHIP}; font-weight:700; font-size:[[62]]; line-height:1.6">仕込みと、<br>試飲の会。</p>{L(P, "efebe2", "50%")}'
                               + seal("[[112]]", "right:[[60]]; bottom:[[70]]"), pad="[[56]]", inner_pad="[[90]] [[60]] [[90]]"), a5w, f"background:{INK}; color:{KIN}")
     fl_b = ab(148, 210, frame(spread(["Details", "No. 027"], "[[26]]", f"color:{MUTE}") +
@@ -235,19 +235,19 @@ def p_dir():
                   + specrows([("TEA", "［茶葉］"), ("FERMENTED", "14 DAYS"), ("BOTTLED", "TO ORDER")], "[[28]]", "rgba(239,235,226,.35)", "[[16]]") +
                   f'<div style="display:flex; justify-content:space-between; align-items:flex-end">{L(P, "efebe2", "[[300]]")}{K.hanko("[[120]]")}</div></div>', "100%", f"background:{INK}; color:{KIN}", cls="flat post"),
          "Batch post", "The number is the headline; the details are typed."),
-        (ab(3, 4, f'<div style="left:[[70]]; right:[[70]]; top:[[64]]">{spread(["Bottled", "for", "one", "person"], "[[26]]")}</div>' + side("Kombucha", "left:[[34]]", "[[22]]") + side("Nagoya · 名古屋", "right:[[34]]", "[[22]]") +
-                  f'<div style="left:50%; top:[[190]]; transform:translateX(-50%)">{K.tea_branch("[[230]]", KIN, 1.1)}</div>'
-                  f'<p style="left:0; right:0; top:[[580]]; text-align:center; font-family:{SHIP}; font-weight:700; font-size:[[54]]; line-height:1.8">一本の、<br>自分のための時間。</p>'
-                  f'<div class="col" style="left:0; right:0; bottom:[[64]]; align-items:center; gap:[[34]]">{L(P, "efebe2", "40%")}<span class="mono" style="font-size:[[18]]; letter-spacing:.3em; opacity:.6">BOTTLED FOR ONE · 名古屋</span></div>',
+        (ab(3, 4, f'<div style="left:[[-30]]; bottom:[[-80]]">{K.tea_branch("[[620]]", KIN, 1.0)}</div>'
+                  f'<p class="vt" style="right:[[90]]; top:[[90]]; font-family:{SHIP}; font-weight:700; font-size:[[62]]; line-height:1.9; letter-spacing:.12em">一本の、<br>自分のための時間。</p>'
+                  f'<div style="right:[[90]]; bottom:[[80]]">{L(P, "efebe2", "[[260]]")}</div>' + seal("[[90]]", "right:[[110]]; bottom:[[190]]"),
                   "100%", f"background:{SUMI}; color:{KIN}", cls="flat post"),
-         "Poster post", "Spaced words, vertical side lines, the camellia, one line in Mincho."),
+         "Words post", "The tea flower rising from the bottom edge; one line, set vertically."),
         (ab(3, 4, ph("lenora", "single", "0", "0", "100%", "3/4", zoom=1.75), "100%", cls="flat post"), "Product post", "The bottle and its card, in one shaft of light."),
     ]
-    story = ab(9, 16, frame(f'<span class="mono" style="font-size:[[30]]; letter-spacing:.3em; color:#A39E95">INVITATION</span>{K.tea_branch("[[200]]", KIN, 1.1)}<p style="font-family:{SHIP}; font-weight:700; font-size:[[72]]; line-height:1.8">今日のおなか、<br>どうですか？</p>'
+    story = ab(9, 16, frame(f'<span class="mono" style="font-size:[[30]]; letter-spacing:.3em; color:#A39E95">INVITATION</span><div style="width:[[110]]">{K.drop("100%", KIN, sw=.5)}</div><p style="font-family:{SHIP}; font-weight:700; font-size:[[72]]; line-height:1.8">今日のおなか、<br>どうですか？</p>'
                             f'<div style="width:80%; display:flex; flex-direction:column; gap:[[24]]">' + "".join(f'<span class="jp" style="border:1px solid #6E6860; padding:[[24]] 0; font-size:[[42]]">{w}</span>' for w in ("軽い", "重い", "ふつう")) + f'</div>{L(P, "efebe2", "42%")}'
                             + seal("[[128]]", "right:[[60]]; bottom:[[60]]"), pad="[[70]]", inner_pad="[[110]] [[70]] [[110]]"), "100%", f"background:{INK}; color:{KIN}", cls="flat story")
     nts = notes(["The wordmark is shown from your Lenora setting with a redrawn water-drop ʻokina. License Lenora with Superior Type’s Logo and Merchandise add-ons, then reset it as vector.",
-                 "The camellia is drawn for this concept; a final version would be drawn by hand, then the 一本 seal carved as a real hanko so every label is stamped at the counter."])
+                 "Borrowed, not copied: from references we took fine line work and stamped labels as principles. Our version counts fermenting days with the drop from our own wordmark, and seals each label with a 一本 hanko.",
+                 "The camellia (tea flower) is drawn for this concept; a final version would be drawn by hand, then the 一本 seal carved as a real hanko so every label is stamped at the counter."])
     direction_page(P, hero, idn, pal, typ, pack, prt, social("lenora", posts, story), nts)
 
 def p_frame_html(inner, style=""):
@@ -269,7 +269,7 @@ def p_home():
                     f'<span style="font-size:14px; color:#A39E95">¥［　］（税込）· fermented {dd} days</span></a>'
                     for f, n, dd in zip(FL, ("027", "028", "029"), ("14", "11", "18")))
     content = (f'<section style="padding:clamp(56px,9vw,120px) 0"><div class="wrap" style="display:flex; justify-content:center">'
-               + p_frame_html(f'<span class="eyebrow" style="color:#A39E95">Kombucha · 名古屋</span>{K.tea_branch("88px", KIN, 1.1)}{L(P, "efebe2", "min(70%,520px)")}<p style="font-family:\'Shippori Mincho B1\'; font-size:clamp(20px,2.4vw,30px); font-weight:700">一滴から、からだの声を。</p>'
+               + p_frame_html(f'<span class="eyebrow" style="color:#A39E95">Kombucha · 名古屋</span>{L(P, "efebe2", "min(70%,520px)")}<div style="width:min(60%,300px)">{K.drops("100%", 14, 14, KIN)}</div><p style="font-family:\'Shippori Mincho B1\'; font-size:clamp(20px,2.4vw,30px); font-weight:700">一滴から、からだの声を。</p>'
                               f'<p style="font-style:italic; color:#A39E95; margin-top:-10px">Every bottle made out to one person.</p><a class="btn" href="lenora-product.html">Choose your bottle</a><div style="position:absolute; right:36px; bottom:30px">{K.hanko("40px")}</div>', "width:min(100%,900px); position:relative") + '</div></section>'
                f'<section style="padding:0 0 clamp(64px,9vw,120px)"><div class="wrap"><p class="eyebrow" style="text-align:center; color:#A39E95; margin-bottom:32px">This week’s batches</p><div class="grid g3">{cards}</div></div></section>'
                f'<section style="background:{KIN}; color:{INK}; padding:clamp(64px,9vw,120px) 0"><div class="wrap" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr)); gap:clamp(32px,6vw,80px); align-items:center">'
@@ -316,26 +316,28 @@ def tag(text, w, size):
             f'<span style="position:absolute; top:7%; left:50%; width:9%; aspect-ratio:1; transform:translateX(-50%); border-radius:50%; background:var(--plate)"></span>'
             f'<p class="hand vt" style="position:absolute; right:22%; top:22%; font-size:{size}; line-height:1.9; color:{MI}">{text}</p></div>')
 
-def badge(w, ink=MI, centre="jar"):
-    return K.ring_badge(w, "HANDBREWED IN NAGOYA · 間 · KOMBUCHA · ", K.MOTIFS[centre]("200px", ink), ink=ink)
+def badge(w, ink=MI, centre=None):
+    return K.kakuin(w, ("名古屋", "手仕込"), ink)
 
 def notebook(width, style=""):
-    """kimy's brewing notes: one card per batch, tucked into every order."""
-    line = "1px solid #3A3631"
-    field = lambda lab, val, size="[[46]]": (f'<div style="display:flex; align-items:baseline; gap:[[18]]; padding:[[14]] [[20]]"><span class="mono" style="font-size:[[22]]; letter-spacing:.06em; opacity:.75">{lab}</span>'
-                                             f'<span class="pen" style="font-size:{size}">{val}</span></div>')
+    """kimy's fermentation slip: the batch's fourteen days as a timeline, marked in red pen."""
+    days = [(1, "仕込み", ""), (4, "", "膜が張ってきた"), (7, "", "酸味が出てきた"), (10, "", ""), (14, "瓶詰め", "やさしい酸味。")]
+    top, bot = 330, 1300
+    y = lambda d: top + (d - 1) / 13 * (bot - top)
+    marks = "".join(f'<div style="left:[[248]]; top:[[{y(d) - 14:.0f}]]; width:[[28]]; aspect-ratio:1; border-radius:50%; background:{MI}"></div>'
+                    f'<p class="mono" style="left:[[90]]; top:[[{y(d) - 22:.0f}]]; width:[[130]]; text-align:right; font-size:[[30]]">DAY {d:02d}</p>'
+                    + (f'<p class="mono" style="left:[[310]]; top:[[{y(d) - 22:.0f}]]; font-size:[[30]]; opacity:.7">{a}</p>' if a else "")
+                    + (f'<p class="pen" style="left:[[{460 if a else 310}]]; top:[[{y(d) - 30:.0f}]]; font-size:[[44]]; transform:rotate(-2deg)">{b}</p>' if b else "")
+                    for d, a, b in days)
     return ab(105, 148,
-              f'<p class="mono" style="left:[[80]]; top:[[80]]; font-size:[[26]]; letter-spacing:.08em">BREWING NOTES <span style="opacity:.6">/ 仕込み帳</span></p>'
-              f'<div class="row" style="left:[[80]]; right:[[80]]; top:[[140]]; border:{line}; justify-content:space-between">{field("brewed by:", "kimy", "[[54]]")}<div style="border-left:{line}">{field("batch no.:", "027", "[[70]]")}</div></div>'
-              f'<div style="left:[[240]]; right:[[240]]; top:[[300]]; aspect-ratio:1/1.08; border:{line}; padding:[[26]]"><div style="height:100%; background:{NERI}; display:flex; align-items:center; justify-content:center">{K.jar("70%", MI)}</div></div>'
-              f'<p class="mono" style="left:[[80]]; top:[[900]]; font-size:[[22]]; opacity:.75">notes:</p>'
-              f'<p class="pen" style="left:[[110]]; right:[[80]]; top:[[940]]; font-size:[[46]]; line-height:1.5; transform:rotate(-1deg)">紅茶と［素材］、14日。<br>やさしい酸味、少し花の香り。</p>'
-              f'<div style="left:[[80]]; width:[[600]]; top:[[1110]]; border:{line}">{field("tea:", "［茶葉］", "[[38]]")}<div style="border-top:{line}">{field("started → bottled:", "10/08 → 10/22", "[[38]]")}</div></div>'
-              f'<div style="right:[[40]]; top:[[1060]]; width:[[300]]; transform:rotate(-12deg); opacity:.88">{badge("100%")}</div>',
+              f'<p class="mono" style="left:[[90]]; top:[[90]]; font-size:[[28]]; letter-spacing:.1em">NAʻAU · 発酵メモ</p>'
+              f'<p style="right:[[90]]; top:[[70]]; font-family:var(--lat); font-size:[[110]]; line-height:1">027</p>'
+              f'<p class="hand" style="left:[[90]]; top:[[160]]; font-size:[[44]]">［フレーバー］· 紅茶と［素材］</p>'
+              f'<div style="left:[[260]]; top:[[{top}]]; height:[[{bot - top}]]; width:[[3]]; background:{MI}"></div>{marks}'
+              f'<div style="left:[[460]]; top:[[{y(14) + 34:.0f}]]; width:[[300]]; height:[[5]]; background:{BENI}; border-radius:[[3]]; transform:rotate(-2deg)"></div>'
+              f'<div style="right:[[90]]; bottom:[[90]]; width:[[200]]; transform:rotate(-6deg)">{badge("100%")}</div>'
+              f'<div style="right:[[110]]; top:[[420]]; width:[[230]]">{K.jar("100%", MI)}</div>',
               width, f"background:{GO}; color:{MI}; {style}")
-
-def print_row(motifs, w, gap="[[30]]", ink=MI):
-    return f'<div class="row" style="align-items:flex-end; gap:{gap}">' + "".join(K.MOTIFS[k](w, ink) for k in motifs) + '</div>'
 
 def m_dir():
     hero = (f'<header class="wrap" style="padding-top:clamp(48px,7vw,96px); display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr)); gap:clamp(32px,6vw,80px); align-items:center">'
@@ -350,13 +352,14 @@ def m_dir():
         pf(ab(4, 3, f'<div style="left:[[90]]; top:[[90]]">' + note("今日もゆっくり、<br>自分の声を聴いてね。<br>— kimy", "[[640]]", size="[[48]]", pad="[[56]]") + f'</div><div style="right:[[70]]; bottom:[[70]]">{L(M, "3a3631", "[[280]]")}</div>', "100%", f"background:{NERI}; color:{MI}", cls="flat"), "Note", "kimy’s handwriting on a card that overlaps the page."),
         pf(ab(4, 3, f'<p class="jp" style="left:[[70]]; top:[[70]]; font-size:[[64]]; font-weight:600; line-height:1.6">今日のおなか、<br>どうですか？</p><div style="left:[[-40]]; bottom:[[-120]]; width:[[1080]]">{L(M, "3a3631", "100%")}</div>', "100%", f"background:{ODO}; color:{MI}", cls="flat"), "Ochre", "The mark large and cropped, for social and the shop sign."),
     ]) + '</div>'
-    idn += ('<div class="sub"><h3>Prints and stamps</h3><p>Cut from lino and printed by hand; kimy’s round stamp closes every bag.</p></div><div class="grid g-wide">'
-            + pf(ab(2.4, 1, f'<div class="row" style="left:[[60]]; right:[[60]]; bottom:[[110]]; justify-content:space-between; align-items:flex-end">'
-                 + "".join(K.MOTIFS[k](w, MI) for k, w in (("bottle", "[[150]]"), ("jar", "[[170]]"), ("yunomi", "[[150]]"), ("leaf", "[[120]]"), ("bubbles", "[[110]]"), ("sun", "[[130]]")))
-                 + f'</div><div style="left:[[60]]; right:[[60]]; bottom:[[96]]; border-top:1.5px solid {MI}"></div><p class="mono" style="left:[[60]]; bottom:[[40]]; font-size:[[16]]; letter-spacing:.2em; opacity:.7">BOTTLE · JAR · YUNOMI · TEA LEAF · BUBBLES · SUN</p>',
-                    "100%", f"background:{GO}; color:{MI}", cls="flat"), "The print set", "Six blocks: what kimy brews with, and what it does.")
+    idn += ('<div class="sub"><h3>Prints and seal</h3><p>Cut from lino and printed by hand: what is in kimy’s jar, and the days it takes. Her square seal closes every bag.</p></div><div class="grid g-wide">'
+            + pf(ab(2.4, 1, "".join(f'<div style="left:[[{80 + i * 190}]]; top:[[70]]; width:[[120]]">{K.MOTIFS[k]("100%", MI)}</div>'
+                                     f'<p class="mono" style="left:[[{80 + i * 190}]]; top:[[230]]; width:[[120]]; text-align:center; font-size:[[13]]; letter-spacing:.14em; opacity:.7">{lab}</p>'
+                                     for i, (k, lab) in enumerate((("jar", "JAR"), ("scoby", "SCOBY"), ("leaf", "TEA"), ("bubbles", "FIZZ"), ("bottle", "BOTTLE")))) +
+                    f'<div style="left:[[60]]; right:[[60]]; top:[[300]]">{K.calendar("100%", MI, 14, 14)}</div>',
+                    "100%", f"background:{GO}; color:{MI}", cls="flat"), "The print set", "Blocks for what is in the jar; a waxing moon for the fourteen days it takes.")
             + pf(ab(1.2, 1, f'<div style="left:50%; top:50%; transform:translate(-50%,-50%); width:[[620]]">{badge("100%")}</div>', "100%", f"background:{NERI}; color:{MI}", cls="flat"),
-                 "kimy’s stamp", "Handbrewed in Nagoya, around the jar.")
+                 "kimy’s seal", "名古屋 · 手仕込: brewed by hand in Nagoya, as a square seal.")
             + '</div>')
     pal = (chips([("Gofun", "#FAF7F1", "Ground", 3), ("Ink", "#3A3631", "Text · 11.2:1", 2), ("Ōdo", "#C39143", "Blocks and fills", 1.5), ("Ōdo text", "#8A6A3A", "Accent text · 4.7:1", 1), ("Neri", "#EDE4CD", "Cards, tags", 1.5), ("Beni pen", "#B8352B", "kimy’s red pen", .8)]),
            "Palette D, Gofun & Ōdo: morning light through shōji; ochre rhymes with the glass. kimy’s red pen is for her notes only.")
@@ -375,10 +378,10 @@ def m_dir():
     pack = (pf(still("ogg", "range", "21/9", zoom=1.45), "The range", "A band wraps the bottle: 間 in vertical Mincho, the mark, and the date written by kimy.", plate=False) +
             '<div class="grid g3" style="margin-top:clamp(20px,3vw,36px)">' +
             pf(band + back, "Band label and back label", "Matte, water-resistant. 一括表示 at 8 pt minimum; batch written by hand.", "1/1", pstyle="flex-direction:column; gap:7%") +
-            pf(tag("［お名前］さんへ<br>ゆっくり、どうぞ。", "30%", "[[120]]") + f'<div style="position:absolute; left:12%; bottom:12%">{K.leaf("70px", MI)}</div>', "String tag", "Tied at the neck, written by kimy for each order.", "1/1") +
-            pf(notebook(fitw(1, 105 / 148, .84)), "Brewing notes card", "In every order: kimy’s notes on this batch, by hand, stamped.", "1/1") + '</div>'
+            pf(tag("［お名前］さんへ<br>ゆっくり、どうぞ。", "30%", "[[120]]") + f'<div style="position:absolute; left:12%; bottom:12%">{K.moon("64px", 1, MI)}</div>', "String tag", "Tied at the neck, written by kimy for each order.", "1/1") +
+            pf(notebook(fitw(1, 105 / 148, .84)), "Fermentation slip", "In every order: the batch’s fourteen days, marked by kimy in red pen.", "1/1") + '</div>'
             + '<div class="grid g-wide" style="margin-top:clamp(20px,3vw,36px)">'
-            + pf(f'<div style="position:absolute; inset:0; color:{MI}">{K.pattern([K.leaf, K.bubbles, K.jar, K.yunomi, K.sun], MI)}</div>', "Wrapping paper", "Neri tissue, printed all over with the block set.", "2.4/1", pstyle=f"background:{NERI}")
+            + pf(f'<div style="position:absolute; inset:7% 5%; color:{MI}">{K.calendar("100%", MI, 14, 7)}</div>', "Wrapping paper", "Neri tissue printed as a half-month: a moon waxing from new to full, one for each day the batch ferments.", "2.4/1.25", pstyle=f"background:{NERI}")
             + pf(wrapc.replace('top:24%', 'top:20%') + f'<div style="position:absolute; right:9%; bottom:10%; width:24%; transform:rotate(-10deg)">{badge("100%")}</div>', "Gift box", "One ochre band, sealed with kimy’s stamp.", "1.2/1")
             + '</div>')
     a5w = fitw(4 / 3, 148 / 210, .82)
@@ -386,7 +389,7 @@ def m_dir():
               f'<p class="vt jp" style="right:[[80]]; top:[[80]]; font-size:[[60]]; font-weight:600; letter-spacing:.14em; line-height:1.8">はじめての、<br>コンブチャ仕込み。</p>'
               f'<div style="left:[[90]]; top:[[420]]">' + note("少人数で、のんびり<br>仕込みましょう。<br>— kimy", "[[470]]", size="[[40]]", pad="[[40]]") + '</div>'
               f'<div style="left:0; right:0; bottom:0; height:[[420]]; background:{ODO}"></div>'
-              f'<div style="left:[[70]]; right:[[70]]; bottom:[[400]]">{print_row(("jar", "yunomi", "bottle", "leaf"), "[[190]]", "[[24]]")}</div>'
+              f'<div style="right:[[-120]]; bottom:[[180]]; width:[[560]]">{K.scoby("100%", MI)}</div>'
               f'<p class="hand" style="left:[[80]]; bottom:[[90]]; font-size:[[50]]">［月日］名古屋</p><div style="right:[[70]]; bottom:[[70]]; width:[[230]]; transform:rotate(-8deg)">{badge("100%")}</div>', a5w, f"background:{GO}; color:{MI}")
     fl_b = ab(148, 210, f'<p class="jp" style="left:[[90]]; top:[[110]]; font-size:[[54]]">ワークショップのご案内</p>'
               f'<dl style="left:[[90]]; right:[[90]]; top:[[260]]; font-family:var(--sans); font-size:[[36]]; line-height:1.55; column-gap:[[40]]; row-gap:[[30]]">'
@@ -396,30 +399,28 @@ def m_dir():
     cw = fitw(4 / 3, 91 / 55, .34)
     card_f = ab(91, 55, f'<div style="left:[[70]]; bottom:[[70]]">{L(M, "3a3631", "[[330]]")}</div><span class="vt jp" style="right:[[70]]; top:[[70]]; font-size:[[40]]; letter-spacing:.34em">ナアウ</span>', cw, f"background:{GO}; color:{MI}")
     card_b = ab(91, 55, f'<p class="hand" style="left:[[70]]; top:[[70]]; font-size:[[60]]">またね。kimy</p><p style="left:[[70]]; bottom:[[70]]; font-family:var(--sans); font-size:[[32]]">名古屋市［　］ · @naau_kombucha</p>', cw, f"background:{ODO}; color:{MI}")
-    prt = ('<div class="grid g2">' + pf(fl_f + fl_b, "A5 workshop flyer", "Vertical title, an ochre block and kimy’s note on the front; details in the standard order on the back.", "4/3") +
+    prt = ('<div class="grid g2">' + pf(fl_f + fl_b, "A5 workshop flyer", "Vertical title, the SCOBY print half over the ochre block, kimy’s note on the front; details in the standard order on the back.", "4/3") +
            pf(card_f + card_b, "Shop card, 91 × 55 mm", "Gofun front, ochre back with a handwritten line.", "4/3", pstyle="flex-direction:column; gap:7%") + '</div>')
     posts = [
-        (ab(3, 4, f'<div class="film" style="left:[[60]]; top:[[60]]; width:[[600]]">{still("ogg", "pour", "3/4", zoom=2.1, tone="sepia")}</div>'
-                  + "".join(f'<p style="left:[[{x}]]; top:[[{y}]]; font-family:Yomogi; font-size:[[{fs}]]; line-height:1; color:{MI}; filter:url(#crayon); transform:rotate({r}deg); white-space:nowrap">ゆっくり</p>'
-                            for x, y, fs, r in ((150, 120, 190, -3), (210, 400, 200, 2), (120, 690, 210, -2), (250, 960, 190, 1)))
-                  + f'<p style="left:[[60]]; bottom:[[60]]; font-family:var(--lat); font-size:[[26]]; line-height:1.5">今週の仕込み — No. 027 ［フレーバー］<br>naʻau kombucha, 名古屋</p>', "100%", f"background:{GO}; color:{MI}", cls="flat post"),
-         "Batch post", "kimy’s crayon lettering over a film photograph."),
+        (ab(3, 4, ph("ogg", "pour", "0", "0", "100%", "3/2.6", zoom=2.1) +
+                  f'<div style="left:[[70]]; top:[[690]]">' + note('<span class="pen" style="font-size:[[54]]">この泡が、<br>生きている証拠。</span>', "[[520]]", rot=-3, pad="[[46]]") + '</div>'
+                  f'<p class="vt jp" style="right:[[90]]; top:[[930]]; font-size:[[40]]; letter-spacing:.3em">今週の仕込み</p>'
+                  f'<div style="left:[[70]]; bottom:[[70]]">{L(M, "3a3631", "[[240]]")}</div>', "100%", f"background:{GO}; color:{MI}", cls="flat post"),
+         "Batch post", "This week’s glass, with kimy’s note pinned beneath it."),
         (ab(3, 4, f'<div style="left:50%; top:50%; transform:translate(-50%,-50%) rotate(-3deg); width:[[700]]; box-shadow:0 10px 26px rgba(58,54,49,.16)">{notebook("100%", "box-shadow:none")}</div>', "100%", f"background:{NERI}; color:{MI}", cls="flat post"),
-         "Brewing notes post", "This week’s card, as kimy wrote it."),
+         "Fermentation post", "This week’s slip, as kimy marked it."),
         (ab(3, 4, f'<p class="vt jp" style="right:[[90]]; top:[[90]]; font-size:[[78]]; font-weight:600; letter-spacing:.24em">ワークショップ</p><p class="hand" style="left:[[80]]; top:[[100]]; font-size:[[52]]">［月日］名古屋</p>'
-                  f'<div style="left:[[80]]; top:[[330]]">{print_row(("jar", "yunomi", "bubbles"), "[[210]]", "[[10]]")}</div>'
-                  f'<div style="left:[[80]]; bottom:[[80]]">{L(M, "3a3631", "[[380]]")}</div>', "100%", f"background:{ODO}; color:{MI}", cls="flat post"), "Workshop post", "Ochre block, vertical title."),
+                  f'<div style="left:[[-80]]; top:[[300]]; width:[[600]]">{K.scoby("100%", MI)}</div>'
+                  f'<div style="left:[[80]]; bottom:[[80]]">{L(M, "3a3631", "[[380]]")}</div>', "100%", f"background:{ODO}; color:{MI}", cls="flat post"), "Workshop post", "Ochre block, vertical title, the SCOBY cropped by the edge."),
     ]
-    story = ab(9, 16, f'<p class="pen" style="left:[[60]]; top:[[80]]; font-size:[[70]]; transform:rotate(-3deg)">こんにちは、</p>'
-               f'<p class="pen" style="right:[[60]]; top:[[160]]; font-size:[[64]]; transform:rotate(-2deg)">ワークショップのお誘い！</p>'
-               f'<p class="pen" style="left:0; right:0; top:[[440]]; text-align:center; font-size:[[78]]; transform:rotate(-2deg)">はじめての仕込み</p>'
-               f'<div style="left:[[200]]; top:[[540]]; width:[[600]]; transform:rotate(-1.5deg)">{K.perforated("100%", 1.15, still("ogg", "jar", "1/1.15", zoom=2.2, tone="sepia"))}</div>'
-               f'<p class="pen" style="left:0; right:0; top:[[1270]]; text-align:center; font-size:[[60]]">at 名古屋［　］</p>'
-               f'<div style="left:[[150]]; right:[[150]]; top:[[1340]]">{K.pen_ellipse("100%")}</div>'
-               f'<p class="pen" style="left:0; right:0; top:[[1402]]; text-align:center; font-size:[[70]]; letter-spacing:.1em">［月］/［日］/ 土</p>'
-               f'<p class="pen" style="left:0; right:0; bottom:[[60]]; text-align:center; font-size:[[100]]">13:00 → 16:00</p>', "100%", f"background:{PAPER}", cls="flat story")
+    rules_ = "".join(f'<div style="right:[[{100 + k * 108}]]; top:[[110]]; bottom:[[330]]; width:1px; background:rgba(184,53,43,.35)"></div>' for k in range(9))
+    story = ab(9, 16, rules_ + '<p class="pen vt" style="right:[[150]]; top:[[150]]; font-size:[[60]]; line-height:1; letter-spacing:.12em; white-space:nowrap">こんにちは、kimy です。</p><p class="pen vt" style="right:[[258]]; top:[[150]]; font-size:[[60]]; line-height:1; letter-spacing:.12em; white-space:nowrap">はじめての仕込みの会を</p><p class="pen vt" style="right:[[366]]; top:[[150]]; font-size:[[60]]; line-height:1; letter-spacing:.12em; white-space:nowrap">ひらきます。</p><p class="pen vt" style="right:[[474]]; top:[[150]]; font-size:[[60]]; line-height:1; letter-spacing:.12em; white-space:nowrap">［月］［日］（土）十三時から、</p><p class="pen vt" style="right:[[582]]; top:[[150]]; font-size:[[60]]; line-height:1; letter-spacing:.12em; white-space:nowrap">名古屋［　］にて。</p><p class="pen vt" style="right:[[690]]; top:[[150]]; font-size:[[60]]; line-height:1; letter-spacing:.12em; white-space:nowrap">定員［　］名、先着順です。</p><p class="pen vt" style="right:[[798]]; top:[[150]]; font-size:[[60]]; line-height:1; letter-spacing:.12em; white-space:nowrap">おまちしています。</p>'
+               f'<div style="left:[[90]]; right:[[90]]; top:[[110]]; bottom:[[330]]; border:1px solid rgba(184,53,43,.35)"></div>'
+               f'<div style="left:[[110]]; bottom:[[90]]; width:[[230]]">{K.jar("100%", MI)}</div>'
+               f'<div style="right:[[110]]; bottom:[[100]]; width:[[180]]; transform:rotate(-5deg)">{badge("100%")}</div>', "100%", f"background:{PAPER}", cls="flat story")
     nts = notes(["The wordmark is shown from your Ogg setting with the ʻokina turned the right way; retype it with ‘ (U+2018) in Ogg for the font’s own mark.",
-                 "Handwriting is set in Klee One as a stand-in until kimy’s hand is scanned."])
+                 "Handwriting is set in Klee One as a stand-in until kimy’s hand is scanned.",
+                 "Borrowed, not copied: block printing is the technique we took. The subjects are our own (the SCOBY, kimy’s jar, tea, the fizz) and the fourteen days are a waxing moon; the slip and the vertical letter are written in kimy’s voice."])
     direction_page(M, hero, idn, pal, typ, pack, prt, social("ogg", posts, story), nts)
 
 def m_shell(content):

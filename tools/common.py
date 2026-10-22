@@ -105,14 +105,15 @@ def accordions(border):
                                 ("配送・返品", "クール便（冷蔵）でお届けします。送料 ¥［　］。日時指定ができます。生ものにつき、お客様都合の返品はお受けできません。"),
                                 ("作り手について", "kimy — 看護師として働きながら、名古屋でコンブチャを仕込んでいます。")])
 
-# ------------------------------------------------------------------ still life (photography direction)
+# ------------------------------------------------------------------ still life (photography direction, drawn flat)
 _uid = [0]
-BOTTLE = "M9 300 H91 Q100 300 100 291 V122 C100 94 74 82 68 62 V26 H32 V62 C26 82 0 94 0 122 V291 Q0 300 9 300 Z"
+# a 330 ml craft kombucha bottle: short neck, round shoulders (0..100 × 42..300)
+BOTTLE = "M12 300 H88 Q100 300 100 288 V152 C100 120 72 110 67 90 V68 H33 V90 C28 110 0 120 0 152 V288 Q0 300 12 300 Z"
 SCENES = {
- "current": dict(wall=("#F8F7F4", "#EDEBE6"), table=("#FCFBF9", "#ECEAE5"), shadow=.13, contact=.30, rim="#FFFFFF", glass_line="#FFFFFF", cap_ink="#9A968F"),
- "lenora": dict(wall=("#1B1A18", "#242220"), table=("#2E2B28", "#1A1917"), shadow=.45, contact=.6, rim="#F2E6D0", glass_line="#E9DFCB", cap_ink="#8C867C"),
- "ogg": dict(wall=("#F2EBDD", "#E7DDC9"), table=("#DCC7A3", "#C9AF86"), shadow=.17, contact=.32, rim="#FFF8EA", glass_line="#FFFFFF", cap_ink="#8C7C64"),
- "collab": dict(wall=("#F5DECD", "#EFD2BE"), table=("#F2E7DB", "#E3D3C2"), shadow=.15, contact=.3, rim="#FFFFFF", glass_line="#FFFFFF", cap_ink="#9B7F6C"),
+ "current": dict(wall="#F6F5F1", table="#EAE8E2", light=None, shade="#DCD9D1", cap_ink="#9A968F"),
+ "lenora":  dict(wall="#201F1D", table="#2D2A27", light="#272523", shade="#1A1917", cap_ink="#8C867C"),
+ "ogg":     dict(wall="#F1E9DA", table="#D9C3A0", light="#F8F1E4", shade="#C4AB84", cap_ink="#8C7C64"),
+ "collab":  dict(wall="#F4DDCC", table="#EADBCB", light=None, shade="#DCC8B5", cap_ink="#9B7F6C"),
 }
 
 def _shade(h, f):
@@ -123,162 +124,130 @@ def _shade(h, f):
         r, g, b = (int(c + (255 - c) * (f - 1)) for c in (r, g, b))
     return f"#{r:02X}{g:02X}{b:02X}"
 
-def _shadow(n, x, w, by, h, s):
-    L, t = h * 0.85, h * 0.13
-    pts = f"{x + .12 * w:.0f},{by} {x + w:.0f},{by} {x + w + L:.0f},{by - t:.0f} {x + .12 * w + L * .92:.0f},{by - t - 6:.0f}"
-    return (f'<polygon points="{pts}" fill="#000" opacity="{s["shadow"]}" filter="url(#bl{n})"/>'
-            f'<ellipse cx="{x + w / 2:.0f}" cy="{by - 2}" rx="{w * .56:.0f}" ry="7" fill="#000" opacity="{s["contact"]}" filter="url(#bs{n})"/>')
+def _shadow(x, w, by, h, s):
+    """A hard, flat cast shadow, like cut paper."""
+    L, t = h * .7, h * .1
+    return f'<polygon points="{x + .1 * w:.0f},{by} {x + w:.0f},{by} {x + w + L:.0f},{by - t:.0f} {x + .1 * w + L:.0f},{by - t:.0f}" fill="{s["shade"]}"/>'
 
 def _label(dk, fl, no):
     if dk == "current":
-        return (f'<circle cx="50" cy="214" r="33" fill="#FFFFFF"/><image href="assets/logos/current-naau-1e1e1e.png" x="25" y="199" width="50" height="13.2"/>'
-                f'<text x="50" y="228" font-family="Zen Kaku Gothic New" font-size="4.6" letter-spacing="1" text-anchor="middle" fill="#1E1E1E">{fl}</text>')
+        return (f'<circle cx="50" cy="222" r="33" fill="#FFFFFF"/><image href="assets/logos/current-naau-1e1e1e.png" x="25" y="207" width="50" height="13.2"/>'
+                f'<text x="50" y="236" font-family="Zen Kaku Gothic New" font-size="4.6" letter-spacing="1" text-anchor="middle" fill="#1E1E1E">{fl}</text>')
     if dk == "lenora":
-        return (f'<rect x="32" y="36" width="36" height="13" fill="#141312"/><text x="50" y="45" font-family="EB Garamond" font-size="5.4" letter-spacing=".6" text-anchor="middle" fill="#EFEBE2">No.{no}</text>'
-                f'<rect x="11" y="138" width="78" height="146" fill="#EFEBE2"/><rect x="15" y="142" width="70" height="138" fill="none" stroke="#2B2926" stroke-width=".7"/>'
-                f'<rect x="17.5" y="144.5" width="65" height="133" fill="none" stroke="#2B2926" stroke-width=".45"/>'
-                f'<image href="assets/logos/lenora-2b2926.png" x="23" y="164" width="54" height="15.5"/>'
-                f'<text x="50" y="198" font-family="EB Garamond" font-style="italic" font-size="6.4" text-anchor="middle" fill="#2B2926">kombucha</text>'
-                f'<text x="50" y="222" font-family="Zen Old Mincho" font-size="4.6" letter-spacing=".8" text-anchor="middle" fill="#2B2926">{fl}</text>'
-                f'<line x1="30" y1="256" x2="70" y2="256" stroke="#2B2926" stroke-width=".5"/>'
-                f'<text x="50" y="267" font-family="Zen Old Mincho" font-size="5" text-anchor="middle" fill="#2B2926">［お名前］様</text><rect x="68" y="258" width="9" height="13" rx="4.5" fill="#9B3A25" opacity=".92"/>')
+        return (f'<rect x="0" y="168" width="100" height="90" fill="#EFEBE2"/><rect x="5" y="173" width="90" height="80" fill="none" stroke="#2B2926" stroke-width=".6"/>'
+                f'<rect x="7.5" y="175.5" width="85" height="75" fill="none" stroke="#2B2926" stroke-width=".35"/>'
+                f'<image href="assets/logos/lenora-2b2926.png" x="23" y="186" width="54" height="15.5"/>'
+                f'<text x="50" y="213" font-family="EB Garamond" font-style="italic" font-size="6" text-anchor="middle" fill="#2B2926">kombucha</text>'
+                f'<text x="14" y="242" font-family="IBM Plex Mono" font-size="3.8" letter-spacing=".6" fill="#2B2926">NO.{no} · ［お名前］様</text>'
+                f'<rect x="80" y="234" width="7" height="10" rx="3.5" fill="#9B3A25"/>')
     if dk == "ogg":
         return (f'<rect x="0" y="176" width="100" height="62" fill="#FAF7F1"/>'
                 f'<text x="11" y="200" font-family="Zen Old Mincho" font-size="13" text-anchor="middle" fill="#3A3631">間</text>'
                 f'<image href="assets/logos/ogg-3a3631.png" x="23" y="190" width="50" height="17.9"/>'
                 f'<text x="48" y="222" font-family="Klee One" font-size="5.2" text-anchor="middle" fill="#3A3631">{fl}</text>'
                 f'<text x="91" y="187" font-family="Klee One" font-size="4.4" fill="#3A3631" style="writing-mode:vertical-rl">10/22 kimy</text>')
-    if dk == "plain":
-        return ""
     return ""
 
 def _bottle(n, i, x, by, sc, glass, dk, cap, fl="［フレーバー］", no="027", s=None):
     w, h = 100 * sc, 300 * sc
-    gid = f"am{n}_{i}"
-    grad = (f'<linearGradient id="{gid}" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="{_shade(glass, .5)}"/><stop offset=".16" stop-color="{_shade(glass, .86)}"/>'
-            f'<stop offset=".34" stop-color="{_shade(glass, 1.18)}"/><stop offset=".52" stop-color="{glass}"/><stop offset=".86" stop-color="{_shade(glass, .7)}"/><stop offset="1" stop-color="{_shade(glass, .42)}"/></linearGradient>')
-    body = (f'<g transform="translate({x - w / 2:.1f},{by - h:.1f}) scale({sc})"><path d="{BOTTLE}" fill="url(#{gid})"/>'
-            f'<path d="M15 130 C15 114 22 103 31 95 L31 99 C24 107 19 117 19 130 V280 Q19 285 17 285 Q15 285 15 280 Z" fill="#FFFFFF" opacity=".26"/>'
-            f'<path d="M93 130 V284" stroke="{s["rim"]}" stroke-width="1.2" opacity=".22"/>'
-            f'<rect x="29" y="0" width="42" height="24" rx="3" fill="{cap}"/><rect x="31" y="24" width="38" height="4" fill="{_shade(cap, .7) if cap != "#141312" else "#0E0D0C"}"/>'
-            f'<rect x="31" y="2" width="6" height="20" fill="#FFFFFF" opacity=".08"/>'
+    body = (f'<g transform="translate({x - w / 2:.1f},{by - h:.1f}) scale({sc})"><path d="{BOTTLE}" fill="{glass}"/>'
+            f'<path d="M14 160 C14 140 24 128 34 122 V128 C26 134 20 144 20 160 V284 H14 Z" fill="{_shade(glass, 1.14)}"/>'
+            f'<rect x="30" y="42" width="40" height="24" rx="2.5" fill="{cap}"/><rect x="32" y="66" width="36" height="3" fill="{_shade(cap, .75)}"/>'
             f'{_label(dk, fl, no)}</g>')
-    return grad, _shadow(n, x - w / 2, w, by, h, s) + body
+    return "", _shadow(x - w / 2, w, by, h * .86, s) + body
 
 def _glass(n, x, by, sc, s, liquid="#C9883A"):
     w, h = 80 * sc, 110 * sc
-    return (f'<ellipse cx="{x + w * .9:.0f}" cy="{by - 6}" rx="{w * .8:.0f}" ry="{10 * sc:.0f}" fill="{liquid}" opacity=".22" filter="url(#bl{n})"/>'
-            + _shadow(n, x - w / 2, w, by, h * .8, s) +
+    return (_shadow(x - w / 2, w, by, h * .8, s) +
             f'<g transform="translate({x - w / 2:.1f},{by - h:.1f}) scale({sc})">'
-            f'<path d="M7.6 40 H72.4 L70 105 Q69.4 110 64 110 H16 Q10.6 110 10 105 Z" fill="{liquid}" opacity=".88"/>'
-            f'<ellipse cx="40" cy="40" rx="32.4" ry="2.6" fill="{_shade(liquid, 1.35)}"/>'
-            f'<path d="M4 0 H76 L70 105 Q69.4 110 64 110 H16 Q10.6 110 10 105 Z" fill="#FFFFFF" opacity=".10" stroke="{s["glass_line"]}" stroke-opacity=".7" stroke-width="1"/>'
-            f'<path d="M10 6 L15 100" stroke="#FFFFFF" stroke-width="2.4" opacity=".35" stroke-linecap="round"/>'
-            f'<circle cx="30" cy="70" r="1.1" fill="#FFF" opacity=".5"/><circle cx="46" cy="84" r=".9" fill="#FFF" opacity=".5"/><circle cx="52" cy="60" r="1.2" fill="#FFF" opacity=".45"/></g>')
+            f'<path d="M4 0 H76 L70 105 Q69.4 110 64 110 H16 Q10.6 110 10 105 Z" fill="#FFFFFF" opacity=".45"/>'
+            f'<path d="M7.6 40 H72.4 L70 105 Q69.4 110 64 110 H16 Q10.6 110 10 105 Z" fill="{liquid}"/>'
+            f'<rect x="7.6" y="38" width="64.8" height="4" fill="{_shade(liquid, 1.3)}"/>'
+            + "".join(f'<circle cx="{cx}" cy="{cy}" r="1.3" fill="{_shade(liquid, 1.35)}"/>' for cx, cy in ((30, 70), (46, 84), (52, 58), (36, 92))) + '</g>')
 
 def _yunomi(n, x, by, sc, s):
     w, h = 104 * sc, 74 * sc
-    return (_shadow(n, x - w / 2, w, by, h, s) +
-            f'<g transform="translate({x - w / 2:.1f},{by - h:.1f}) scale({sc})"><defs><linearGradient id="yu{n}" x1="0" x2="1"><stop offset="0" stop-color="#A89676"/><stop offset=".34" stop-color="#E4D7BE"/><stop offset=".7" stop-color="#C9B794"/><stop offset="1" stop-color="#8F7C5D"/></linearGradient></defs>'
-            f'<path d="M3 3 Q52 -1 101 3 Q100 46 88 64 Q84 70 74 70 H30 Q20 70 16 64 Q4 46 3 3 Z" fill="url(#yu{n})"/>'
-            f'<path d="M3 3 Q52 -1 101 3 L100.6 12 Q52 8 3.4 12 Z" fill="#6B5638" opacity=".75"/><path d="M34 70 H70 V74 H34 Z" fill="#8F7C5D"/>'
-            f'<ellipse cx="52" cy="3" rx="49" ry="2.6" fill="#4A3A26" opacity=".85"/><path d="M14 18 Q16 44 26 60" stroke="#FFF" stroke-width="3" opacity=".25" fill="none" stroke-linecap="round"/></g>')
+    return (_shadow(x - w / 2, w, by, h, s) +
+            f'<g transform="translate({x - w / 2:.1f},{by - h:.1f}) scale({sc})">'
+            f'<path d="M3 3 H101 Q100 46 88 64 Q84 70 74 70 H30 Q20 70 16 64 Q4 46 3 3 Z" fill="#D8C9AC"/>'
+            f'<path d="M3 3 H101 L100.6 13 H3.4 Z" fill="#7D6849"/><rect x="34" y="70" width="36" height="4" fill="#A8977A"/></g>')
 
 def _jar(n, x, by, sc, s, cloth="#ECE4D3"):
     w, h = 190 * sc, 330 * sc
-    return (_shadow(n, x - w / 2, w, by, h, s) +
+    return (_shadow(x - w / 2, w, by, h, s) +
             f'<g transform="translate({x - w / 2:.1f},{by - h:.1f}) scale({sc})">'
-            f'<path d="M8 128 H182 V300 Q182 322 160 322 H30 Q8 322 8 300 Z" fill="#B87A35" opacity=".92"/><rect x="8" y="118" width="174" height="15" rx="5" fill="#E6D6B4"/>'
-            f'<rect x="8" y="131" width="174" height="5" fill="#C9A66B" opacity=".5"/>'
-            f'<path d="M30 40 H160 Q160 66 176 74 Q190 82 190 104 V300 Q190 330 160 330 H30 Q0 330 0 300 V104 Q0 82 14 74 Q30 66 30 40 Z" fill="#FFFFFF" opacity=".12" stroke="{s["glass_line"]}" stroke-opacity=".65" stroke-width="2"/>'
-            f'<path d="M14 110 V300" stroke="#FFFFFF" stroke-width="6" opacity=".3" stroke-linecap="round"/>'
-            f'<path d="M14 18 Q95 4 176 18 L178 58 Q176 66 166 62 Q95 52 24 62 Q14 66 12 58 Z" fill="{cloth}"/><path d="M22 60 Q30 76 26 92 M168 60 Q160 78 166 94" stroke="{cloth}" stroke-width="10" fill="none" stroke-linecap="round"/>'
-            f'<path d="M24 46 Q95 36 166 46" stroke="#8B6B45" stroke-width="3" fill="none"/></g>')
+            f'<path d="M30 40 H160 Q160 66 176 74 Q190 82 190 104 V300 Q190 330 160 330 H30 Q0 330 0 300 V104 Q0 82 14 74 Q30 66 30 40 Z" fill="#FFFFFF" opacity=".42"/>'
+            f'<path d="M8 128 H182 V300 Q182 322 160 322 H30 Q8 322 8 300 Z" fill="#B87A35"/><rect x="8" y="118" width="174" height="14" fill="#E6D6B4"/>'
+            f'<path d="M14 18 Q95 6 176 18 L178 58 Q95 50 12 58 Z" fill="{cloth}"/><path d="M24 46 Q95 38 166 46" stroke="#8B6B45" stroke-width="3" fill="none"/></g>')
 
 def _soap(n, x, by, sc, s):
-    w, h = 210 * sc, 140 * sc
-    return (_shadow(n, x - w / 2, w, by, h * .55, s) +
-            f'<g transform="translate({x - w / 2:.1f},{by - h:.1f}) scale({sc})"><rect width="210" height="140" fill="#F4D9C6"/><rect width="210" height="140" fill="url(#sp{n})"/>'
-            f'<image href="assets/collab/kombar-artwork.svg" x="86" y="22" width="100" height="100"/>'
-            f'<text x="34" y="126" font-family="Inter" font-weight="700" font-size="25" fill="#1E1E1E" transform="rotate(-90 34 126)" letter-spacing=".5">KOM’BAR</text></g>')
+    w, h = 210 * sc, 103 * sc
+    return (_shadow(x - w / 2, w, by, h, s) +
+            f'<g transform="translate({x - w / 2:.1f},{by - h:.1f}) scale({sc})"><rect width="210" height="103" fill="#F4D9C6"/>'
+            f'<image href="assets/collab/kombar-artwork.svg" x="34" y="9" width="85" height="85"/>'
+            f'<text x="20" y="96" font-family="Inter" font-weight="700" font-size="15" fill="#1E1E1E" transform="rotate(-90 20 96)">KOM’BAR</text></g>')
 
 def _card(n, x, by, w, h, s, inner_svg, rot=-4, fill="#FBF8F2"):
-    return (f'<g transform="translate({x},{by}) rotate({rot})"><rect x="6" y="8" width="{w}" height="{h}" fill="#000" opacity="{s["shadow"] * .9:.2f}" filter="url(#bs{n})"/>'
+    return (f'<g transform="translate({x},{by}) rotate({rot})"><rect x="7" y="7" width="{w}" height="{h}" fill="{s["shade"]}"/>'
             f'<rect width="{w}" height="{h}" fill="{fill}"/>{inner_svg}</g>')
 
 def still(dk, kind="range", ratio="4/3", cap="", flavours=("［フレーバー］", "［フレーバー］", "［限定］"), label=None, pos="50% 50%", zoom=None, cy=None, note=False, tone=None):
-    """An SVG still life. dk picks the light and props; label picks the bottle label (defaults to dk)."""
+    """A flat, cut-paper still life that stands in for photography. dk picks the light and props; label picks the bottle label."""
     _uid[0] += 1; n = _uid[0]
     s = SCENES[dk]
     lab = label or dk
-    d = D.get(lab, D["current"]) if lab in D else D["current"]
     glasses = D[lab]["glass"] if lab in D else ["#9C5B22", "#7A4519", "#B57A3C"]
     capc = D[lab]["cap"] if lab in D else "#1E1E1E"
     W, H, T = 1600, 1200, 742
-    defs = (f'<linearGradient id="wa{n}" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="{s["wall"][0]}"/><stop offset="1" stop-color="{s["wall"][1]}"/></linearGradient>'
-            f'<linearGradient id="ta{n}" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="{s["table"][0]}"/><stop offset="1" stop-color="{s["table"][1]}"/></linearGradient>'
-            f'<filter id="bl{n}" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="12"/></filter>'
-            f'<filter id="bs{n}" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="4"/></filter>'
-            f'<filter id="bw{n}" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="38"/></filter>')
-    bg = f'<rect width="{W}" height="{T}" fill="url(#wa{n})"/><rect y="{T}" width="{W}" height="{H - T}" fill="url(#ta{n})"/>'
-    if dk == "current":
-        bg += f'<ellipse cx="560" cy="360" rx="520" ry="300" fill="#FFFFFF" opacity=".75" filter="url(#bw{n})"/><rect y="{T}" width="{W}" height="2" fill="#FFFFFF" opacity=".9"/>'
-    elif dk == "lenora":
-        bg += (f'<polygon points="380,0 760,0 1060,{T} 620,{T}" fill="#F2E6D0" opacity=".07" filter="url(#bw{n})"/>'
-               f'<ellipse cx="820" cy="{T + 110}" rx="520" ry="120" fill="#F2E6D0" opacity=".10" filter="url(#bw{n})"/><rect y="{T}" width="{W}" height="1.5" fill="#F2E6D0" opacity=".12"/>')
+    bg = f'<rect width="{W}" height="{T}" fill="{s["wall"]}"/><rect y="{T}" width="{W}" height="{H - T}" fill="{s["table"]}"/>'
+    if dk == "lenora":
+        bg += f'<polygon points="520,0 760,0 1000,{T} 640,{T}" fill="{s["light"]}"/><polygon points="640,{T} 1000,{T} 1180,{H} 700,{H}" fill="{_shade(s["table"], 1.06)}"/>'
     elif dk == "ogg":
-        panes = "".join(f'<rect x="{x}" y="{y}" width="112" height="128" fill="#FFF9EE"/>' for x in range(640, 1200, 124) for y in range(150, 700, 140))
-        bg += (f'<g transform="skewX(-14)" opacity=".55" filter="url(#bs{n})">{panes}</g>'
-               + "".join(f'<rect y="{T + 26 + 38 * i}" width="{W}" height="1.5" fill="#8A6A3A" opacity=".10"/>' for i in range(12)) +
-               f'<rect y="{T}" width="{W}" height="2" fill="#FFF8EA" opacity=".6"/>')
-    elif dk == "collab":
-        bg += f'<ellipse cx="560" cy="360" rx="520" ry="300" fill="#FFF4EC" opacity=".7" filter="url(#bw{n})"/>'
-    grads, objs = [], []
+        bg += f'<g transform="skewX(-14)">' + "".join(f'<rect x="{x}" y="{y}" width="112" height="128" fill="{s["light"]}"/>' for x in range(640, 1200, 124) for y in range(150, 700, 140)) + '</g>'
+    objs = []
     def add_bottle(i, x, by, sc, fl="［フレーバー］", no="027", g=None):
-        gr, ob = _bottle(n, i, x, by, sc, g or glasses[i % 3], lab if lab in D else "plain", capc, fl, no, s)
-        grads.append(gr); objs.append(ob)
+        objs.append(_bottle(n, i, x, by, sc, g or glasses[i % 3], lab if lab in D else "plain", capc, fl, no, s)[1])
     if kind == "range":
         for i, (x, fl, no) in enumerate(zip((622, 800, 978), flavours, ("027", "028", "029"))):
-            add_bottle(i, x, 846 + (i == 1) * 6, 1.32, fl, no)
+            add_bottle(i, x, 846, 1.32, fl, no)
     elif kind == "pour":
         add_bottle(0, 720, 840, 1.34)
         objs.append(_glass(n, 905, 872, 1.55, s))
     elif kind == "single":
         if dk == "lenora":
-            card = ('<rect x="10" y="10" width="160" height="210" fill="none" stroke="#2B2926" stroke-width="1.6"/><rect x="16" y="16" width="148" height="198" fill="none" stroke="#2B2926" stroke-width="1"/>'
-                    '<text x="90" y="62" font-family="EB Garamond" font-size="13" letter-spacing="3" text-anchor="middle" fill="#6E6860">MADE OUT TO</text>'
-                    '<text x="90" y="125" font-family="Zen Old Mincho" font-size="22" text-anchor="middle" fill="#2B2926">［お名前］様</text>'
-                    '<text x="90" y="190" font-family="EB Garamond" font-size="15" text-anchor="middle" fill="#2B2926">No. 027</text>')
-            objs.append(_card(n, 905, 640, 180, 230, s, card, rot=-6, fill="#EFEBE2"))
+            card = ('<rect x="10" y="10" width="160" height="110" fill="none" stroke="#2B2926" stroke-width="1.2"/>'
+                    '<text x="22" y="40" font-family="IBM Plex Mono" font-size="10" letter-spacing="2" fill="#6E6860">FOR</text>'
+                    '<text x="22" y="78" font-family="Zen Old Mincho" font-size="20" fill="#2B2926">［お名前］様</text>'
+                    '<text x="22" y="106" font-family="IBM Plex Mono" font-size="10" letter-spacing="1" fill="#2B2926">NO.027 · 14 DAYS</text>'
+                    '<rect x="142" y="86" width="14" height="20" rx="7" fill="#9B3A25"/>')
+            objs.append(_card(n, 880, 860, 180, 130, s, card, rot=-4, fill="#EFEBE2"))
         add_bottle(0, 760, 870, 1.55)
         if dk == "ogg":
             objs.append(_yunomi(n, 965, 892, 1.5, s))
         if dk == "ogg" and note:
-            note = '<text x="22" y="52" font-family="Klee One" font-size="21" fill="#3A3631">今日もゆっくり。</text><text x="22" y="90" font-family="Klee One" font-size="17" fill="#3A3631">— kimy</text>'
-            objs.insert(0, _card(n, 540, 880, 230, 120, s, note, rot=-5))
+            note_svg = '<text x="22" y="52" font-family="Klee One" font-size="21" fill="#3A3631">今日もゆっくり。</text><text x="22" y="90" font-family="Klee One" font-size="17" fill="#3A3631">— kimy</text>'
+            objs.insert(0, _card(n, 540, 880, 230, 120, s, note_svg, rot=-5))
         if dk == "current":
             objs.append(_glass(n, 930, 884, 1.4, s))
     elif kind == "jar":
         objs.append(_jar(n, 740, 870, 1.25, s, cloth="#EFEBE2" if dk == "lenora" else "#ECE4D3"))
         objs.append(_glass(n, 990, 890, 1.35, s, liquid="#C27F35"))
     elif kind == "gift":
-        grads.append(f'<linearGradient id="sp{n}" x1="0" x2="1"><stop offset="0" stop-color="#000" stop-opacity=".06"/><stop offset=".4" stop-color="#FFF" stop-opacity=".08"/><stop offset="1" stop-color="#000" stop-opacity=".08"/></linearGradient>')
         add_bottle(0, 700, 850, 1.3)
-        objs.append(_soap(n, 920, 880, 1.45, s))
+        objs.append(_soap(n, 930, 880, 1.45, s))
     elif kind == "glass":
         objs.append(_glass(n, 800, 880, 2.3, s))
     z = zoom or {"range": 1.75, "pour": 1.8, "single": 1.7, "jar": 1.6, "glass": 2.0, "gift": 1.7}.get(kind, 1.6)
-    c = cy or {"range": 680, "pour": 690, "single": 680, "jar": 690, "glass": 760, "gift": 690}.get(kind, 700)
+    c = cy or {"range": 680, "pour": 690, "single": 690, "jar": 690, "glass": 760, "gift": 700}.get(kind, 700)
     rw, rh = (float(v) for v in ratio.split("/"))
     r = rw / rh
-    need_h, need_w = {"range": (600, 640), "pour": (560, 520), "single": (720, 660), "jar": (560, 540), "glass": (440, 360), "gift": (600, 620)}.get(kind, (560, 560))
+    need_h, need_w = {"range": (560, 640), "pour": (520, 520), "single": (640, 660), "jar": (560, 540), "glass": (440, 360), "gift": (560, 620)}.get(kind, (560, 560))
     z = min(z, W / (max(r, W / H) * need_h), H * min(r, W / H) / need_w)
     vw, vh = W / z, H / z
     svg = (f'<svg viewBox="{800 - vw / 2:.0f} {c - vh / 2:.0f} {vw:.0f} {vh:.0f}" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Photography direction: {cap or kind}">'
-           f'<defs>{defs}{"".join(grads)}</defs>{bg}{"".join(objs)}</svg>')
+           f'{bg}{"".join(objs)}</svg>')
     capt = f'<span class="still-cap" style="color:{s["cap_ink"]}">Photo direction · {cap}</span>' if cap else ""
-    toned = "filter:grayscale(1) sepia(.42) contrast(1.12) brightness(.97);" if tone == "sepia" else ""
-    return f'<div class="still" style="aspect-ratio:{ratio}; --pos:{pos}; {toned}">{svg}{capt}</div>'
+    return f'<div class="still" style="aspect-ratio:{ratio}; --pos:{pos}">{svg}{capt}</div>'
 
 def ph(dk, kind, left, top, width, ratio="1/1", **kw):
     """A still placed inside an artboard."""
