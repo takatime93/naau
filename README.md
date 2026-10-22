@@ -36,7 +36,7 @@ python3 build_collab.py .. .
 - `kombar.py` takes the KOM'BAR artwork apart into ten named elements and loads the KOM'BAR wordmark (KOMbucha + BAR soap); `python3 kombar.py` also writes each element to `assets/collab/elements/`.
 - `ink.py` holds the hand-made marks: block-print motifs, the fine-line camellia, stamps and seals, the postage-stamp frame and the red-pen loop.
 - Print and social pieces are artboards: sizes written as `[[n]]` are thousandths of the artboard's width, so each piece keeps its proportions at any screen size.
-- Photography is drawn as flat, cut-paper still lifes to show the light and props for each direction. They stand in for a real photo shoot.
+- Where a photograph belongs, a shot card describes it in type (subject, light, props) inside crop marks. Nothing is drawn to look like a photo.
 
 ## Before sharing publicly
 

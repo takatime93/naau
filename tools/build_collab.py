@@ -21,8 +21,21 @@ NAAU_CUR = lambda w, col="1e1e1e", style="": f'<img src="assets/logos/current-na
 SANS = "font-family:Inter, sans-serif"
 JPB = "font-family:var(--sans); font-weight:700"
 
-def lockup(w_naau, w_ivy, gap="[[16]]", align="flex-start", col="1e1e1e", ivy="dark"):
-    return f'<div class="col" style="position:static; align-items:{align}; gap:{gap}">{NAAU(w_naau, col)}{IVY(ivy, w_ivy)}</div>'
+# Measured from the artwork: naʻau (Ogg) x-height is 279 of 1230 px wide, baseline 9 px above the image bottom;
+# IVYCOAST cap height is 186 of 1200 px wide, baseline 2 px above the bottom.
+IVY_K = 1200 * 279 / (1230 * 186)          # IVYCOAST width per naʻau width, so caps match the x-height
+
+def pair(w, col="1e1e1e", ivy="dark", style=""):
+    """naʻau × IVYCOAST on one baseline."""
+    return (f'<div class="pair-lock" style="--w:{w}; {style}">'
+            f'<img src="assets/logos/ogg-{OGGCOL.get(col, col)}.png" alt="naʻau" style="width:var(--w); margin-bottom:calc(var(--w) * -0.0073)">'
+            f'<svg viewBox="0 0 10 10" aria-label="×" style="width:calc(var(--w) * .07); margin-bottom:calc(var(--w) * .0784)"><path d="M1 1 L9 9 M9 1 L1 9" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>'
+            f'<img src="assets/collab/ivycoast-wordmark-{ivy}.png" alt="IVYCOAST" style="width:calc(var(--w) * {IVY_K:.4f}); margin-bottom:calc(var(--w) * {-IVY_K * 2 / 1200:.4f})"></div>')
+
+def lockup(w_naau, w_ivy=None, gap="[[16]]", align="flex-start", col="1e1e1e", ivy="dark"):
+    """Stacked: naʻau over IVYCOAST, IVYCOAST sized to the same rule as the line lockup."""
+    return (f'<div class="col" style="position:static; align-items:{align}; gap:{gap}; --w:{w_naau}">{NAAU("var(--w)", col)}'
+            f'{IVY(ivy, f"calc(var(--w) * {IVY_K:.4f})")}</div>')
 
 def caps(text, size, extra=""):
     return f'<p style="{SANS}; font-size:{size}; letter-spacing:.18em; line-height:1.7; text-transform:uppercase; {extra}">{text}</p>'
@@ -38,10 +51,12 @@ CLOSE = "育てる時間。手をかけること。自然から学ぶこと。"
 LABEL = [("品名", "化粧石けん"), ("内容量", "［　］g"), ("全成分", "［確認中］"), ("使用方法", "よく泡立てて使用し、洗い流す"), ("製造販売元", "［　］"), ("原産国", "日本")]
 
 def face_front(w="100%"):
-    """The front as designed by Ivycoast: wordmark, artwork, two lines of capitals."""
-    return ab(BW, BH, f'<div style="left:[[66]]; top:[[46]]; width:[[64]]">{wm("100%", INK, "v")}</div>'
-              f'<div style="left:[[152]]; top:[[42]]; width:[[392]]">{art("100%", INK)}</div>'
-              + caps("Organic kombucha<br>cold processed bar soap", "[[16.5]]", "position:absolute; right:[[48]]; bottom:[[42]]; text-align:right; letter-spacing:.2em; line-height:1.9"),
+    """The front, from Ivycoast's own file (assets/collab/source/kombar-front.svg), centred with an even margin."""
+    cw = 887                                   # artwork width in board units; height follows its 729.28 : 333.84 ratio
+    ch = cw * 333.84 / 729.28
+    bh = 1000 * BH / BW
+    return ab(BW, BH, f'<img src="assets/collab/source/kombar-front.svg" alt="KOM’BAR: the wordmark, the artwork and ORGANIC KOMBUCHA COLD PROCESSED BAR SOAP" '
+              f'style="left:[[{(1000 - cw) / 2:.1f}]]; top:[[{(bh - ch) / 2:.1f}]]; width:[[{cw}]]">',
               w, f"background:{PEACH}; color:{INK}", cls="flat")
 
 def bars(w, h):
@@ -50,16 +65,14 @@ def bars(w, h):
     return f'<div style="width:{w}; height:{h}; display:flex; background:{PAPER}; padding:[[6]] [[10]]">{b}</div>'
 
 def face_back(w="100%"):
-    """Back: the headline and the first lines of the story, the label in order, the three logos."""
-    return ab(BW, BH, caps("Kombucha soap", "[[14]]", "position:absolute; left:[[48]]; top:[[40]]; letter-spacing:.24em")
-              + f'<p style="left:[[48]]; top:[[70]]; {JPB}; font-size:[[34]]; line-height:1.3">発酵が生み出す美しさ。</p>'
-              f'<p style="left:[[48]]; top:[[130]]; width:[[480]]; font-family:var(--sans); font-size:[[17]]; line-height:1.85">{STORY[0]}大切に育てたSCOBYを細かな粉末にし、やさしいスクラブとして石鹸に取り入れました。</p>'
-              f'<p style="left:[[48]]; top:[[262]]; {JPB}; font-size:[[16]]; letter-spacing:.06em">{CLOSE}</p>'
-              f'<div class="row" style="left:[[48]]; bottom:[[40]]; gap:[[18]]; align-items:center">{NAAU("[[120]]")}<span style="font-size:[[18]]">×</span>{IVY("dark", "[[130]]")}</div>'
-              f'<div style="left:[[600]]; top:[[40]]; width:[[200]]">{wm("100%", INK)}</div>'
-              f'<div style="left:[[600]]; right:[[48]]; top:[[100]]">' + rows(LABEL, "[[12.5]]", pad="[[5.5]]") + '</div>'
-              f'<div style="right:[[48]]; bottom:[[58]]">{bars("[[170]]", "[[54]]")}</div>'
-              f'<p style="right:[[48]]; bottom:[[38]]; width:[[170]]; {SANS}; font-size:[[11]]; letter-spacing:.3em; text-align:center">4 ［　　　　　　］</p>',
+    """Back: headline and two sentences on the left, the label on the right, logos and barcode along the foot."""
+    return ab(BW, BH, caps("Kombucha soap", "[[13]]", "position:absolute; left:[[56]]; top:[[52]]; letter-spacing:.26em")
+              + f'<p style="left:[[56]]; top:[[84]]; {JPB}; font-size:[[36]]; line-height:1.3">発酵が生み出す美しさ。</p>'
+              f'<p style="left:[[56]]; top:[[150]]; width:[[440]]; font-family:var(--sans); font-size:[[16]]; line-height:1.9">{STORY[0]}大切に育てたSCOBYを細かな粉末にし、やさしいスクラブとして石鹸に取り入れました。</p>'
+              f'<div style="left:[[56]]; bottom:[[48]]">{pair("[[118]]")}</div>'
+              f'<div style="left:[[580]]; right:[[56]]; top:[[52]]">' + rows(LABEL, "[[13]]", pad="[[6.5]]") + '</div>'
+              f'<div style="right:[[56]]; bottom:[[62]]">{bars("[[150]]", "[[46]]")}</div>'
+              f'<p style="right:[[56]]; bottom:[[44]]; width:[[150]]; {SANS}; font-size:[[10]]; letter-spacing:.3em; text-align:center">4 ［　　　　　　］</p>',
               w, f"background:{PEACH}; color:{INK}", cls="flat")
 
 def insert_card(w="100%"):
@@ -71,69 +84,46 @@ def insert_card(w="100%"):
               f'<div style="left:[[80]]; right:[[80]]; top:[[300]]; font-family:var(--sans); font-size:[[25]]; line-height:1.9">{paras}</div>'
               f'<p style="left:[[80]]; top:[[1050]]; {JPB}; font-size:[[28]]; letter-spacing:.06em; line-height:1.7">育てる時間。<br>手をかけること。<br>自然から学ぶこと。</p>'
               f'<div style="right:[[-70]]; bottom:[[-60]]; width:[[380]]">{el("mother", "100%", INK)}</div>'
-              f'<div class="row" style="left:[[80]]; bottom:[[70]]; gap:[[24]]; align-items:center">{NAAU("[[170]]")}<span style="font-size:[[26]]">×</span>{IVY("dark", "[[190]]")}</div>',
+              f'<div style="left:[[80]]; bottom:[[70]]">{pair("[[170]]")}</div>',
               w, f"background:{PAPER}; color:{INK}")
 
-def face_end(name, num, jp, en, w="100%", bg=PEACH, ink=INK):
-    """End panel, 30 × 60: one element and one line, in sequence."""
-    return ab(BD, BH, f'<p style="left:[[90]]; top:[[80]]; {SANS}; font-size:[[70]]; letter-spacing:.1em">{num}</p>'
-              f'<p style="right:[[90]]; top:[[70]]; {JPB}; font-size:[[110]]">{jp}</p>'
-              f'<div style="left:[[110]]; right:[[110]]; top:50%; transform:translateY(-50%); display:flex; justify-content:center">{el(name, "100%", ink)}</div>'
-              + caps(en, "[[50]]", "position:absolute; left:[[90]]; right:[[90]]; bottom:[[80]]; line-height:1.4"),
+def face_end(name, *_, w="100%", bg=PEACH, ink=INK):
+    """End panel: one element, small, centred."""
+    return ab(BD, BH, f'<div style="left:[[260]]; right:[[260]]; top:50%; transform:translateY(-50%)">{el(name, "100%", ink)}</div>',
               w, f"background:{bg}; color:{ink}", cls="flat")
 
 def face_top(w="100%"):
-    return ab(3, 1, f'<div style="left:[[46]]; top:50%; transform:translateY(-50%); width:[[300]]">{wm("100%", INK)}</div>'
-              f'<div style="right:[[60]]; top:[[34]]; bottom:[[34]]; display:flex; align-items:center; gap:[[26]]">{el("tea", "auto", INK, "height:[[260]]; width:auto")}'
-              f'<div class="col" style="position:static; gap:[[6]]"><p style="{SANS}; font-size:[[30]]; letter-spacing:.1em">01 · 茶</p>' + caps("It begins with tea", "[[22]]") + '</div></div>',
+    """Lid: the wordmark, centred."""
+    return ab(BW, BD, f'<div style="left:50%; top:50%; transform:translate(-50%,-50%); width:[[300]]">{wm("100%", INK)}</div>',
               w, f"background:{PEACH}; color:{INK}", cls="flat")
 
 def face_bottom(w="100%"):
-    return ab(3, 1, f'<div style="left:[[60]]; top:50%; transform:translateY(-50%); display:flex; align-items:center; gap:[[24]]">{el("sun", "[[180]]", INK)}'
-              f'<div class="col" style="position:static; gap:[[6]]"><p style="{SANS}; font-size:[[30]]; letter-spacing:.1em">03 · 日</p>' + caps("Cured ［　］ weeks", "[[22]]") + '</div></div>'
-              f'<p style="right:[[60]]; top:50%; transform:translateY(-50%); {SANS}; font-size:[[22]]; letter-spacing:.2em; text-align:right; line-height:1.8">MADE IN JAPAN<br>LOT ［　　　］</p>',
+    return ab(BW, BD, caps("Made in Japan · Lot ［　　　］", "[[15]]", "position:absolute; left:0; right:0; top:50%; transform:translateY(-50%); text-align:center; letter-spacing:.3em"),
               w, f"background:{PEACH}; color:{INK}", cls="flat")
 
 def dieline():
-    """Flat net: side | front | side | back | glue; lid above the front, base below the back."""
-    U, H, D, W = 4, BH, BD, BW
-    X = {"sl": 0, "fr": D, "sr": D + W, "bk": 2 * D + W, "gl": 2 * D + 2 * W}
-    T = 12                               # tuck flap
-    Y = {"tp": T, "bd": T + D, "bt": T + D + H}
-    TOT_W, TOT_H = 2 * D + 2 * W + 10, T + 2 * D + H + T
-    def at(x, y, w_mm, inner):
-        return f'<div style="left:[[{x * U * 1000 / (TOT_W * U):.1f}]]; top:[[{y * 1000 / TOT_W:.1f}]]; width:[[{w_mm * 1000 / TOT_W:.1f}]]">{inner}</div>'
-    faces = (at(X["sl"], Y["bd"], D, face_end("bird", "04", "鳥", "Ivycoast,<br>by hand", "100%")) +
-             at(X["fr"], Y["bd"], W, face_front("100%")) +
-             at(X["sr"], Y["bd"], D, face_end("mother", "02", "母", "The<br>mother", "100%")) +
-             at(X["bk"], Y["bd"], W, face_back("100%")) +
-             at(X["fr"], Y["tp"], W, face_top("100%")) +
-             at(X["bk"], Y["bt"], W, face_bottom("100%")))
-    fr, sr, bk, gl, bd, bt = X["fr"], X["sr"], X["bk"], X["gl"], Y["bd"], Y["bt"]
-    cut, fold = INK, "#9C5B22"
-    lines = (f'<svg viewBox="0 0 {TOT_W} {TOT_H}" style="left:0; top:0; width:100%; height:100%; overflow:visible" aria-hidden="true">'
-             f'<g fill="{PEACH}" stroke="{cut}" stroke-width=".25">'
-             f'<path d="M{fr} {T} Q{fr} 0 {fr + 12} 0 H{sr - 12} Q{sr} 0 {sr} {T} Z"/>'
-             f'<path d="M{bk} {bt + D} V{bt + D + T} H{gl} V{bt + D} Z"/>'
-             f'<path d="M0 {bd} L4 {bd - 12} H{D - 4} L{D} {bd} Z M{sr} {bd} L{sr + 4} {bd - 12} H{bk - 4} L{bk} {bd} Z"/>'
-             f'<path d="M0 {bt} L4 {bt + 12} H{D - 4} L{D} {bt} Z M{sr} {bt} L{sr + 4} {bt + 12} H{bk - 4} L{bk} {bt} Z"/>'
-             f'<path d="M{gl} {bd + 2} L{gl + 10} {bd + 6} V{bt - 6} L{gl} {bt - 2} Z"/></g>'
-             f'<g fill="none" stroke="{fold}" stroke-width=".3" stroke-dasharray="1.4 1"><path d="M{fr} {bd} V{bt} M{sr} {bd} V{bt} M{bk} {bd} V{bt} M{gl} {bd + 2} V{bt - 2} M{fr} {bd} H{sr} M{bk} {bt} H{gl} M{fr} {T} H{sr} M{bk} {bt + D} H{gl}"/></g>'
-             f'<g font-family="Inter, sans-serif" font-size="2.6" letter-spacing=".3" fill="{MUTE}">'
-             f'<text x="{bk + 10}" y="8">— CUT</text><line x1="{bk}" y1="7" x2="{bk + 8}" y2="7" stroke="{cut}" stroke-width=".3"/>'
-             f'<text x="{bk + 36}" y="8">— FOLD</text><line x1="{bk + 26}" y1="7" x2="{bk + 34}" y2="7" stroke="{fold}" stroke-width=".35" stroke-dasharray="1.4 1"/>'
-             f'<text x="{bk + 10}" y="14">{W} × {H} × {D} MM · ［TO CONFIRM］</text></g></svg>')
-    return ab(TOT_W, TOT_H, lines + faces, "100%", "background:transparent", cls="flat")
-
-def box3d(width_cqw=46, rx=-18, ry=-34, tilt=0):
-    """A CSS box from the same faces: front, right end, lid."""
-    F = width_cqw; H = F * BH / BW; Dp = F * BD / BW
-    face = lambda w, h, tf, inner: (f'<div style="position:absolute; left:{-w / 2:.2f}cqw; top:{-h / 2:.2f}cqw; width:{w:.2f}cqw; height:{h:.2f}cqw; transform:{tf}; backface-visibility:hidden">{inner}</div>')
-    return (f'<div style="position:absolute; left:50%; top:52%; transform-style:preserve-3d; transform:rotateX({rx}deg) rotateY({ry}deg) rotateZ({tilt}deg)">'
-            + face(F, H, f"translateZ({Dp / 2:.2f}cqw)", face_front("100%"))
-            + face(Dp, H, f"rotateY(90deg) translateZ({F / 2:.2f}cqw)", f'<div style="filter:brightness(.9)">{face_end("mother", "02", "母", "The<br>mother", "100%")}</div>')
-            + face(F, Dp, f"rotateX(90deg) translateZ({H / 2:.2f}cqw)", f'<div style="filter:brightness(1.04)">{face_top("100%")}</div>')
-            + '</div>')
+    """A technical drawing: cut, fold and panel names only."""
+    W, H, D, T = BW, BH, BD, 12
+    X = [0, D, D + W, 2 * D + W, 2 * D + 2 * W]
+    top, bot = T + D, T + D + H
+    TW, TH = 2 * D + 2 * W + 10, T + 2 * D + H + T
+    cut, fold, lab = INK, AMBER, MUTE
+    t = lambda x, y, txt, sz=3.2, anchor="middle": f'<text x="{x}" y="{y}" text-anchor="{anchor}" font-family="IBM Plex Mono, monospace" font-size="{sz}" letter-spacing=".4" fill="{lab}">{txt}</text>'
+    body = (f'<g fill="none" stroke="{cut}" stroke-width=".3" stroke-linejoin="round">'
+            f'<path d="M0 {top} H{X[1]} V{T} Q{X[1]} 0 {X[1] + 12} 0 H{X[2] - 12} Q{X[2]} 0 {X[2]} {T} V{top} H{X[4]} L{X[4] + 10} {top + 4} V{bot - 4} L{X[4]} {bot} '
+            f'H{X[4]} V{bot + D + T} H{X[3]} V{bot} H0 Z"/>'
+            f'<path d="M0 {top} L4 {top - 12} H{D - 4} L{D} {top} M{X[2]} {top} L{X[2] + 4} {top - 12} H{X[3] - 4} L{X[3]} {top}'
+            f' M0 {bot} L4 {bot + 12} H{D - 4} L{D} {bot} M{X[2]} {bot} L{X[2] + 4} {bot + 12} H{X[3] - 4} L{X[3]} {bot}"/></g>'
+            f'<g fill="none" stroke="{fold}" stroke-width=".35" stroke-dasharray="1.6 1.1">'
+            f'<path d="M{X[1]} {top} V{bot} M{X[2]} {top} V{bot} M{X[3]} {top} V{bot} M{X[4]} {top} V{bot} M{X[1]} {top} H{X[2]} M{X[1]} {T} H{X[2]} M{X[3]} {bot} H{X[4]} M{X[3]} {bot + D} H{X[4]}"/></g>'
+            + t(X[1] + W / 2, top + H / 2, "FRONT", 4) + t(X[1] + W / 2, top + H / 2 + 6, f"{W} × {H}", 3)
+            + t(X[3] + W / 2, top + H / 2, "BACK", 4) + t(D / 2, top + H / 2, "END", 3.4) + t(X[2] + D / 2, top + H / 2, "END", 3.4)
+            + t(X[1] + W / 2, T + D / 2 + 1, "LID", 3.4) + t(X[3] + W / 2, bot + D / 2 + 1, "BASE", 3.4) + t(X[1] + W / 2, T - 4, "TUCK", 2.6)
+            + t(X[4] + 5, top + H / 2, "GLUE", 2.4)
+            + f'<g transform="translate({X[3] + 4} 6)"><line x1="0" y1="-1" x2="8" y2="-1" stroke="{cut}" stroke-width=".3"/>{t(10, 0, "CUT", 2.6, "start")}'
+            f'<line x1="22" y1="-1" x2="30" y2="-1" stroke="{fold}" stroke-width=".35" stroke-dasharray="1.6 1.1"/>{t(32, 0, "FOLD", 2.6, "start")}'
+            f'{t(0, 6, f"{W} × {H} × {D} MM · TO CONFIRM", 2.6, "start")}</g>')
+    return f'<svg viewBox="-2 -2 {TW + 4} {TH + 4}" style="width:100%; display:block" role="img" aria-label="Dieline: cut and fold lines">{body}</svg>'
 
 # ====================================================================== hero
 hero = (f'<header class="kb2"><div class="wrap kb2-grid">'
@@ -141,7 +131,7 @@ hero = (f'<header class="kb2"><div class="wrap kb2-grid">'
         f'<div class="kb2-wm">{wm("100%", INK)}</div>'
         f'<p class="kb2-def"><b>KOM</b>bucha + <b>BAR</b> soap</p>'
         f'<p class="kb-jp">発酵が生み出す美しさ。</p><p class="kb-en">A cold-process bar soap made with naʻau’s kombucha and the SCOBY that brews it.</p>'
-        f'<div class="kb2-lock">{NAAU("128px")}<span>×</span>{IVY("dark", "150px")}</div></div>'
+        f'<div class="kb2-lock">{pair("128px")}</div></div>'
         f'<div class="kb2-art">{el("mother", "100%", INK)}</div>'
         f'</div></header>')
 
@@ -154,21 +144,10 @@ intro = ('<section class="wrap kb-intro">'
          '<ol class="toc">' + "".join(f'<li><a href="#{a}"><span>{n}</span>{t}</a></li>' for n, a, t in TOC) + '</ol></div></section>')
 
 # ====================================================================== 01 brands, 02 product (unchanged in substance)
-brands = ('<div class="pair">'
-          f'<div class="side"><div class="side-mark">{IVYICON("38px")}{IVY("green", "170px")}</div>'
-          '<p class="side-lead">Australian botanicals, brought into Japanese homes for daily rituals.</p>'
-          '<dl class="facts"><dt>Voice</dt><dd>Calm and considered; ordinary moments, elevated just enough.</dd><dt>Language</dt><dd>English-led, with Japanese.</dd><dt>Look</dt><dd>Cream and deep green, a flared serif, beach light.</dd></dl></div>'
-          '<div class="join" aria-hidden="true">×</div>'
-          f'<div class="side"><div class="side-mark">{NAAU("124px")}</div>'
-          '<p class="side-lead">Small-batch kombucha, brewed in Nagoya by kimy.</p>'
-          '<dl class="facts"><dt>Voice</dt><dd>Warm, personal and a little playful.</dd><dt>Language</dt><dd>Japanese-led, with English.</dd><dt>Look</dt><dd>Being decided: see <a href="index.html">the overview</a>.</dd></dl></div>'
-          '</div>'
-          '<div class="shared"><p class="eyebrow" style="color:#6E655B">Where they meet</p><div class="shared-grid">' +
-          "".join(f'<div><span class="jp">{e}</span><h3>{t}</h3><p>{b}</p></div>' for e, t, b in [
-              ("儀式", "Ritual", "Small acts of care, repeated every day."),
-              ("時間", "Time", "Kombucha ferments for weeks; cold-process soap cures for weeks."),
-              ("素材", "Materials", "Natural ingredients, chosen carefully."),
-              ("手", "Hands", "Made by hand, in small batches.")]) + '</div></div>')
+brands = (f'<div class="meet">{pair("min(30vw,200px)")}'
+          '<div class="meet-cols"><p><span>Ivycoast</span>Australian botanicals, brought into Japanese homes for daily rituals.</p>'
+          '<p><span>naʻau</span>Small-batch kombucha, brewed in Nagoya by kimy.</p></div>'
+          '<p class="meet-line">Where they meet: 儀式 ritual, 時間 time, 素材 materials, 手 hands.</p></div>')
 
 product = ('<div class="grid g2" style="align-items:start">'
            + pf(face_front("100%"), "Front, as designed", "Kept exactly: the vertical wordmark, the full artwork, two lines of capitals.", plate=False)
@@ -183,7 +162,7 @@ FIELDS = [(PEACH, INK), (GREEN, PEACH), (PAPER, INK), (INK, PEACH), (KRAFT, INK)
           (PAPER, GREEN), (PEACH, GREEN), (GREEN, PAPER), (PAPER, AMBER)]
 def tile(i, name):
     _, jp, en, meaning = KB.ELEMENTS[name]
-    bg, fg = FIELDS[i]
+    bg, fg = PEACH, INK
     return (f'<figure class="kel"><div class="kel-card" style="background:{bg}; color:{fg}"><span class="kel-n">{i + 1:02d}</span><span class="kel-jp">{jp}</span>'
             f'<div class="kel-art">{el(name, "auto", fg, "height:100%; width:auto; max-width:100%")}</div></div>'
             f'<figcaption><b>{en}</b><span>{meaning}</span></figcaption></figure>')
@@ -268,29 +247,26 @@ def kakegami():
               + caps("KOM’BAR + naʻau kombucha 330 ml", "[[18]]", "position:absolute; left:[[70]]; bottom:[[210]]"),
               "100%", "background:transparent", cls="flat")
 
-packaging = ('<div class="sub" style="margin-top:0"><h3>The box, flat</h3><p>Every panel has a job. The ends tell the story in order: 01 tea, 02 the mother, 03 time, 04 Ivycoast.</p></div>'
-             + pf(dieline(), "Dieline, 90 × 44 × 30 mm", "Front as designed; back, ends, lid and base new. Sizes to confirm with Ivycoast’s printer.", plate=False) +
-             '<div class="grid g-wide" style="margin-top:clamp(24px,3vw,40px); align-items:stretch">'
-             + pf(f'<div style="position:absolute; inset:0; container-type:inline-size; perspective:1600px">{box3d(48)}</div>', "The box, assembled", "Front, the mother on the end, tea on the lid.", "4/3", pstyle=f"background:linear-gradient(180deg,#EFE6DA 0 64%,#E3D6C6 64%)")
-             + pf(face_back("100%"), "Back panel", "The story’s opening and closing lines; the label in order; the three logos.", plate=False, style="justify-content:center")
-             + '</div>'
-             '<div class="sub"><h3>Batch bands</h3><p>For the bare bar at markets and the naʻau counter: a narrow band, dated by hand with a round date stamp for each cure.</p></div>' + bands +
-             '<div class="sub"><h3>Shipping and gifts</h3><p>Kraft outside, peach inside. The tissue repeats one element; the gift set gets a Japanese paper band.</p></div>'
-             '<div class="grid g2">' + pf(mailer(), "Mailer, outside", "The route across the lid: from naʻau in Nagoya to the Ivycoast studio, with a peach address label.", plate=False) + pf(mailer_inside(), "Mailer, inside the lid", "The first thing you read when it opens.", plate=False)
-             + pf(tissue(), "Tissue paper", "One element, the tea leaf, in a regular half-drop repeat; every other row turned.", plate=False) + pf(kakegami(), "Gift set, with a paper band", "KOM’BAR and a bottle of naʻau, wrapped with a peach 掛け紙 band.", plate=False) + '</div>')
-
 # ====================================================================== 06 print
-def story_card(no, name, jp, line_jp, line_en, bg, fg, cw=820):
-    return ab(55, 91, f'<p style="left:[[80]]; top:[[80]]; {SANS}; font-size:[[60]]; letter-spacing:.1em">{no}</p><p style="right:[[80]]; top:[[60]]; {JPB}; font-size:[[150]]">{jp}</p>'
-              f'<p style="left:[[80]]; top:[[300]]; right:[[80]]; {JPB}; font-size:[[78]]; line-height:1.5">{line_jp}</p>'
-              f'<p class="it" style="left:[[80]]; top:[[560]]; right:[[80]]; font-family:var(--lat); font-size:[[54]]; line-height:1.35">{line_en}</p>'
-              f'<div style="right:[[-120]]; bottom:[[-200]]; width:[[{cw}]]">{el(name, "100%", fg)}</div>',
-              "23%", f"background:{bg}; color:{fg}")
+def story_card(no, name, word, line_jp, line_en, bg, fg, ew=640, w="23%"):
+    return ab(55, 91, caps(f"{no} — {word}", "[[34]]", "position:absolute; left:[[90]]; top:[[96]]; letter-spacing:.22em")
+              + f'<div style="right:[[90]]; top:[[90]]; width:[[200]]">{wm("100%", fg)}</div>'
+              f'<div style="left:50%; top:[[700]]; transform:translate(-50%,-50%); width:[[{ew}]]">{el(name, "100%", fg)}</div>'
+              f'<div style="left:[[90]]; right:[[90]]; top:[[1230]]; height:1px; background:currentColor; opacity:.35"></div>'
+              f'<p style="left:[[90]]; right:[[90]]; top:[[1290]]; font-family:var(--sans); font-weight:500; font-size:[[58]]; line-height:1.6">{line_jp}</p>'
+              f'<p class="it" style="left:[[90]]; right:[[90]]; top:[[1405]]; font-family:var(--lat); font-size:[[46]]">{line_en}</p>',
+              w, f"background:{bg}; color:{fg}")
 
-cards = (story_card("01", "tea", "茶", "はじまりは、<br>お茶。", "It begins<br>with tea.", PAPER, GREEN, 1000) +
-         story_card("02", "mother", "母", "SCOBYは、<br>コンブチャの母。", "The SCOBY is<br>the mother.", PEACH, INK) +
-         story_card("03", "sun", "日", "石鹸になるまで、<br>数週間。", "Weeks of<br>curing.", AMBER, PAPER) +
-         story_card("04", "bird", "鳥", "海辺の工房で、<br>手で切る。", "Cut by hand<br>by the coast.", GREEN, PEACH))
+CARD_ARGS = [("01", "tea", "Tea", "はじまりは、お茶。", "It begins with tea.", PAPER, GREEN, 640),
+             ("02", "mother", "The mother", "SCOBYは、コンブチャの母。", "The SCOBY is the mother.", PEACH, INK, 600),
+             ("03", "sun", "Time", "石鹸になるまで、数週間。", "Weeks of curing.", PAPER, AMBER, 640),
+             ("04", "bird", "Ivycoast", "海辺の工房で、手で切る。", "Cut by hand by the coast.", PEACH, GREEN, 700)]
+card1 = lambda i: story_card(*CARD_ARGS[i], w="100%")
+
+cards = (story_card("01", "tea", "Tea", "はじまりは、お茶。", "It begins with tea.", PAPER, GREEN, 640) +
+         story_card("02", "mother", "The mother", "SCOBYは、コンブチャの母。", "The SCOBY is the mother.", PEACH, INK, 600) +
+         story_card("03", "sun", "Time", "石鹸になるまで、数週間。", "Weeks of curing.", PAPER, AMBER, 640) +
+         story_card("04", "bird", "Ivycoast", "海辺の工房で、手で切る。", "Cut by hand by the coast.", PEACH, GREEN, 700))
 
 counter = ab(105, 148, f'<p style="left:[[80]]; top:[[90]]; {JPB}; font-size:[[78]]; line-height:1.45">コンブチャから、<br>石鹸ができました。</p>'
              f'<p class="it" style="left:[[80]]; top:[[330]]; font-family:var(--lat); font-size:[[40]]">Kombucha, made into soap.</p>'
@@ -303,12 +279,12 @@ poster = ab(297, 420, f'<div style="left:[[70]]; right:[[70]]; top:[[80]]">{wm("
             + caps("<b>KOM</b>bucha + <b>BAR</b> soap", "[[22]]", f"position:absolute; left:[[70]]; top:[[250]]; color:{PEACH}")
             + f'<p style="left:[[70]]; top:[[340]]; {JPB}; font-size:[[56]]; line-height:1.5; color:{PEACH}">発酵が生み出す美しさ。</p>'
             f'<div style="left:[[70]]; right:[[70]]; top:[[460]]; color:{PEACH}">' + rows([("発売", "［月日］"), ("取扱", "naʻau 名古屋 · Ivycoast online"), ("価格", "¥［　］（税込）")], "[[24]]", "rgba(244,217,198,.4)", "[[14]]") + '</div>'
-            f'<div style="left:[[70]]; top:[[700]]; display:flex; gap:[[24]]; align-items:center; color:{PEACH}">{NAAU("[[170]]", "ffffff")}<span style="font-size:[[28]]">×</span>{IVY("white", "[[190]]")}</div>'
+            f'<div style="left:[[70]]; top:[[700]]; color:{PEACH}">{pair("[[170]]", "ffffff", "white")}</div>'
             f'<div style="left:[[100]]; right:[[100]]; top:[[960]]">{el("sun", "100%", PEACH)}</div>',
             "100%", f"background:{GREEN}; color:{PEACH}")
 
 print_ = ('<div class="sub" style="margin-top:0"><h3>Story cards, 55 × 91 mm</h3><p>Four cards inside each box: how a cup of tea becomes a bar of soap.</p></div>'
-          + pf(f'<div style="display:flex; gap:2.5%; justify-content:center; align-items:flex-start; width:100%">{cards}</div>', "Story cards, front", "One element each, cropped off the bottom; one line in Japanese, one in English.", "21/9")
+          + pf(f'<div style="display:flex; gap:2.5%; justify-content:center; align-items:flex-start; width:100%">{cards}</div>', "Story cards, front", "One element each, whole; one line in Japanese, one in English. Paper and peach alternate.", "21/9")
           + '<div class="grid g2" style="margin-top:clamp(24px,3vw,40px)">'
           + pf(f'<div style="width:46%">{counter}</div>', "Counter card, A6", "At the naʻau counter and Ivycoast stockists.", "1/1")
           + pf(f'<div style="width:50%">{poster}</div>', "Launch poster, A3", "For the shop window: the wordmark across the top, what it stands for, and the sun rising from the bottom edge.", "1/1") + '</div>')
@@ -455,19 +431,113 @@ roles = ('<div class="roles">' + "".join(
         ("", "naʻau", ["Kombucha ferment and SCOBY supply", "The naming story and kimy’s voice", "Product page on the naʻau shop", "Counter card and workshop tie-in"]),
         ("together", "Together", ["Agree the ten elements and their meanings", "A photography day in both studios", "Launch posts as Instagram collab posts", "One shared copy deck, checked against 薬機法", "Launch date: ［　］"])]) + '</div>')
 
-body = (KB.DEFS + C.nav("collab") + hero + intro +
-        sec("01", "Two brands, one ritual", "Where Ivycoast and naʻau meet: small daily acts of care, and the patience of things that take weeks to make.", brands, sid="brands") +
-        sec("02", "The product: KOM’BAR", "Organic kombucha cold-processed bar soap, made with naʻau’s kombucha and SCOBY.", product, sid="product") +
-        sec("03", "The artwork, taken apart", "Ten elements from one illustration, each with a meaning.", elements, sid="elements") +
-        sec("04", "Colour, type and space", "Six colours from both brands and five type voices.", system, sid="system") +
-        sec("05", "Packaging", "The box as a whole object, batch bands, shipping and gifts.", packaging, sid="packaging") +
-        sec("06", "Print", "Story cards in the box, a counter card and a launch poster.", print_, sid="print") +
-        sec("07", "Social", "Feed posts at 3:4, a story at 9:16, a five-slide carousel.", social, sid="social") +
-        sec("08", "Website", "The product page both shops share, and a banner for each home page.", web, sid="web") +
-        sec("09", "Website language", "How both sites talk about the collaboration, in Japanese and English.", language, sid="language") +
-        sec("10", "How it ties to each naʻau direction", "The box uses the Concept B logo. Here is how the collaboration would sit beside each direction.", ties, sid="ties") +
-        sec("11", "What we borrowed", "Inspired by, never copied: a principle from each reference, made into our own version.", borrowed, sid="borrowed") +
-        sec("12", "Who does what", "Responsibilities and next steps.", roles, sid="roles") +
-        '<footer class="site"><div class="wrap">naʻau × Ivycoast · concept for discussion. Text in ［brackets］ is to be confirmed. Artwork and KOM’BAR wordmark from the Ivycoast files; Ivycoast logos from the Ivycoast brand files.</div></footer>')
+# ====================================================================== scenes: printed pieces as objects on a surface
+def obj(x, y, w, inner, rot=0, z=1, shadow="paper"):
+    """Place a printed piece in a scene: x, y, w in % of the scene; it keeps its own proportions."""
+    sh = {"paper": "0 1px 1px rgba(0,0,0,.08), 0 14px 22px -10px rgba(0,0,0,.30), 0 40px 70px -30px rgba(0,0,0,.28)",
+          "deep": "0 2px 2px rgba(0,0,0,.18), 0 24px 40px -14px rgba(0,0,0,.45), 0 60px 90px -40px rgba(0,0,0,.4)", "none": "none"}[shadow]
+    return f'<div class="obj" style="left:{x}%; top:{y}%; width:{w}%; transform:rotate({rot}deg); z-index:{z}"><div style="box-shadow:{sh}">{inner}</div></div>'
+
+def scene(bg, ratio, objs, cls=""):
+    return f'<div class="scene {cls}" style="background:{bg}; aspect-ratio:{ratio}">{objs}</div>'
+
+def chapter(n, title, desc, content, bg="var(--page)", fg="var(--ink)", sid="", cls=""):
+    idattr = f' id="{sid}"' if sid else ""
+    return (f'<section class="chap {cls}"{idattr} style="background:{bg}; color:{fg}"><div class="wrap">'
+            f'<header class="chap-h"><p class="chap-l"><span>{n}</span>{title}</p>' + (f'<p class="chap-d">{desc}</p>' if desc else '') + f'</header>{content}</div></section>')
+
+def cap(title, spec=""):
+    return f'<p class="scap"><b>{title}</b>{(" — " + spec) if spec else ""}</p>'
+
+# ---------------- cover
+cover = (f'<header class="cover2" style="background:{PEACH}; color:{INK}"><div class="wrap cover2-in">'
+         f'<div class="cover2-top"><span>naʻau × Ivycoast</span><span>A proposal for both teams · 2026</span></div>'
+         f'<div class="cover2-box">{face_front("100%")}</div>'
+         f'<div class="cover2-foot"><p class="cover2-jp">発酵が生み出す美しさ。</p><p class="kb2-def"><b>KOM</b>bucha + <b>BAR</b> soap</p>'
+         f'<div class="cover2-lock">{pair("150px")}</div></div>'
+         f'</div></header>')
+
+# ---------------- 01 the idea
+idea = ('<div class="idea"><p class="idea-big">Kombucha, brewed in Nagoya.<br>Soap, cut by hand by the coast.</p>'
+        '<div class="idea-makers">'
+        f'<div>{NAAU("96px")}<p>Small-batch kombucha, brewed in Nagoya by kimy.</p></div>'
+        f'<div>{IVY("dark", f"calc(96px * {IVY_K:.4f})")}<p>Australian botanicals, brought into Japanese homes for daily rituals.</p></div>'
+        '</div></div>')
+
+# ---------------- 02 the product: the box, every side
+def lay(x, y, w, inner, label):
+    return obj(x, y, w, inner + f'<p class="lay-l">{label}</p>', 0, 1)
+
+# all panels at one scale: 90 mm = 43% of the scene width
+MM = 43 / 90
+product_scene = scene(AMBER, "16/11",
+    lay(5, 6, 43, face_front("100%"), "Front") + lay(52, 6, 43, face_back("100%"), "Back") +
+    lay(5, 47, 43, face_top("100%"), "Lid") + lay(5, 75, 43, face_bottom("100%"), "Base") +
+    lay(57.2, 47, 30 * MM, face_end("bird"), "End") + lay(75.5, 47, 30 * MM, face_end("mother"), "End"))
+card_scene = scene(PEACH, "1/1", obj(22, 9, 56, insert_card("100%"), 0, 1, "deep"))
+product2 = (product_scene + cap("Every side of the box", "the front as Ivycoast designed it; a new back; one element on each end; the wordmark on the lid") +
+            '<div class="two-uneven rev" style="margin-top:clamp(28px,4vw,56px)"><div>' + card_scene + cap("Story card inside the lid, 85 × 120 mm", "the full text") + '</div>'
+            '<dl class="facts facts-lg" style="align-self:center"><dt>Name</dt><dd>KOM’BAR: <b>KOM</b>bucha + <b>BAR</b> soap</dd><dt>Product</dt><dd>Organic kombucha cold-processed bar soap</dd>'
+            '<dt>Made with</dt><dd>naʻau kombucha ferment, and SCOBY powder as a gentle scrub</dd><dt>Made by</dt><dd>Ivycoast, by hand</dd>'
+            '<dt>Box</dt><dd>90 × 44 × 30 mm ［to confirm］</dd><dt>Weight</dt><dd>［　g］</dd><dt>全成分</dt><dd>［to confirm］</dd></dl></div>'
+            '<div style="margin-top:clamp(40px,5vw,72px); background:#F6F1E9; padding:clamp(20px,4vw,56px)">' + dieline() + '</div>' + cap("Dieline", "to confirm with Ivycoast’s printer"))
+
+# ---------------- 03 the artwork system
+system_c = ('<div class="kel-grid kel-5">' + "".join(tile(i, n) for i, n in enumerate(KB.ORDER)) + '</div>'
+            '<div class="sysrow"><div><p class="eyebrow">Colour</p>' + C.chips([(n, h, r, w) for n, h, r, w in PAL]) + '</div></div>')
+
+# ---------------- 04 the world
+opening = scene(KRAFT, "16/9",
+    obj(3, -6, 46, mailer_inside(), -3, 1) +
+    obj(44, 6, 50, tissue(), 2, 2, "paper") +
+    obj(50, 22, 14, card1(0), -12, 4) + obj(60, 20, 14, card1(1), -3, 5) + obj(70, 23, 14, card1(2), 6, 6) + obj(80, 30, 14, card1(3), 14, 7) +
+    obj(16, 58, 34, face_front("100%"), -6, 8, "deep"))
+market = scene(GREEN, "4/3",
+    obj(6, 4, 52, band("01", "26.11.03", GREEN), -6, 1, "none") + obj(40, 30, 52, band("02", "26.11.24", INK), 4, 2, "none") + obj(4, 46, 52, band("03", "26.12.15", AMBER), -2, 3, "none"))
+counter_s = scene("#D8CBB8", "3/4", obj(22, 14, 56, counter, -2, 1, "deep"))
+poster_s = scene(INK, "3/4", obj(20, 9, 60, poster, 0, 1, "deep"))
+feed = [p_reveal, p_sun, p_mother] + [ab(3, 4, f'<div style="left:[[160]]; right:[[160]]; top:50%; transform:translateY(-50%)">{el(n, "100%", fg)}</div>', "100%", f"background:{bg}", cls="flat") for n, bg, fg in (("tea", PAPER, GREEN), ("scoby", INK, PEACH), ("bird", PEACH, GREEN))]
+phone_feed = (f'<div class="phone big"><div class="phone-screen"><div class="ig-head">{wm("38%", INK)}<span>naʻau × Ivycoast</span></div>'
+              f'<div class="ig-grid">' + "".join(f'<div>{p}</div>' for p in feed) + '</div></div></div>')
+feed_s = f'<div class="scene" style="background:{PEACH}; aspect-ratio:4/3; display:flex; align-items:center; justify-content:center">{phone_feed}</div>'
+gift_s = scene("#D8CBB8", "16/9", obj(8, 10, 54, kakegami(), -3, 1, "deep") + obj(58, 30, 36, mailer(), 5, 2))
+
+world = ('<h3 class="wsub">Opening the box</h3>' + opening + cap("Opening the box", "peach inside the lid, tea-leaf tissue, four story cards, the bar")
+         + '<h3 class="wsub">At the counter and at markets</h3><div class="two-uneven"><div>' + market + cap("Batch bands", "the bare bar, dated with a round date stamp for each cure") + '</div><div>' + counter_s + cap("Counter card, A6") + '</div></div>'
+         + '<h3 class="wsub">Launch</h3><div class="two-uneven rev"><div>' + poster_s + cap("Poster, A3", "for both shop windows") + '</div><div>' + feed_s + cap("The feed", "collab posts from both accounts") + '</div></div>'
+         + '<h3 class="wsub">How it’s made</h3>' + carousel + cap("Carousel, five slides", "one continuous line from tea to the coast")
+         + '<h3 class="wsub">Online</h3>' + web
+         + '<h3 class="wsub">As a gift</h3>' + gift_s + cap("Gift set and mailer", "a peach 掛け紙 band; the route from Nagoya to the Ivycoast studio on the lid"))
+
+# ---------------- 05 voice
+voice = (f'<div class="voice-lead"><p class="jp">{LINES[0][0]}</p><p class="it">{LINES[0][1]}</p></div>'
+         '<div class="voice-lines">' + "".join(f'<div><p class="jp">{j}</p><p class="it">{e}</p></div>' for j, e in LINES[1:3]) + '</div>'
+         '<div class="lang"><div><p class="lang-voice"><b>Japanese first, English as a quiet second line.</b> Sensory and process-led: what it is, how it’s made, how it feels to use. Calm like Ivycoast; warm and personal like naʻau. No exclamation marks, no superlatives.</p>'
+         '<h3 class="lang-h">Names</h3><dl class="facts"><dt>naʻau × Ivycoast</dt><dd>With the ʻokina, and a multiplication sign ×, not the letter x.</dd>'
+         '<dt>KOM’BAR</dt><dd><b>KOM</b>bucha + <b>BAR</b> soap. Always in capitals.</dd><dt>SCOBY（スコビー）</dt><dd>Explained once as 細菌と酵母の共生培養体.</dd></dl></div>'
+         '<div><h3 class="lang-h" style="margin-top:0">Words we can use, for soap</h3>'
+         '<ul class="words ok">' + "".join(f'<li class="jp">{w}</li>' for w in ("肌を清浄にする（洗浄により）", "肌を整える／肌のキメを整える", "皮膚をすこやかに保つ", "SCOBYの粉末をスクラブとして配合")) + '</ul>'
+         '<h3 class="lang-h">Words we avoid</h3><ul class="words no">' + "".join(f'<li class="jp">{w}</li>' for w in ("美白、アンチエイジング、若返る", "「発酵の力で肌が生まれ変わる」など、効能をうたう表現", "腸活・腸内環境など、飲料の健康効果と石鹸を結びつける表現", "治る、改善、医師・看護師がすすめる")) + '</ul>'
+         '<p class="muted" style="font-size:13px; margin-top:14px">Final copy to be checked against 薬機法 by the party holding the cosmetics licence.</p></div></div>')
+
+# ---------------- 06 next steps
+decide = ('<ol class="decide">' + "".join(f'<li><span>{i:02d}</span><p>{t}</p></li>' for i, t in enumerate([
+    "Agree the ten elements and what each one means.",
+    "Confirm the box size, the back panel copy and 全成分 with Ivycoast’s printer and the cosmetics licence holder.",
+    "Book a photography day in both studios: the brewing jar, the pour, cutting and curing the bars.",
+    "Set the launch date, then schedule the collab posts and the countdown.",
+    "Choose naʻau’s direction; the collaboration uses Concept B for now."], 1)) + '</ol>')
+nexts = (decide + '<div class="sub"><h3>Who does what</h3><p></p></div>' + roles +
+         '<div class="sub"><h3>With each naʻau direction</h3><p>The box stays the same; the naʻau logo changes.</p></div>' + ties +
+         '<details class="borrowed"><summary>What we borrowed from the references, line by line</summary>' + borrowed + '</details>')
+
+body = (KB.DEFS + C.nav("collab") + cover +
+        chapter("01", "The idea", "", idea, sid="idea") +
+        chapter("02", "The product", "The box, every side.", product2, bg=PEACH, sid="product") +
+        chapter("03", "The artwork", "Ten elements from one illustration, used one at a time.", system_c, bg=INK, fg=PAPER, sid="artwork", cls="dark") +
+        chapter("04", "The world", "Every piece, as it will be used.", world, sid="world") +
+        chapter("05", "The voice", "", voice, bg=PEACH, sid="voice") +
+        chapter("06", "Next steps", "", nexts, sid="next") +
+        '<footer class="site"><div class="wrap">naʻau × Ivycoast · a proposal for discussion. Text in ［brackets］ is to be confirmed. Artwork, KOM’BAR wordmark and Ivycoast logos from the Ivycoast files.</div></footer>')
 C.page("collab.html", "naʻau × Ivycoast — KOM’BAR", "d-collab", body)
 print("collab written")

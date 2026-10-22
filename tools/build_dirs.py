@@ -1,7 +1,7 @@
 """The three direction pages, each with its own home and product mockups.
 
 Current identity: white, centred, photo-led, round sticker labels.
-Concept A (Lenora): sumi, strict symmetry, double-rule frames, batch numerals, made out to one person.
+Concept A (Lenora): sumi, strict symmetry and wide margins, batch numerals, made out to one person.
 Concept B (Ogg): gofun and ōdo, asymmetry, vertical Japanese, kimy's handwritten notes.
 """
 import sys
@@ -45,8 +45,8 @@ def s_dir():
     hero = (f'<header class="wrap" style="padding-top:clamp(64px,9vw,120px); text-align:center; display:flex; flex-direction:column; align-items:center; gap:22px">'
             f'<p class="eyebrow">Current identity · kimy’s script</p>{L(S, "1e1e1e", "min(62%,340px)")}'
             f'<h1 style="margin:22px 0 0; font-weight:400; font-size:clamp(30px,3.6vw,46px); line-height:1.15">The brand as it is</h1>'
-            f'<p style="max-width:560px; color:var(--muted)">kimy’s script, on white. Black ink, small centred type, nothing added. The colour comes from the amber glass and the light in the photographs.</p></header>'
-            f'<div class="wrap" style="margin-top:clamp(40px,6vw,72px)">{still("current", "range", "21/9", "morning light, white table", zoom=1.55)}</div>')
+            f'<p style="max-width:560px; color:var(--muted)">kimy’s script, on white. Black ink, small centred type, nothing added. The colour comes from the amber glass and the light in the photographs.</p></header>')
+
     pr, pb = 4 / 3, 1
     idn = '<div class="grid g3">' + "".join([
         pf(ab(4, 3, f'<div class="fill" style="display:flex; align-items:center; justify-content:center">{L(S, "1e1e1e", "40%")}</div>', "100%", cls="flat"), "Plain", "The lockup, centred and small, on white."),
@@ -62,7 +62,8 @@ def s_dir():
     back = ab(3, 4, f'<div class="fill col" style="padding:[[80]] [[76]]; font-family:var(--sans); font-size:[[42]]; line-height:1.75; gap:[[40]]"><dl style="position:static; column-gap:[[40]]">{C.ichi_rows()}</dl>'
               f'<p style="position:static">{C.HANDLING}</p><div style="position:static; margin-top:auto; border:1px dashed currentColor; padding:[[24]] [[30]]; display:flex; justify-content:space-between"><span>Batch ＿＿</span><span>瓶詰め日 ＿＿</span></div></div>', fitw(1, .75, .8))
     box = ab(4, 3, f'<div class="fill" style="display:flex; align-items:center; justify-content:center">{L(S, "1e1e1e", "38%")}</div><span style="left:0; right:0; bottom:[[60]]; text-align:center; font-family:var(--sans); font-size:[[30]]; letter-spacing:.3em">要冷蔵 · クール便</span>', "74%")
-    pack = (pf(still("current", "range", "21/9", zoom=1.45), "The range", "330 ml amber glass with a round white sticker, Ø 60 mm. The glass is the only colour.", plate=False) +
+    trio = "".join(f'<div style="width:24%; transform:rotate({r}deg)">{sticker.replace(fit_w := fitw(1, 1, .7), "100%").replace("［フレーバー］", fl)}</div>' for r, fl in ((-3, "［フレーバー］"), (2, "［フレーバー］"), (-1, "［限定］")))
+    pack = (pf(trio, "The range", "Three round stickers, Ø 60 mm, on 330 ml amber glass. The glass is the only colour.", "21/9", pstyle="gap:4%") +
             '<div class="grid g3" style="margin-top:clamp(20px,3vw,36px)">' +
             pf(sticker, "Front sticker", "Matte, water-resistant, Ø 60 mm.", "1/1") +
             pf(back, "Back label", "一括表示 in light Gothic, 8 pt minimum, with a stamp box.", "1/1") +
@@ -83,7 +84,7 @@ def s_dir():
     posts = [
         (ab(3, 4, ph("current", "single", "[[70]]", "[[70]]", "[[860]]", "1/1.08", zoom=1.9) + '<p style="left:0; right:0; bottom:[[90]]; text-align:center; font-family:var(--sans); font-size:[[36]]; letter-spacing:.16em">No. 027 · ［フレーバー］</p>', "100%", cls="flat post"), "Batch post", "Photograph first, one line beneath."),
         (ab(3, 4, f'<div class="fill col" style="align-items:center; justify-content:center; gap:[[80]]"><p style="position:static; font-family:var(--sans); font-weight:300; font-size:[[50]]; line-height:2.1; text-align:center">飲むだけじゃない。<br>自分の身体に気づく、kombucha。</p>{L(S, "1e1e1e", "[[200]]", small=True)}</div>', "100%", cls="flat post", style="outline:1px solid var(--rule)"), "Words post", "Small centred type on white."),
-        (ab(3, 4, ph("current", "pour", "0", "0", "100%", "3/4", zoom=1.7), "100%", cls="flat post"), "Pour post", "The pour, in the same white light."),
+        (ab(3, 4, f'<div style="left:50%; top:46%; transform:translate(-50%,-50%); width:[[620]]">{sticker.replace(fitw(1, 1, .7), "100%")}</div>', "100%", "background:#F1F1EF", cls="flat post"), "Label post", "The sticker, life size, on mist."),
     ]
     story = ab(9, 16, f'<div class="fill col" style="align-items:center; justify-content:center; gap:[[90]]; text-align:center">{L(S, "1e1e1e", "[[300]]", small=True)}'
                f'<p style="position:static; font-family:var(--sans); font-size:[[64]]; line-height:1.9">今日のおなか、<br>どうですか？</p><div style="position:static; display:flex; gap:[[24]]">' +
@@ -143,7 +144,7 @@ INK, KIN, SUMI, MUTE = "#2B2926", "#EFEBE2", "#1F1E1C", "#6E6860"
 
 def frame(inner, pad="[[50]]", gap="[[24]]", rule=None, inner_pad="[[70]] [[60]]", just="space-between"):
     col = rule or "currentColor"
-    return (f'<div class="fill" style="padding:{pad}"><div style="position:relative; height:100%; border:1px solid {col}; outline:1px solid {col}; outline-offset:[[-14]]; '
+    return (f'<div class="fill" style="padding:{pad}"><div style="position:relative; height:100%; '
             f'display:flex; flex-direction:column; align-items:center; justify-content:{just}; text-align:center; padding:{inner_pad}; gap:{gap}">{inner}</div></div>')
 
 SEAL = "#9B3A25"
@@ -165,20 +166,19 @@ def side(text, pos, size="[[20]]", font="'IBM Plex Mono', monospace"):
             f'text-transform:uppercase; opacity:.75; white-space:nowrap">{text}</span>')
 
 def p_dir():
-    hero_ab = ab(16, 10, frame(f'<span class="mono" style="font-size:[[16]]; letter-spacing:.3em; opacity:.7">NO. 027 · BOTTLED FOR ONE</span>' +
-                               f'{L(P, "efebe2", "52%")}<div style="width:[[300]]">{K.drops("100%", 14, 14, KIN)}</div>'
-                               + seal("[[64]]", "right:[[80]]; bottom:[[64]]"),
-                               pad="[[36]]", inner_pad="[[46]] [[90]] [[50]]"),
-                 "min(100%,760px)", f"background:{SUMI}; color:{KIN}", cls="flat")
+    hero_ab = ab(16, 10, f'<div style="left:50%; top:46%; transform:translate(-50%,-50%); width:[[560]]">{L(P, "efebe2", "100%")}</div>'
+                 f'<p class="mono" style="left:0; right:0; top:[[470]]; text-align:center; font-size:[[13]]; letter-spacing:.4em; opacity:.6">NO. 027 · BOTTLED FOR ONE</p>'
+                 + seal("[[44]]", "left:50%; bottom:[[44]]; transform:translateX(-50%)"),
+                 "min(100%,980px)", f"background:{SUMI}; color:{KIN}", cls="flat")
     hero = (f'<header class="wrap" style="padding-top:clamp(56px,8vw,110px); display:flex; flex-direction:column; align-items:center; text-align:center; gap:26px">'
             f'<p class="eyebrow">Concept A · Lenora</p>{hero_ab}'
             f'<h1 style="margin:14px 0 0; font-weight:400; font-size:clamp(30px,3.6vw,46px); line-height:1.15">Bottled for one</h1>'
-            f'<p style="max-width:620px; color:var(--muted)">A made-to-order atelier. Sumi grounds and strict symmetry inside a fine double rule. The drop from the wordmark becomes the count of fermenting days, one per day, filled when the batch is bottled; every label is made out to one person and stamped with a vermilion 一本 seal, the only colour besides the amber glass.</p></header>'
-            f'<div class="wrap" style="margin-top:clamp(40px,6vw,72px)">{still("lenora", "single", "21/9", "one shaft of evening light", zoom=1.5)}</div>')
+            f'<p style="max-width:620px; color:var(--muted)">A made-to-order atelier. Sumi grounds, strict symmetry and wide, quiet margins: no frames, no ornament. The mark does the work. The drop from the wordmark becomes the count of fermenting days, one per day, filled when the batch is bottled; every label is made out to one person and stamped with a vermilion 一本 seal, the only colour besides the amber glass.</p></header>')
+
     idn = '<div class="grid g3">' + "".join([
         pf(ab(4, 3, frame(f'<span class="eyebrow" style="font-size:[[22]]; color:{MUTE}">Listen to your naʻau</span>{L(P, "2b2926", "58%")}<div style="width:[[330]]">{K.drops("100%", 14, 14, INK)}</div>'
                           + seal("[[73]]", "right:[[54]]; bottom:[[46]]"), inner_pad="[[50]] [[70]] [[56]]"), "100%", f"background:{KIN}; color:{INK}", cls="flat"),
-           "Framed", "Centred, double rule, the day count under the mark. The default."),
+           "Centred", "The mark on kinari, the day count beneath, wide margins. The default."),
         pf(ab(4, 3, f'<div class="fill col" style="align-items:flex-start; justify-content:space-between; padding:[[64]] [[70]]"><span class="mono" style="font-size:[[20]]; letter-spacing:.3em; opacity:.7">NOW POURING</span>'
                     f'<span style="font-family:var(--lat); font-size:[[260]]; line-height:.85">027</span>'
                     f'<div style="width:100%; display:flex; justify-content:space-between; align-items:flex-end; gap:[[40]]">' + specrows([("TEA", "［茶葉］"), ("DAYS", "14")], "[[20]]", "rgba(239,235,226,.4)", "[[10]]", "flex:1") +
@@ -210,13 +210,14 @@ def p_dir():
               f'<div class="ab flat" style="left:50%; top:50%; transform:translate(-50%,-50%); width:[[330]]; aspect-ratio:3/4; background:{KIN}; color:{INK}; box-shadow:0 10px 24px rgba(0,0,0,.4)">'
               + frame(f'<span class="eyebrow" style="font-size:[[60]]; color:{MUTE}">Made out to</span><span class="jp" style="font-size:[[120]]">［お名前］様</span>{L(P, "2b2926", "62%")}', pad="[[60]]", inner_pad="[[120]] [[60]]") + '</div>'
               + seal("[[102]]", "right:[[120]]; bottom:[[110]]"), "78%")
-    pack = (pf(still("lenora", "range", "21/9", zoom=1.45), "The range", "A tall framed label made out to its owner and stamped with the seal; a sumi collar carries the batch number.", plate=False) +
+    trio = "".join(f'<div style="width:20%; transform:rotate({r}deg)">{front.replace(lw, "100%").replace("No. 027", "No. " + n)}</div>' for r, n in ((-2, "027"), (1.5, "028"), (-1, "029")))
+    pack = (pf(trio, "The range", "Three batches, each label made out to its owner, typed and sealed by hand.", "21/9", pstyle="gap:5%") +
             '<div class="grid g3" style="margin-top:clamp(20px,3vw,36px)">' +
             pf(front, "Front label", "Typed batch details, the owner’s name, the seal pressed by hand at the counter.", "1/1") +
-            pf(back, "Back label", "一括表示 inside the same double rule, 8 pt minimum.", "1/1") +
+            pf(back, "Back label", "一括表示 on the same symmetric grid, 8 pt minimum.", "1/1") +
             pf(gift, "Gift box", "Sumi board, one drop in hairline, a framed card made out to the recipient.", "1/1") + '</div>')
     a5w = fitw(4 / 3, 148 / 210, .82)
-    fl_f = ab(148, 210, frame(spread(["An evening", "at the counter"], "[[24]]", "opacity:.7") + f'<div style="width:[[560]]">{K.drops("100%", 14, 14, KIN)}</div>' +
+    fl_f = ab(148, 210, frame(spread(["An evening", "at the counter"], "[[24]]", "opacity:.7") + f'<div style="width:[[300]]">{K.tea_branch("100%", KIN, 1.1)}</div>' +
                               f'<span style="font-family:var(--lat); font-size:[[230]]; line-height:.85">027</span><p style="font-family:{SHIP}; font-weight:700; font-size:[[62]]; line-height:1.6">仕込みと、<br>試飲の会。</p>{L(P, "efebe2", "50%")}'
                               + seal("[[112]]", "right:[[60]]; bottom:[[70]]"), pad="[[56]]", inner_pad="[[90]] [[60]] [[90]]"), a5w, f"background:{INK}; color:{KIN}")
     fl_b = ab(148, 210, frame(spread(["Details", "No. 027"], "[[26]]", f"color:{MUTE}") +
@@ -240,7 +241,7 @@ def p_dir():
                   f'<div style="right:[[90]]; bottom:[[80]]">{L(P, "efebe2", "[[260]]")}</div>' + seal("[[90]]", "right:[[110]]; bottom:[[190]]"),
                   "100%", f"background:{SUMI}; color:{KIN}", cls="flat post"),
          "Words post", "The tea flower rising from the bottom edge; one line, set vertically."),
-        (ab(3, 4, ph("lenora", "single", "0", "0", "100%", "3/4", zoom=1.75), "100%", cls="flat post"), "Product post", "The bottle and its card, in one shaft of light."),
+        (ab(3, 4, f'<div style="left:50%; top:50%; transform:translate(-50%,-50%) rotate(-4deg); width:[[600]]; box-shadow:0 [[30]] [[60]] rgba(0,0,0,.5)">{front.replace(lw, "100%")}</div>', "100%", f"background:{SUMI}", cls="flat post"), "Label post", "One label, made out to one person, on sumi."),
     ]
     story = ab(9, 16, frame(f'<span class="mono" style="font-size:[[30]]; letter-spacing:.3em; color:#A39E95">INVITATION</span><div style="width:[[110]]">{K.drop("100%", KIN, sw=.5)}</div><p style="font-family:{SHIP}; font-weight:700; font-size:[[72]]; line-height:1.8">今日のおなか、<br>どうですか？</p>'
                             f'<div style="width:80%; display:flex; flex-direction:column; gap:[[24]]">' + "".join(f'<span class="jp" style="border:1px solid #6E6860; padding:[[24]] 0; font-size:[[42]]">{w}</span>' for w in ("軽い", "重い", "ふつう")) + f'</div>{L(P, "efebe2", "42%")}'
@@ -251,7 +252,7 @@ def p_dir():
     direction_page(P, hero, idn, pal, typ, pack, prt, social("lenora", posts, story), nts)
 
 def p_frame_html(inner, style=""):
-    return (f'<div style="border:1px solid currentColor; outline:1px solid currentColor; outline-offset:-8px; padding:clamp(28px,4vw,56px); display:flex; flex-direction:column; align-items:center; text-align:center; gap:22px; {style}">{inner}</div>')
+    return (f'<div style="padding:clamp(28px,4vw,56px); display:flex; flex-direction:column; align-items:center; text-align:center; gap:22px; {style}">{inner}</div>')
 
 def p_shell(content):
     return (f'<div class="shop" style="background:{SUMI}; color:{KIN}; min-height:100vh">'
@@ -344,7 +345,7 @@ def m_dir():
             f'<div style="display:flex; flex-direction:column; gap:22px"><p class="eyebrow">Concept B · Ogg</p>{L(M, "3a3631", "min(100%,440px)")}'
             f'<h1 style="margin:6px 0 0; font-weight:400; font-size:clamp(30px,3.6vw,46px); line-height:1.15">The pause</h1>'
             f'<p style="max-width:520px; color:var(--muted)">Airy and hand-made. Asymmetric layouts with room to breathe, vertical Japanese, an ochre block, and kimy’s handwriting on cards that overlap the page. A small card asks how you feel before you open the bottle.</p></div>'
-            f'<div style="position:relative; padding:0 0 40px 52px">{still("ogg", "single", "4/5", zoom=1.9)}'
+            f'<div style="position:relative; padding:0 0 40px 52px"><div style="aspect-ratio:4/5; background:{NERI}; display:flex; align-items:center; justify-content:center"><div style="width:62%">{K.scoby("100%", MI)}</div></div>'
             f'<p class="vt jp" style="position:absolute; left:0; top:0; font-size:clamp(17px,1.6vw,21px); letter-spacing:.34em; line-height:2">からだの声に、耳を澄ます。</p>'
             f'<div style="position:absolute; left:20px; bottom:0">' + note('<span class="pen" style="font-size:19px">今日もゆっくり、<br>自分の声を聴いてね。<br>— kimy</span>', "min(60vw,250px)", size="16px", pad="18px 20px") + '</div></div></header>')
     idn = '<div class="grid g3">' + "".join([
@@ -353,11 +354,11 @@ def m_dir():
         pf(ab(4, 3, f'<p class="jp" style="left:[[70]]; top:[[70]]; font-size:[[64]]; font-weight:600; line-height:1.6">今日のおなか、<br>どうですか？</p><div style="left:[[-40]]; bottom:[[-120]]; width:[[1080]]">{L(M, "3a3631", "100%")}</div>', "100%", f"background:{ODO}; color:{MI}", cls="flat"), "Ochre", "The mark large and cropped, for social and the shop sign."),
     ]) + '</div>'
     idn += ('<div class="sub"><h3>Prints and seal</h3><p>Cut from lino and printed by hand: what is in kimy’s jar, and the days it takes. Her square seal closes every bag.</p></div><div class="grid g-wide">'
-            + pf(ab(2.4, 1, "".join(f'<div style="left:[[{80 + i * 190}]]; top:[[70]]; width:[[120]]">{K.MOTIFS[k]("100%", MI)}</div>'
-                                     f'<p class="mono" style="left:[[{80 + i * 190}]]; top:[[230]]; width:[[120]]; text-align:center; font-size:[[13]]; letter-spacing:.14em; opacity:.7">{lab}</p>'
+            + pf(ab(2.4, 1, "".join(f'<div class="ab flat" style="left:[[{50 + i * 184}]]; top:[[60]]; width:[[164]]; aspect-ratio:1; background:{NERI}"><div style="left:[[150]]; top:[[150]]; right:[[150]]; bottom:[[150]]">{K.MOTIFS[k]("100%", MI)}</div></div>'
+                                     f'<p class="mono" style="left:[[{50 + i * 184}]]; top:[[240]]; width:[[164]]; text-align:center; font-size:[[13]]; letter-spacing:.14em">{lab}</p>'
                                      for i, (k, lab) in enumerate((("jar", "JAR"), ("scoby", "SCOBY"), ("leaf", "TEA"), ("bubbles", "FIZZ"), ("bottle", "BOTTLE")))) +
                     f'<div style="left:[[60]]; right:[[60]]; top:[[300]]">{K.calendar("100%", MI, 14, 14)}</div>',
-                    "100%", f"background:{GO}; color:{MI}", cls="flat"), "The print set", "Blocks for what is in the jar; a waxing moon for the fourteen days it takes.")
+                    "100%", f"background:{ODO}; color:{MI}", cls="flat"), "The print set", "Five blocks for what is in kimy’s jar, each printed on its own square; a waxing moon for the fourteen days.")
             + pf(ab(1.2, 1, f'<div style="left:50%; top:50%; transform:translate(-50%,-50%); width:[[620]]">{badge("100%")}</div>', "100%", f"background:{NERI}; color:{MI}", cls="flat"),
                  "kimy’s seal", "名古屋 · 手仕込: brewed by hand in Nagoya, as a square seal.")
             + '</div>')
@@ -375,7 +376,8 @@ def m_dir():
               f'<p class="hand" style="right:[[60]]; bottom:[[50]]; width:[[290]]; border:1px dashed currentColor; padding:[[14]] [[20]]; font-size:[[36]]; line-height:1.4">Batch 027<br>10/22</p>', "84%")
     wrapc = (f'<div style="width:40%; aspect-ratio:1; background:{NERI}; position:relative; box-shadow:0 10px 24px -8px rgba(58,54,49,.25); container-type:inline-size">'
              f'<span style="position:absolute; left:0; right:0; top:52%; height:14%; background:{ODO}"></span><div style="position:absolute; left:50%; top:24%; transform:translateX(-50%); width:56%">{L(M, "3a3631", "100%")}</div></div>')
-    pack = (pf(still("ogg", "range", "21/9", zoom=1.45), "The range", "A band wraps the bottle: 間 in vertical Mincho, the mark, and the date written by kimy.", plate=False) +
+    trio = "".join(f'<div style="width:40%; margin-left:{m}%; transform:rotate({r}deg)">{band.replace("84%", "100%").replace("［フレーバー］", fl)}</div>' for r, m, fl in ((-1.5, -10, "［フレーバー］"), (1, 8, "［フレーバー］"), (-.5, -2, "［限定］")))
+    pack = (pf(f'<div style="display:flex; flex-direction:column; align-items:center; gap:3%; width:100%">{trio}</div>', "The range", "Three bands: 間 in vertical Mincho, the mark, and the date written by kimy.", "21/11", pstyle="padding:3% 0") +
             '<div class="grid g3" style="margin-top:clamp(20px,3vw,36px)">' +
             pf(band + back, "Band label and back label", "Matte, water-resistant. 一括表示 at 8 pt minimum; batch written by hand.", "1/1", pstyle="flex-direction:column; gap:7%") +
             pf(tag("［お名前］さんへ<br>ゆっくり、どうぞ。", "30%", "[[120]]") + f'<div style="position:absolute; left:12%; bottom:12%">{K.moon("64px", 1, MI)}</div>', "String tag", "Tied at the neck, written by kimy for each order.", "1/1") +

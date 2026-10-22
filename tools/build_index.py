@@ -49,7 +49,7 @@ RESEARCH = [
 
 COVERS = [
  ("current", "#FFFFFF", "#1E1E1E", L(D["current"], "1e1e1e", "46%"), "Current identity", "kimy’s script, as it is", "kimy’s script as it is: white, ink, centred, photo-led, round sticker labels."),
- ("lenora", "#2B2926", "#EFEBE2", L(D["lenora"], "efebe2", "56%"), "Concept A · Lenora", "Bottled for one", "A made-to-order atelier: sumi, double-rule frames, batch numerals, labels made out to one person."),
+ ("lenora", "#2B2926", "#EFEBE2", L(D["lenora"], "efebe2", "56%"), "Concept A · Lenora", "Bottled for one", "A made-to-order atelier: sumi, wide margins, batch numerals, labels made out to one person."),
  ("ogg", "#FAF7F1", "#3A3631", L(D["ogg"], "3a3631", "56%"), "Concept B · Ogg", "The pause", "Airy and hand-made: vertical Japanese, kimy’s handwritten notes, band labels and string tags."),
 ]
 
@@ -82,8 +82,7 @@ palettes = '<div class="rows">' + "".join(
     for letter, jp, en, used, mood, cs in PALETTES) + '</div>'
 
 dirs = ('<div class="grid g3">' + "".join(
-    f'<a href="{k}.html" class="dcard"><div style="position:relative">{still(k, "range" if k != "lenora" else "single", "4/3", zoom=1.9)}'
-    f'<div class="dcard-mark" style="background:{bg}">{L(D[k], fg.lstrip("#").lower(), "70%")}</div></div>'
+    f'<a href="{k}.html" class="dcard"><div class="dcard-img" style="background:{bg}; color:{fg}">{L(D[k], fg.lstrip("#").lower(), "48%")}</div>'
     f'<p class="eyebrow">{e}</p><h3>{lab}</h3><p class="muted">{s}</p><span class="link">View the direction →</span></a>'
     for k, bg, fg, logo, lab, e, s in COVERS) + '</div>'
     '<a href="collab.html" class="collab-band"><img src="assets/collab/kombar-artwork.svg" alt="KOM’BAR artwork"><div><p class="eyebrow" style="color:#6E655B">Collaboration · KOM’BAR</p>'
