@@ -1,0 +1,131 @@
+/* naʻau brand concepts — presentation site */
+
+:root {
+  --page: #E6E1D8;
+  --paper: #F7F4EE;
+  --ink: #2B2926;
+  --muted: #625D56;
+  --rule: #CFC8BC;
+  --lat: 'EB Garamond', serif;
+  --jp: 'Zen Old Mincho', serif;
+  --sans: 'Zen Kaku Gothic New', sans-serif;
+}
+
+/* Direction tokens.
+   Shiro (current): plain white and ink. Ippon (Lenora): sumi and kinari, palette A.
+   Ma (Ogg): gofun and ōdo, palette D. */
+.d-current { --ground: #FFFFFF; --ink-d: #1E1E1E; --accent: #1E1E1E; --accent-text: #1E1E1E; --second: #6B6B6B; --support: #F1F1EF; --dark: #1E1E1E; --on-dark: #FFFFFF; --glass: #8E4E1F; --cap: #1E1E1E; --on-accent: #FFFFFF;
+             --page: #FFFFFF; --paper: #F7F7F6; --rule: #E6E6E4; --muted: #6B6B6B; --ink: #1E1E1E; --surface: #F1F1EF; }
+.d-lenora  { --ground: #EFEBE2; --ink-d: #2B2926; --accent: #524E4D; --accent-text: #524E4D; --second: #A39E95; --support: #3A3835; --dark: #2B2926; --on-dark: #EFEBE2; --glass: #9C5B22; --cap: #1A1918; --on-accent: #EFEBE2;
+             --page: #1F1E1C; --paper: #2B2926; --rule: #3A3835; --muted: #A39E95; --ink: #EFEBE2; --surface: #151413; }
+.d-ogg     { --ground: #FAF7F1; --ink-d: #3A3631; --accent: #C39143; --accent-text: #8A6A3A; --second: #7A7268; --support: #EDE4CD; --dark: #3A3631; --on-dark: #FAF7F1; --glass: #A8692A; --cap: #3A3631; --on-accent: #3A3631;
+             --page: #F3EEE3; --paper: #FAF7F1; --rule: #DDD3C3; --muted: #6E655B; --ink: #3A3631; --surface: #E6DDCC; }
+.d-lenora .sitenav { background: rgba(31, 30, 28, .94); }
+.d-current .sitenav { background: rgba(255, 255, 255, .94); }
+.d-ogg .sitenav { background: rgba(243, 238, 227, .94); }
+.d-lenora .btn:hover { background: var(--ink); color: var(--page); }
+
+/* Shiro: round sticker label */
+.bottle .label.round { left: 14%; right: 14%; top: 55%; bottom: auto; aspect-ratio: 1; border-radius: 50%; background: #FFFFFF; color: #1E1E1E; justify-content: center; gap: 6%; padding: 10%; }
+/* Ippon: tall framed label, made out to one person */
+.bottle .label.tall { left: 9%; right: 9%; top: 42%; bottom: 9%; background: var(--ground); color: var(--ink-d); padding: 5%; }
+.bottle .label.tall .in { flex: 1; width: 100%; border: 1px solid currentColor; outline: 1px solid currentColor; outline-offset: 2px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 12% 6% 9%; }
+.bottle .collar { position: absolute; left: 32%; right: 32%; top: 12%; height: 6%; background: var(--dark); color: var(--on-dark); display: flex; align-items: center; justify-content: center; font-family: var(--lat); font-size: calc(var(--bw, 110px) * .06); letter-spacing: .08em; }
+/* Ma: band label wrapping the bottle, with vertical text */
+.bottle .label.band { left: 0; right: 0; top: 52%; bottom: 20%; background: var(--ground); color: var(--ink-d); flex-direction: row; align-items: center; justify-content: space-between; padding: 0 9%; }
+
+.vt { writing-mode: vertical-rl; }
+.hand { font-family: 'Klee One', cursive; }
+.frame2 { border: 1px solid currentColor; outline: 1px solid currentColor; outline-offset: 4px; }
+.cardnote { background: var(--paper); box-shadow: 0 1px 2px rgba(58, 54, 49, .14), 0 8px 20px rgba(58, 54, 49, .08); }
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--page); color: var(--ink); font-family: var(--lat); font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+a:hover { color: var(--accent-text, #8F2E14); }
+:focus-visible { outline: 2px solid #8F2E14; outline-offset: 3px; }
+
+.wrap { max-width: 1240px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 40px); }
+.eyebrow { font-family: var(--lat); font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); margin: 0; }
+.jp { font-family: var(--jp); }
+.it { font-style: italic; }
+.muted { color: var(--muted); }
+
+/* site navigation */
+.sitenav { position: sticky; top: 0; z-index: 10; background: rgba(230, 225, 216, .94); backdrop-filter: blur(6px); border-bottom: 1px solid var(--rule); }
+.sitenav .wrap { display: flex; flex-wrap: wrap; gap: 8px 28px; align-items: center; justify-content: space-between; padding-top: 14px; padding-bottom: 14px; }
+.sitenav .brand { font-size: 15px; letter-spacing: .04em; text-decoration: none; }
+.sitenav ul { list-style: none; display: flex; flex-wrap: wrap; gap: 6px 22px; margin: 0; padding: 0; }
+.sitenav li a { font-size: 13px; letter-spacing: .14em; text-transform: uppercase; text-decoration: none; color: var(--muted); }
+.sitenav li a[aria-current="page"] { color: var(--ink); border-bottom: 1px solid var(--ink); }
+
+/* sections */
+.sec { padding: clamp(56px, 8vw, 104px) 0; border-bottom: 1px solid var(--rule); }
+.sec:last-of-type { border-bottom: 0; }
+.sec-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 12px 40px; margin-bottom: clamp(28px, 4vw, 48px); }
+.sec-head h2 { margin: 6px 0 0; font-weight: 400; font-size: clamp(28px, 3.4vw, 44px); line-height: 1.2; }
+.sec-head p { margin: 0; max-width: 520px; color: var(--muted); }
+
+.grid { display: grid; gap: clamp(14px, 2vw, 24px); }
+.g2 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); }
+.g3 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); }
+.g4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+
+/* artwork frames */
+.fig { margin: 0; display: flex; flex-direction: column; gap: 10px; }
+.fig figcaption { font-size: 14px; color: var(--muted); line-height: 1.5; }
+.fig figcaption b { color: var(--ink); font-weight: 500; }
+.art { position: relative; overflow: hidden; background: var(--ground, var(--paper)); }
+.surface { background: var(--surface, #D9D3C8); display: flex; align-items: center; justify-content: center; gap: clamp(16px, 3vw, 44px); padding: clamp(24px, 4vw, 56px); flex-wrap: wrap; }
+
+/* bottle (symbol defined inline on each page) */
+.bottle { position: relative; width: var(--bw, 110px); aspect-ratio: 1 / 3; flex-shrink: 0; --glass-fill: var(--glass); }
+.bottle > svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.bottle .label { position: absolute; left: 10%; right: 10%; top: 47%; bottom: 13%; background: var(--lbl, var(--ground)); color: var(--lbl-ink, var(--ink-d)); display: flex; flex-direction: column; align-items: center; justify-content: space-between; text-align: center; padding: 9% 6% 7%; }
+.bottle .label img { width: 82%; }
+.bottle .label .k { font-family: var(--lat); font-style: italic; font-size: calc(var(--bw, 110px) * .075); }
+.bottle .label .f { font-family: var(--lat); font-size: calc(var(--bw, 110px) * .055); letter-spacing: .14em; text-transform: uppercase; }
+.bottle .label .rule { width: 56%; height: 1px; background: currentColor; opacity: .7; }
+
+/* flat label and print sheets */
+.sheet { background: var(--ground); color: var(--ink-d); box-shadow: 0 1px 2px rgba(43, 41, 38, .16), 0 10px 28px rgba(43, 41, 38, .08); position: relative; overflow: hidden; }
+.a5 { aspect-ratio: 148 / 210; }
+.card { aspect-ratio: 91 / 55; }
+.lbl-front { aspect-ratio: 60 / 80; }
+.lbl-back { aspect-ratio: 60 / 80; font-family: var(--sans); font-size: 10.5px; line-height: 1.65; }
+.kv { display: grid; grid-template-columns: auto 1fr; gap: 2px 10px; }
+.kv dt { white-space: nowrap; }
+.kv dd { margin: 0; }
+.stamp { border: 1px dashed currentColor; padding: 6px 8px; display: flex; justify-content: space-between; gap: 10px; opacity: .85; }
+.qr { width: 64px; height: 64px; border: 1px solid currentColor; display: flex; align-items: center; justify-content: center; font-size: 9px; letter-spacing: .2em; }
+
+/* social */
+.post { aspect-ratio: 3 / 4; position: relative; overflow: hidden; background: var(--ground); color: var(--ink-d); }
+.story { aspect-ratio: 9 / 16; position: relative; overflow: hidden; }
+.safe { position: absolute; left: 0; right: 0; top: 50%; aspect-ratio: 4 / 5; transform: translateY(-50%); border: 1px dashed rgba(143, 46, 20, .55); pointer-events: none; display: none; }
+.show-safe .safe { display: block; }
+.toggle { font: inherit; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; background: transparent; border: 1px solid var(--ink); padding: 10px 16px; cursor: pointer; color: var(--ink); min-height: 44px; }
+
+/* photo placeholder — honest about what will be shot */
+.photo { background: var(--support, #D8D2C8); display: flex; align-items: flex-end; padding: 14px; }
+.photo span { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: rgba(43, 41, 38, .75); }
+
+/* web previews */
+.preview { position: relative; overflow: hidden; aspect-ratio: 16 / 11; background: #fff; border: 1px solid var(--rule); }
+.preview iframe { position: absolute; top: 0; left: 0; width: 1440px; height: 990px; border: 0; transform-origin: 0 0; pointer-events: none; }
+.preview-bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.btn { display: inline-flex; align-items: center; min-height: 44px; padding: 10px 18px; border: 1px solid var(--ink); text-decoration: none; font-size: 13px; letter-spacing: .14em; text-transform: uppercase; }
+.btn:hover { background: var(--ink); color: var(--paper); }
+
+/* swatches */
+.pal { background: var(--paper); padding: clamp(20px, 3vw, 32px); display: flex; flex-direction: column; gap: 16px; }
+.chips { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; }
+.chip { aspect-ratio: 1 / 1.2; display: flex; flex-direction: column; justify-content: flex-end; padding: 6px; font-size: 10px; line-height: 1.3; }
+.ratio { font-size: 13px; color: var(--muted); }
+
+.note { background: var(--paper); padding: 20px 24px; border-left: 0; font-size: 15px; }
+.list { margin: 0; padding-left: 1.1em; }
+.list li { margin: 4px 0; }
+footer.site { padding: 40px 0 56px; color: var(--muted); font-size: 14px; }
