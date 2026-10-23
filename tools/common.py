@@ -222,7 +222,7 @@ PHOTOS = {
     "cedar":    ("1766586049961-1eca6500ca49", "Yosuke Ota", "ChpQXg2EYY4"),
     "mandarin": ("1734894966816-9f2b7bf9c605", "alien beker", "Jw3XXq4u7NU"),
     "shadow":   ("1530177150700-84cd9a3b059b", "Augustine Wong", "T0BYurbDK_M"),
-    # Concept A · Lenora, 手当て: hands, craft and old ways, shown in black and white
+    # Concept A · Lenora, 手仕込み: hands, craft and old ways, shown in black and white
     "clay":     ("1465631494067-3e0491e95bd1", "Quino Al", "vBxlL1xpSdc"),
     "cupped":   ("1571391034628-2a2261e8273f", "Motoki Tonn", "tJ6GNCJ1gyM"),
     "whisk":    ("1759933164283-ab161f34bd02", "adrien lopes", "VhPtiipk0tE"),

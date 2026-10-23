@@ -598,7 +598,7 @@ html[lang="ja"] body { text-autospace: normal; text-spacing-trim: normal; }
 .vlines .it { color: var(--muted); }
 @media (max-width: 760px) { .vlines > div { grid-template-columns: minmax(0, 1fr); gap: 4px; } }
 
-/* Concept A · Lenora, 手当て */
+/* Concept A · Lenora, 手仕込み */
 .grain { position: relative; }
 .ab > .grain, .ab .fill.grain { position: absolute; }
 .la-hero { padding-top: clamp(40px, 6vw, 88px); display: flex; flex-direction: column; gap: clamp(20px, 3vw, 32px); }
@@ -640,8 +640,8 @@ html[lang="ja"] body { text-autospace: normal; text-spacing-trim: normal; }
 .og-listen-in { position: relative; z-index: 2; display: flex; flex-wrap: wrap; gap: clamp(32px, 6vw, 80px); align-items: center; }
 
 /* Concept A · Lenora website: stone ground, black-and-white photographs, mono type on a grid */
-.lx { --st: #E4E2DD; --st2: #D9D6CF; --ln: #C9C5BD; --k: #1A1917; background: var(--st); color: var(--k); font-family: 'Shippori Mincho B1', serif; }
-.lx .mono { font-family: 'IBM Plex Mono', monospace; }
+.lxs { --st: #E4E2DD; --st2: #D9D6CF; --ln: #C9C5BD; --k: #1A1917; background: var(--st); color: var(--k); font-family: 'Shippori Mincho B1', serif; }
+.lxs .mono { font-family: 'IBM Plex Mono', monospace; }
 .lx-head { position: relative; z-index: 5; }
 .lx-head.ov { position: absolute; left: 0; right: 0; top: 0; color: #EFEBE2; }
 .lx-nav { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); align-items: center; gap: 12px; padding: 22px clamp(16px, 3vw, 40px); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; }
@@ -651,7 +651,7 @@ html[lang="ja"] body { text-autospace: normal; text-spacing-trim: normal; }
 .lx-hero::before { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,0) 22%, rgba(0,0,0,0) 70%, rgba(0,0,0,.35)); z-index: 1; }
 .lx-caps { position: absolute; left: 0; right: 0; top: 58%; z-index: 2; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; padding: 0 clamp(16px, 3vw, 40px); font-size: 11px; line-height: 1.5; letter-spacing: .12em; text-transform: uppercase; }
 .lx-caps > :last-child { justify-self: end; }
-.lx-hero-v { position: absolute; right: clamp(16px, 3vw, 40px); bottom: clamp(24px, 4vw, 48px); z-index: 2; margin: 0; font-weight: 800; font-size: clamp(36px, 5vw, 72px); letter-spacing: .16em; color: #B0472B; }
+.lx-hero-v { position: absolute; right: clamp(16px, 3vw, 40px); bottom: clamp(24px, 4vw, 48px); z-index: 2; margin: 0; font-weight: 800; font-size: clamp(28px, 3.4vw, 50px); letter-spacing: .16em; color: #B0472B; }
 .lx-sec { padding: clamp(56px, 8vw, 104px) clamp(16px, 3vw, 40px); }
 .lx-row { display: flex; justify-content: space-between; gap: 16px; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; padding-bottom: 14px; border-bottom: 1px solid var(--ln); margin-bottom: 14px; }
 .lx-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
@@ -894,3 +894,6 @@ html[lang="ja"] body { text-autospace: normal; text-spacing-trim: normal; }
   .dl-feed { grid-template-columns: repeat(3, minmax(0, 1fr)); } .dl-nav { display: none; } .dl-head { grid-template-columns: 1fr auto; }
   .dl-pd-info { position: static; }
 }
+
+.lx-prints { position: absolute; z-index: 2; left: 50%; bottom: clamp(28px, 5vw, 64px); display: flex; gap: clamp(10px, 1.4vw, 20px); }
+.lx-prints > div { width: clamp(26px, 2.8vw, 40px); }

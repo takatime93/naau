@@ -1,7 +1,7 @@
 """The three direction pages, each with its own home and product mockups.
 
 Current identity: white, centred, photo-led, round sticker labels.
-Concept A (Lenora): 手当て, care by hand. Black and white, linocut prints and photographs of hands; one red.
+Concept A (Lenora): 手仕込み, brewed by hand. Black and white, linocut prints and photographs of hands; one red.
 Concept B (Ogg): 間, the pause. Gofun and ōdo, vertical Japanese and handwritten notes, with a deep board per flavour and framed photographs.
 """
 import sys
@@ -214,17 +214,17 @@ def side(text, pos, size="[[20]]", font="'IBM Plex Mono', monospace"):
     return (f'<span class="vt" style="position:absolute; {pos}; top:50%; transform:translateY(-50%); font-family:{font}; font-size:{size}; letter-spacing:.32em; '
             f'text-transform:uppercase; opacity:.75; white-space:nowrap">{text}</span>')
 
-# ---------------------------------------------------------------- 手当て (teate): black and white, linocut prints, photographs of hands; one red
+# ---------------------------------------------------------------- 手仕込み (tejikomi): black and white, linocut prints, photographs of hands; one red
 # Care by hand. Prints are cut in lino (lino.py), photographs are black and white with grain, and bengara,
 # the iron-oxide red of old lacquer and seals, is the one tint. Gardenia and indigo appear only on flavour seals.
 import lino as LN
 BLACK, BENI, KUCHI, AI, USU = "#1A1917", "#B0472B", "#D29A2E", "#4E6B7E", "#8E8880"
 MIN8 = f"font-family:{SHIP}; font-weight:800"
 WIDE = "font-family:Inter, sans-serif; letter-spacing:.6em; padding-left:.6em"
-INTRO = ("「手当て」という言葉は、手を当てることから生まれたといわれます。naʻau は、名古屋で、手で仕込むコンブチャ。"
-         "白と黒の版画と写真に、赤をひとつ。古い知恵と手仕事を、飾らずに見せます。",
-         "Teate, the Japanese word for care, is said to come from laying on hands. naʻau is kombucha brewed by hand in Nagoya. "
-         "Black and white, linocut prints and photographs of hands at work, with one red. Old knowledge and handwork, shown as they are.")
+INTRO = ("急がず、混ぜず、足さず。naʻau は、名古屋の台所で、ひと瓶ずつ手で仕込むコンブチャ。"
+         "白と黒の版画と写真に、赤をひとつ。昔ながらの手仕事を、飾らずに見せます。",
+         "No rush, nothing added. naʻau is kombucha brewed by hand, one jar at a time, in a kitchen in Nagoya. "
+         "Black and white, linocut prints and photographs of hands at work, with one red. Old handwork, shown as it is.")
 FLAV = [("027", "camellia", BENI, "［フレーバー］"), ("028", "leaf", KUCHI, "［フレーバー］"), ("029", "moon", AI, "［限定］")]
 SET = [("hand", "手", "Hand"), ("bowl", "碗", "Bowl"), ("camellia", "椿", "Camellia"), ("mortar", "鉢", "Mortar"), ("moon", "月", "Moon"), ("leaf", "茶葉", "Tea leaf")]
 
@@ -253,7 +253,7 @@ def rseal(col, fl, no):
             f'<svg viewBox="0 0 100 100" style="position:absolute; inset:0; width:100%; height:100%" aria-hidden="true"><circle cx="50" cy="50" r="48" fill="{col}" filter="url(#seal)"/></svg>'
             f'<span style="position:relative; display:contents">'
             f'<span class="mono" style="position:relative; font-size:[[15]]; letter-spacing:.2em">NO. {no}</span><span style="position:relative; {MIN8}; font-size:[[26]]; white-space:nowrap">{fl}</span>'
-            f'<span class="mono" style="position:relative; font-size:[[13]]; letter-spacing:.34em">TEATE</span></span></div>')
+            f'<span class="mono" style="position:relative; font-size:[[13]]; letter-spacing:.3em">BY HAND</span></span></div>')
 
 def label(no="027", prt="camellia", col=BENI, fl="［フレーバー］"):
     """Front label: kinari paper, the mark, one print large, the batch typed, the flavour seal pressed over the print."""
@@ -274,12 +274,13 @@ def p_dir():
     hero_ab = ab(16, 9, f'<div class="fill grain">{C.pic("brewjar", 1600, "50% 72%", C.BW_FLIP)}</div>'
                  + '<div class="fill" style="background:linear-gradient(180deg, rgba(0,0,0,.5), rgba(0,0,0,0) 38%, rgba(0,0,0,0) 72%, rgba(0,0,0,.55))"></div>'
                  + f'<div style="left:0; right:0; top:[[46]]; color:{KIN}">{wm("light", "[[280]]", "[[11]]", "[[10]]")}</div>'
-                 + f'<p class="vt" style="right:[[46]]; top:[[46]]; {MIN8}; font-size:[[82]]; letter-spacing:.18em; color:{BENI}">手当て</p>'
+                 + f'<p class="vt" style="right:[[46]]; top:[[46]]; {MIN8}; font-size:[[64]]; letter-spacing:.18em; color:{BENI}">手仕込み</p>'
+                 + f'<div class="row" style="right:[[46]]; top:[[392]]; gap:[[14]]">' + "".join(f'<div style="width:[[40]]">{LN.PRINTS[k]("100%", KIN)}</div>' for k, _, _ in SET) + '</div>'
                  + f'<div class="row mono" style="left:[[46]]; right:[[46]]; bottom:[[36]]; justify-content:space-between; font-size:[[12]]; letter-spacing:.3em; color:{KIN}">'
                    f'<span>NAʻAU KOMBUCHA</span><span>BREWED BY HAND · NAGOYA</span><span>NO. 027</span></div>',
                  "100%", f"background:{BLACK}", cls="flat")
     hero = (f'<header class="wrap la-hero"><p class="eyebrow">Concept A · Lenora</p>{hero_ab}'
-            f'<div class="la-intro"><h1>{C.T("手当て", "Teate, care by hand")}</h1><p>{C.T(*INTRO)}</p></div></header>')
+            f'<div class="la-intro"><h1>{C.T("手仕込み", "Tejikomi, brewed by hand")}</h1><p>{C.T(*INTRO)}</p></div></header>')
 
     cells = "".join(f'<div class="col" style="position:static; align-items:center; gap:[[14]]"><div style="position:static; width:100%">{LN.PRINTS[k]("100%", BLACK)}</div>'
                     f'<span class="mono" style="position:static; font-size:[[17]]; letter-spacing:.22em">{jp} · {en.upper()}</span></div>' for k, jp, en in SET)
@@ -296,7 +297,7 @@ def p_dir():
     ]) + '</div>'
     pal = (chips([("Sumi", BLACK, "Ground, prints, type", 3), ("Kinari", KIN, "Paper and labels", 3), ("Bengara", BENI, "The one tint: type over photographs, seals", 1.2),
                   ("Usuzumi", USU, "Captions", .8), ("Gardenia", KUCHI, "Flavour seal only", .6), ("Indigo", AI, "Flavour seal only", .6)]),
-           "Palette A, 手当て: black and white like a print, with bengara, the iron-oxide red of old lacquer and seals. Gardenia and indigo mark flavours only.")
+           "Palette A, 手仕込み: black and white like a print, with bengara, the iron-oxide red of old lacquer and seals. Gardenia and indigo mark flavours only.")
     seal_demo = ab(1, 1, f'<div style="left:[[60]]; right:[[60]]; top:[[60]]">{rseal(BENI, "［フレーバー］", "027")}</div>', "96px", "background:transparent", cls="flat")
     typ = spec([("Wordmark", f'<div style="color:{KIN}">{wm("light", "170px", "8px", "8px", "flex-start")}</div>', "Lenora with a water-drop ʻokina; KOMBUCHA in Inter, widely spaced"),
                 ("Japanese", f'<p style="{MIN8}; font-size:24px; line-height:1.7">手で仕込む、<br>古い知恵。</p>', "Shippori Mincho B1, ExtraBold"),
@@ -312,7 +313,7 @@ def p_dir():
                         for a, b in (("TASTE / 味わい", "［　］"), ("BEST / 飲みごろ", "よく冷やして、ゆっくりと。"), ("MADE / 仕込み", "名古屋で、手で。14日。")))
     gift = ab(2, 3, wood(KIN, .12) + f'<div style="left:[[-90]]; right:[[110]]; bottom:[[-170]]">{LN.hand("100%", KIN)}</div>'
               f'<div style="left:[[80]]; top:[[90]]">{wm("light", "[[470]]", "[[18]]", align="flex-start")}</div>'
-              f'<p class="vt" style="right:[[80]]; top:[[90]]; {MIN8}; font-size:[[118]]; letter-spacing:.16em; color:{BENI}">手当て</p>'
+              f'<p class="vt" style="right:[[80]]; top:[[90]]; {MIN8}; font-size:[[118]]; letter-spacing:.16em; color:{BENI}">手仕込み</p>'
               f'<div class="col mono" style="left:[[80]]; top:[[400]]; width:[[520]]; gap:[[30]]; font-size:[[24]]; line-height:1.6; letter-spacing:.06em">{notes_box}</div>',
               "54%", f"background:{BLACK}; color:{KIN}", cls="flat")
     trio = "".join(f'<div style="width:23%; transform:rotate({r}deg); box-shadow:0 18px 30px -12px rgba(0,0,0,.7)">{label(*f)}</div>' for f, r in zip(FLAV, (-2, 1.5, -1)))
@@ -320,7 +321,7 @@ def p_dir():
             '<div class="grid g3" style="margin-top:clamp(20px,3vw,36px)">' +
             pf(front, "Front label", "Kinari paper. The print is pressed by hand; the round seal goes on last, over the print.", "1/1") +
             pf(back, "Back label", "一括表示 in the legal order, 8 pt minimum, with the batch and bottling date written in.", "1/1") +
-            pf(gift, "Gift box", "Black board with a wood grain, the hand cropped by the edge, 手当て in bengara, and tasting notes typed.", "1/1") + '</div>')
+            pf(gift, "Gift box", "Black board with a wood grain, the hand cropped by the edge, 手仕込み in bengara, and tasting notes typed.", "1/1") + '</div>')
 
     a5w = fitw(4 / 3, 148 / 210, .82)
     fl_f = ab(148, 210, bwbox("grind", 0, 0, 0, "[[600]]", "50% 42%")
@@ -336,14 +337,14 @@ def p_dir():
                 f'<div style="right:[[90]]; top:50%; transform:translateY(-50%); color:{KIN}">{wm("light", "[[420]]", "[[18]]")}</div>', cw, f"background:{BLACK}; color:{KIN}")
     card_b = ab(91, 55, f'<div class="fill" style="{KIN_P}"></div>'
                 f'<div class="col mono" style="left:[[90]]; top:50%; transform:translateY(-50%); gap:[[16]]; font-size:[[26]]; letter-spacing:.16em"><span>NAʻAU KOMBUCHA</span><span>名古屋市［　］</span><span>@naau_kombucha</span><span>［営業日・時間］</span></div>'
-                f'<div style="right:[[90]]; top:50%; transform:translateY(-50%) rotate(-8deg); width:[[220]]">{rseal(BENI, "手当て", "027")}</div>', cw, f"color:{BLACK}")
+                f'<div style="right:[[90]]; top:50%; transform:translateY(-50%) rotate(-8deg); width:[[220]]">{rseal(BENI, "手仕込み", "027")}</div>', cw, f"color:{BLACK}")
     prt = ('<div class="grid g2">' + pf(fl_f + fl_b, "A5 workshop flyer", "A black-and-white photograph above, the event in bengara below; details typed on kinari on the back.", "4/3") +
            pf(card_f + card_b, "Shop card, 91 × 55 mm", "The hand on black; the back typed, with a seal.", "4/3", pstyle="flex-direction:column; gap:7%") + '</div>')
 
     posts = [
         (ab(3, 4, bwp("care", "50% 50%")
-                  + f'<p style="left:0; right:0; top:[[60]]; text-align:center; {MIN8}; font-size:[[150]]; letter-spacing:.06em; line-height:1; color:{BENI}">手を当てる</p>'
-                  + f'<p style="left:0; right:0; bottom:[[60]]; text-align:center; {MIN8}; font-size:[[110]]; letter-spacing:.06em; line-height:1; color:{BENI}">ということ</p>'
+                  + f'<p style="left:0; right:0; top:[[60]]; text-align:center; {MIN8}; font-size:[[128]]; letter-spacing:.06em; line-height:1; color:{BENI}">ひと瓶ずつ、</p>'
+                  + f'<p style="left:0; right:0; bottom:[[60]]; text-align:center; {MIN8}; font-size:[[118]]; letter-spacing:.06em; line-height:1; color:{BENI}">手で仕込む。</p>'
                   + side("naʻau kombucha", "left:[[34]]", "[[20]]").replace("opacity:.75", f"opacity:1; color:{KIN}")
                   + side("Brewed by hand", "right:[[34]]", "[[20]]").replace("opacity:.75", f"opacity:1; color:{KIN}"),
                   "100%", f"background:{BLACK}", cls="flat post"),
@@ -368,7 +369,7 @@ def p_dir():
                          for i, (n, _, c, f) in enumerate(FLAV))
                + f'<div style="left:0; right:0; bottom:[[90]]; color:{KIN}">{wm("light", "[[360]]", "[[14]]")}</div>',
                "100%", f"background:{BLACK}", cls="flat story")
-    nts = notes(["手当て is used as a word for care and handwork, never as a health claim. Kombucha is a soft drink: no wording of effects on the body, here or in posts.",
+    nts = notes(["Kombucha is a soft drink: no wording of effects on the body, here or in posts. 手仕込み says how it is made, nothing more.",
                  "Borrowed as principles, not copied: black-and-white photography with one spot colour for type, and a set of block prints, one per product, each with its own coloured seal. Ours: our own six prints, vertical Japanese, and bengara from lacquer and seals.",
                  "The prints are drawn for this concept; final versions would be cut in real lino, printed by hand and scanned. The photographs are stand-ins from Unsplash, to be replaced by a shoot of hands at work in the kitchen.",
                  "The wordmark is shown from your Lenora setting. License Lenora with Superior Type’s Logo and Merchandise add-ons, then reset it as vector."])
@@ -385,16 +386,16 @@ def stone_tile(i=0, w="50%", ground="#D9D6CF"):
 
 def p_shell(content, overlay=False):
     mark = "efebe2" if overlay else "2b2926"
-    links = (("lenora-product.html", "Shop"), ("lenora-home.html#teate", "手当て"), ("lenora-home.html#workshop", "Workshop"))
+    links = (("lenora-product.html", "Shop"), ("lenora-home.html#craft", "手仕込み"), ("lenora-home.html#workshop", "Workshop"))
     nav = (f'<header class="lx-head{" ov" if overlay else ""}"><nav class="lx-nav mono" aria-label="Shop">'
            f'<a href="lenora-home.html" aria-label="naʻau home">{L(P, mark, "92px")}</a>'
            + "".join(f'<a href="{h}">{t}</a>' for h, t in links) + '<span class="lx-hide">JPY ¥</span><a href="#">Cart (0)</a></nav></header>')
-    cols = [("Shop", ("This week", "All batches", "Gift set", "Workshop")), ("naʻau", ("手当て", "Story", "Journal", "Instagram")),
+    cols = [("Shop", ("This week", "All batches", "Gift set", "Workshop")), ("naʻau", ("手仕込み", "Story", "Journal", "Instagram")),
             ("Help", ("配送・返品", "特定商取引法に基づく表記", "プライバシーポリシー", "お問い合わせ"))]
     foot = (f'<footer class="lx-foot"><div class="lx-foot-in"><div class="lx-foot-mark">{L(P, "2b2926", "100%")}</div>'
             '<div class="lx-foot-cols mono">' + "".join(f'<div><p>{h}</p>' + "".join(f'<a href="#">{x}</a>' for x in xs) + '</div>' for h, xs in cols) + '</div></div>'
             f'<div class="lx-foot-base mono"><span>© 2026 naʻau kombucha · concept mockup</span><span>Brewed by hand in Nagoya</span></div></footer>')
-    return f'<div class="shop lx">{nav}<main>{content}</main>{foot}</div>'
+    return f'<div class="shop lxs">{nav}<main>{content}</main>{foot}</div>'
 
 def lx_card(i):
     no, prt, col, fl = FLAV[i]
@@ -407,19 +408,20 @@ def p_home():
     caps_ = ("", "", "", "Now brewing — No. 027<br>椿 · Camellia", "Brewed by hand<br>in Nagoya", '<a href="#shop">Shop all</a>')
     hero = (f'<section class="lx-hero grain">{C.pic("brewjar", 2000, "50% 72%", C.BW_FLIP)}'
             '<div class="lx-caps mono">' + "".join(f'<span>{c}</span>' for c in caps_) + '</div>'
-            f'<p class="vt lx-hero-v">手当て</p></section>')
+            f'<div class="lx-prints">' + "".join(f'<div>{LN.PRINTS[k]("100%", "#EFEBE2")}</div>' for k, _, _ in SET) + '</div>'
+            f'<p class="vt lx-hero-v">手仕込み</p></section>')
     grid = (f'<section class="lx-sec" id="shop"><div class="lx-row mono"><span>今週の仕込み · This week</span><span>3 batches · ¥［　］ each</span></div>'
             '<div class="lx-grid">' + "".join(lx_card(i) for i in range(3))
             + f'<div class="lx-card lx-photo"><span class="mono lx-no">Nagoya, 6:00</span><div class="lx-tile grain" style="padding:0">{C.pic("mist", 900, "50% 40%", C.BW)}</div>'
               '<p class="lx-desc">朝いちばんに、瓶をのぞく。</p></div></div></section>')
-    manifesto = ("手を当てる。それが「手当て」の語源だといわれます。名古屋の小さな台所で、お茶を淹れ、母を移し、十四日を待ちます。"
-                 "急がず、混ぜず、足さず。一本ずつ、手で仕込み、手で瓶に詰め、手で版を刷る。古い知恵を、今日の食卓に。naʻau は、その手から生まれるコンブチャです。")
-    man = (f'<section class="lx-man" id="teate"><div class="lx-man-pic grain">{C.pic("grind", 1600, "50% 45%", C.BW)}<div class="lx-man-print">{LN.hand("100%", "#EFEBE2")}</div></div>'
-           f'<div class="lx-man-txt"><p class="mono lx-label">手当て · Teate</p><p class="lx-just">{manifesto}</p>'
-           f'<div class="lx-man-foot"><p class="vt lx-v">手当て</p><a class="lx-btn mono" href="#workshop">Workshop →</a></div></div></section>')
+    manifesto = ("名古屋の小さな台所で、お茶を淹れ、母を移し、十四日を待ちます。急がず、混ぜず、足さず。"
+                 "一本ずつ、手で仕込み、手で瓶に詰め、手で版を刷る。昔ながらのやり方を、今日の食卓に。naʻau は、その手から生まれるコンブチャです。")
+    man = (f'<section class="lx-man" id="craft"><div class="lx-man-pic grain">{C.pic("grind", 1600, "50% 45%", C.BW)}<div class="lx-man-print">{LN.hand("100%", "#EFEBE2")}</div></div>'
+           f'<div class="lx-man-txt"><p class="mono lx-label">手仕込み · By hand</p><p class="lx-just">{manifesto}</p>'
+           f'<div class="lx-man-foot"><p class="vt lx-v">手仕込み</p><a class="lx-btn mono" href="#workshop">Workshop →</a></div></div></section>')
     spots = [(0, 6, 14, -6), (1, 44, 46, 5), (2, 74, 8, -3)]
     tags = [("椿 · Camellia", 9, 52), ("No. 027", 22, 9), ("茶葉", 40, 30), ("Tea leaf", 58, 88), ("月", 84, 62), ("No. 029", 70, 84),
-            ("14 days", 30, 76), ("手当て", 92, 20), ("Moon", 88, 44), ("Nagoya", 50, 12)]
+            ("14 days", 30, 76), ("手仕込み", 92, 20), ("Moon", 88, 44), ("Nagoya", 50, 12)]
     scatter = (f'<section class="lx-scatter" aria-label="This week’s batches, out of focus">'
                + "".join(f'<div class="lx-sc" style="left:{x}%; top:{y}%; transform:rotate({r}deg)"><div class="lx-sc-in">{label(*FLAV[i])}</div></div>' for i, x, y, r in spots)
                + "".join(f'<span class="mono lx-sc-t" style="left:{x}%; top:{y}%">{t}</span>' for t, x, y in tags)

@@ -1,4 +1,4 @@
-"""Concept A (Lenora), 手当て: a set of bold linocut prints.
+"""Concept A (Lenora), 手仕込み: a set of bold linocut prints.
 
 Each print is one filled block with lines carved out of it (the paper shows through), run through
 ink.py's `lino` filter for a wobbled, speckled edge. Shapes are blocky and naive on purpose, like a
@@ -14,7 +14,7 @@ def _hatch(x0, x1, y0, y1, step, w=2.4, slope=0):
     return "".join(f'<path d="M{x0} {y} L{x1} {y + slope}" stroke-width="{w}" fill="none"/>' for y in range(y0, y1, step))
 
 def hand(w, ink="currentColor"):
-    """The emblem: an open hand, palm up, holding one drop. 手当て, care by hand."""
+    """The emblem: an open hand, palm up, holding one drop. 手仕込み, brewed by hand."""
     fingers = [(72, 112, 66, 46), (92, 104, 90, 30), (112, 104, 114, 34), (130, 114, 138, 56)]
     shape = (f'<g stroke="{ink}">' + _caps(fingers, 20) + _caps([(66, 138, 34, 104)], 22) + '</g>'
              '<path d="M58 112 Q100 100 142 116 L140 150 Q136 174 122 182 L124 196 L78 190 L80 182 Q62 172 60 150Z"/>')
