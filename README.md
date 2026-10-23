@@ -8,8 +8,8 @@ A static site presenting three brand directions for naʻau kombucha (Nagoya), pr
 |---|---|
 | `index.html` | Overview: what we heard, research findings, colour options, the directions, decisions needed |
 | `current.html` | Current identity: naʻau's script logo as it is, white and minimal |
-| `lenora.html` | Concept A · Lenora: sumi, mixed media on real paper scans, typed slips, pencil and the 一本 seal (palette A, Sumi & Kinari) |
-| `ogg.html` | Concept B · Ogg: airy and hand-made, block prints and kimy's notes (palette D, Gofun & Ōdo) |
+| `lenora.html` | Concept A · Lenora, 手当て (care by hand): black and white, linocut prints and black-and-white photographs of hands at work, with bengara red as the one tint |
+| `ogg.html` | Concept B · Ogg, 間 (the pause): airy and hand-made with kimy's notes and vertical Japanese, made a little more exclusive with a deep board per flavour (ōdo, kakishibu, koke), photographs framed like windows and light out of focus |
 | `*-home.html`, `*-product.html` | Responsive home and product page mockups for each direction |
 | `collab.html` | naʻau × Ivycoast: KOM'BAR, planned assets, website language, how it ties to each direction |
 
@@ -35,9 +35,11 @@ python3 build_collab.py .. .
 - The site is Japanese first, with an EN toggle in the navigation (remembered per visitor). Every presentation string lives in `ja.py`, keyed by its English; untranslated strings can be listed by building with `NAAU_MISSING=/tmp/missing.txt`. Concept artwork keeps its own designed language.
 - `common.py` holds the shared pieces: navigation, section headers, artboards and the still-life scenes.
 - `kombar.py` takes the KOM'BAR artwork apart into ten named elements and loads the KOM'BAR wordmark (KOMbucha + BAR soap); `python3 kombar.py` also writes each element to `assets/collab/elements/`.
+- `lino.py` holds Concept A's six linocut prints (hand, bowl, camellia, mortar, moon, tea leaf) and the woodblock grain.
 - `ink.py` holds the hand-made marks: block-print motifs, the fine-line camellia, stamps and seals, the postage-stamp frame and the red-pen loop.
 - Print and social pieces are artboards: sizes written as `[[n]]` are thousandths of the artboard's width, so each piece keeps its proportions at any screen size.
-- Where a photograph belongs, a shot card describes it in type (subject, light, props) inside crop marks. Nothing is drawn to look like a photo.
+- Where a photograph belongs, a stand-in photograph from Unsplash is used when one fits (`PHOTOS` and `PICK` in `common.py`); otherwise a shot card describes it in type inside crop marks. Nothing is drawn to look like a photo.
+- The KOM'BAR voice (tagline, descriptor, the 14- and 60-day numbers, the scent line) lives as constants at the top of `build_collab.py`; the 05 Voice chapter lists the principles behind it.
 
 ## Before sharing publicly
 
@@ -49,3 +51,7 @@ python3 build_collab.py .. .
 ## Textures
 
 `assets/textures/` holds real material scans from [ambientCG](https://ambientcg.com), released under CC0 1.0 (no attribution required): Paper003 (creased paper), Paper006 (kraft), Cardboard001 (torn corrugated board; also the source of the traced torn edge in `tear-edge.png`) and CardboardSet001 (the tape strip). They were resized and recoloured for the site.
+
+## Photographs
+
+Stand-in photographs are hotlinked from Unsplash (images.unsplash.com) under the [Unsplash License](https://unsplash.com/license): free to use, no attribution required. Each page names its photographers in the footer. They show the mood only and are to be replaced by a shoot in both studios. The photographers are listed with each photo in `PHOTOS` in `tools/common.py`.

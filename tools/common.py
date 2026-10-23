@@ -96,8 +96,8 @@ LANG_SCRIPT = ('<script>function naauLang(l){document.documentElement.lang=l;try
 SITE = None
 
 FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
-         '<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=Cormorant+Garamond:wght@400;500&family=Shippori+Mincho+B1:wght@500;700'
-         '&family=Zen+Old+Mincho:wght@400;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&family=Klee+One:wght@400;600&family=Yomogi'
+         '<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=Cormorant+Garamond:wght@400;500&family=Shippori+Mincho+B1:wght@500;700;800'
+         '&family=Zen+Old+Mincho:wght@400;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&family=Klee+One:wght@400;600&family=Yomogi&family=Courier+Prime'
          '&family=Inter:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">')
 
 FIT = ('<script>function fit(){document.querySelectorAll("[data-fit]").forEach(function(p){var f=p.querySelector("iframe");'
@@ -132,6 +132,9 @@ def nav(active):
             f'<ul>{lis}</ul>{LANG_TOGGLE}</div></nav>')
 
 def page(fname, title, cls, body, script="", extra_head=""):
+    if '</div></footer>' in body:
+        head, tail = body.rsplit('</div></footer>', 1)
+        body = head + credits(body) + '</div></footer>' + tail
     html = (f'<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">'
             f'<title>{title}</title>{FONTS}<link rel="stylesheet" href="assets/css/site.css?v={CSS_V}">{LANG_SCRIPT}{extra_head}</head>'
             f'<body class="{cls}">{ink.DEFS}{body}{script}</body></html>\n')
@@ -205,8 +208,73 @@ SHOTS = {
 SUBJECT = {"range": "The range, three bottles", "pour": "The pour", "single": "One bottle, close", "jar": "The brewing jar",
            "glass": "A glass, just poured", "gift": "Bottle and soap, together"}
 
+# Stand-in photographs from Unsplash (free licence, no attribution required; credited in the footer and README).
+# Hotlinked from images.unsplash.com at the width needed. key: (photo id, photographer, page slug)
+PHOTOS = {
+    "jar":      ("1583396216852-1e1d61137170", "Tim-Oliver Metz", "cZIiXRX9PqE"),
+    "mother":   ("1573812914274-226dc19fbe17", "Megumi Nachev", "TcNG1talu3s"),
+    "shelf":    ("1642423453295-1e21cbc95967", "Stanley Kustamin", "OhCiWCwiBkE"),
+    "teabowl":  ("1567922045116-2a00fae2ed03", "Aniketh Kanukurthi", "Qaor6nxikUM"),
+    "leaves":   ("1763617702099-d956f3fd8324", "晨曦 Hey", "iIgnfQ-vERM"),
+    "hands":    ("1605265058749-78af14a1be2b", "Sincerely Media", "UmDfdonflT0"),
+    "batter":   ("1697247079184-efb23487a172", "MeSSrro", "8aTZDhvHaVM"),
+    "basin":    ("1770941326576-eb1520695ec8", "Clay Banks", "lQ6U_GSziPQ"),
+    "forest":   ("1786909100019-a43467264c47", "Eva Balogh", "-up4eOuN9CY"),
+    "cedar":    ("1766586049961-1eca6500ca49", "Yosuke Ota", "ChpQXg2EYY4"),
+    "mandarin": ("1734894966816-9f2b7bf9c605", "alien beker", "Jw3XXq4u7NU"),
+    "shadow":   ("1530177150700-84cd9a3b059b", "Augustine Wong", "T0BYurbDK_M"),
+    # Concept A · Lenora, 手当て: hands, craft and old ways, shown in black and white
+    "clay":     ("1465631494067-3e0491e95bd1", "Quino Al", "vBxlL1xpSdc"),
+    "cupped":   ("1571391034628-2a2261e8273f", "Motoki Tonn", "tJ6GNCJ1gyM"),
+    "whisk":    ("1759933164283-ab161f34bd02", "adrien lopes", "VhPtiipk0tE"),
+    "care":     ("1773234005378-ceebf3c877b9", "Thomas Griggs", "mwGrAl1X514"),
+    "oldhand":  ("1602152563796-29267eb24c0f", "Bruce Tang", "1sRJgrV4nwI"),
+    "mist":     ("1578554700872-ef0e27c46d37", "Laura Thonne", "1PCoQuJspGw"),
+    "grind":    ("1492552085122-36706c238263", "Katherine Hanlon", "bd_fCZhy_W8"),
+    "teafield": ("1562558742-ec7adb76fe11", "Kevin Ma", "ppEq6JGLOUE"),
+    "kettle":   ("1531876066433-09d3a1f79fac", "五玄土 ORIENTO", "fLZeuI-OFBc"),
+    # Concept B · Ogg: warm light, paper, persimmon, moss and amber, some shown out of focus for mood
+    "shoji":    ("1767839507904-46980ac12d53", "Perry Merrity II", "jHl9eZSC9Ac"),
+    "wall":     ("1529047033375-f402d3da24ca", "Alexander Possingham", "RIQ96s3Uzso"),
+    "curtain":  ("1682421938316-4b186e25174c", "Saad Ahmad", "3VSa5sbvdpc"),
+    "hoshigaki":("1762980623026-c22d28494369", "Madeline Liu", "zyIVA-DSiC4"),
+    "amber":    ("1729457923221-34e324fec9e5", "Charly Seyler", "lUD3FNbGecQ"),
+    "pourbowl": ("1562547256-2c5ee93b60b7", "CHI CHEN", "oBoELXgJR1w"),
+    "pourcup":  ("1758221054731-744af4bf4d68", "Marie G.", "MQ-Vuwjcv68"),
+    "moss":     ("1708022772151-26030f4a4ba4", "Nicholas Bullett", "qiWaWWhehTo"),
+    "slit":     ("1602911310167-1b82343f6264", "gryffyn m", "pl5B-k_Xk8Y"),
+    "dusk":     ("1686395810129-4ecb06a60f4e", "He Junhui", "7vB1eUo0BOA"),
+    "washi":    ("1572037937946-ece5e3598bee", "Bernd Dittrich", "BH7H9aNJUwE"),
+    "bokeh":    ("1607202563005-cbaabe636953", "Johny Goerend", "5jO5fQqSZi4"),
+    "glow":     ("1608483555724-d430b692b776", "Andy Holmes", "A1WVd4snKLw"),
+    "haze":     ("1604339452989-f0d369b025ac", "Thomas Lefebvre", "lXQ-bPGGDDw"),
+    "ceramics": ("1612058060757-aa8f7f66e687", "Geraldine Lewa", "N_Z91Evs_oM"),
+    "linen":    ("1634665810235-011d663754e7", "Kateryna Hliznitsova", "2NDtPNiLcD0"),
+    "glasses":  ("1691403970049-d9ec6b27117f", "Harper Sunday", "o09l6wRwIX8"),
+}
+def pic(key, w=1200, pos="50% 50%", tone="", alt=""):
+    """A photograph filling its box (object-fit: cover)."""
+    pid = PHOTOS[key][0]
+    return (f'<img class="pic" src="https://images.unsplash.com/photo-{pid}?w={w}&amp;q=78&amp;auto=format&amp;fit=crop" '
+            f'loading="lazy" alt="{alt}" style="object-position:{pos}; {tone}">')
+
+def credits(html):
+    """Footer line naming the photographers whose photographs appear in this page."""
+    names = sorted({who for pid, who, _ in PHOTOS.values() if f"photo-{pid}?" in html})
+    return ('<p class="credits">' + T("仮の写真：", "Stand-in photographs: ") + ", ".join(names) + " / Unsplash</p>") if names else ""
+
+BW = "filter:grayscale(1) contrast(1.18) brightness(.94)"
+TONE = {"current": "", "lenora": BW,
+        "ogg": "", "collab": ""}
+PICK = {("current", "range"): "shelf", ("current", "pour"): "teabowl", ("current", "jar"): "jar", ("current", "single"): "jar",
+        ("lenora", "jar"): "grind", ("lenora", "pour"): "cupped", ("lenora", "range"): "clay",
+        ("ogg", "pour"): "pourcup", ("ogg", "jar"): "amber", ("ogg", "range"): "glasses"}
+
 def still(dk, kind="range", ratio="4/3", cap="", subject=None, **_):
-    """A shot card: the photograph to be taken, described in type inside crop marks."""
+    """A stand-in photograph where one fits; otherwise a shot card describing the photograph to be taken."""
+    if (dk, kind) in PICK:
+        return (f'<div class="still photo" style="aspect-ratio:{ratio}">{pic(PICK[dk, kind], tone=TONE[dk])}'
+                f'<span class="pic-note">{T("仮の写真", "Stand-in photo")}</span></div>')
     s = SHOTS[dk]
     return (f'<div class="still shot" style="aspect-ratio:{ratio}; background:{s["bg"]}; color:{s["ink"]}">'
             f'<i class="cm tl"></i><i class="cm tr"></i><i class="cm bl"></i><i class="cm br"></i>'

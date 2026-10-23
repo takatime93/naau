@@ -19,6 +19,20 @@ PEACH, INK, PAPER, GREEN, AMBER, KRAFT, MUTE = "#F4D9C6", "#1E1E1E", "#F6F1E9", 
 # Peach belongs to the soap box alone.
 WHITE, TURMERIC, PERSIMMON, TIDE = "#F8F6F1", "#E3A630", "#D4542E", "#A9C9D8"
 el, wm, art = KB.el, KB.wordmark, KB.artwork
+P = C.pic
+
+# The voice. Name it by what is in it; one true number; the scent as a scene; time as the luxury; say the plain truth.
+# Each line is written twice, once per language, rather than translated.
+TAG = ("お茶だったものを、<br>手のひらに。", "Once, it was tea.")
+DESCR = ("コンブチャと SCOBY の石けん", "Kombucha &amp; SCOBY cold-process bar")
+NUM = ("14日、仕込む。<br>60日、待つ。", "Brewed fourteen days. Cured sixty.")
+SCENT = ("雨のあとの森と、<br>むいたばかりのマンダリン。", "A forest after rain. A mandarin, just peeled.")
+MOTHER = ("「母」から<br>生まれた石けん。", "A soap with a mother.")
+ORIGIN = ("名古屋で仕込み、<br>海辺の工房で切る。", "Brewed in Nagoya. Cut by hand by the sea.")
+HONEST = ("コンブチャを仕込むたびに、SCOBY はひと層ずつ育ちます。使いきれずにいたその層を、石けんにしました。",
+          "Every brew grows the mother another layer. The layers we couldn’t use became soap.")
+USE = ("手のなかで、ゆっくり泡立てて。", "Work it slowly between wet hands.")
+br = lambda x: x.replace("<br>", "")
 IVY = lambda col, w, style="": f'<img src="assets/collab/ivycoast-wordmark-{col}.png" alt="IVYCOAST" style="width:{w}; display:block; {style}">'
 IVYICON = lambda w: f'<img src="assets/collab/ivycoast-icon-green.png" alt="" style="width:{w}">'
 OGGCOL = {"1e1e1e": "3a3631", "ffffff": "faf7f1"}
@@ -229,7 +243,7 @@ def mailer():
 def mailer_inside():
     """Inside the lid: the brand's own closing line, as the first thing read on opening."""
     return ab(4, 3, f'<div class="fill" style="background:{TURMERIC}"></div><div style="left:[[-60]]; bottom:[[-200]]; width:[[600]]">{el("sun", "100%", INK)}</div>'
-              f'<p class="vt" style="right:[[90]]; top:[[80]]; {JPB}; font-size:[[50]]; line-height:1.9; letter-spacing:.12em">育てる時間。<br>手をかけること。<br>自然から学ぶこと。</p>'
+              f'<p class="vt" style="right:[[110]]; top:[[80]]; {JPB}; font-size:[[60]]; line-height:2; letter-spacing:.14em">{TAG[0]}</p>'
               f'<div style="right:[[80]]; bottom:[[70]]">{lockup("[[120]]")}</div>',
               "100%", "background:transparent", cls="flat")
 
@@ -262,27 +276,29 @@ def story_card(no, name, word, line_jp, line_en, bg, fg, ew=640, w="23%"):
               f'<p class="it" style="left:[[90]]; right:[[90]]; top:[[1405]]; font-family:var(--lat); font-size:[[46]]">{line_en}</p>',
               w, f"background:{bg}; color:{fg}")
 
-CARD_ARGS = [("01", "tea", "Tea", "はじまりは、お茶。", "It begins with tea.", WHITE, GREEN, 640),
-             ("02", "mother", "The mother", "SCOBYは、コンブチャの母。", "The SCOBY is the mother.", WHITE, INK, 600),
-             ("03", "sun", "Time", "石鹸になるまで、二ヶ月。", "Two months of curing.", WHITE, PERSIMMON, 640),
-             ("04", "bird", "Ivycoast", "海辺の工房で、手で切る。", "Cut by hand by the coast.", WHITE, GREEN, 700)]
+CARD_ARGS = [("01", "tea", "Tea", "名古屋で、お茶を仕込む。", "Tea, set to brew in Nagoya.", WHITE, GREEN, 640),
+             ("02", "mother", "The mother", "14日で、母が育つ。", "In fourteen days, a mother grows.", WHITE, INK, 600),
+             ("03", "bird", "Cut", "海辺の工房で、手で切る。", "Cut by hand, by the sea.", WHITE, GREEN, 700),
+             ("04", "sun", "Cure", "そして60日、待つ。", "Then sixty days of waiting.", WHITE, PERSIMMON, 640)]
 card1 = lambda i: story_card(*CARD_ARGS[i], w="100%")
 
 cards = "".join(story_card(*c) for c in CARD_ARGS)
 
-counter = ab(105, 148, f'<p style="left:[[80]]; top:[[90]]; {JPB}; font-size:[[78]]; line-height:1.45">コンブチャから、<br>石鹸ができました。</p>'
-             f'<p class="it" style="left:[[80]]; top:[[330]]; font-family:var(--lat); font-size:[[40]]">Kombucha, made into soap.</p>'
+counter = ab(105, 148, f'<p style="left:[[80]]; top:[[90]]; {JPB}; font-size:[[78]]; line-height:1.45">{TAG[0]}</p>'
+             f'<p class="it" style="left:[[80]]; top:[[330]]; font-family:var(--lat); font-size:[[40]]">{TAG[1]}</p>'
+             + caps(DESCR[1], "[[22]]", "position:absolute; left:[[80]]; top:[[420]]") +
              f'<div style="right:[[-160]]; bottom:[[-120]]; width:[[900]]">{el("mother", "100%", INK)}</div>'
              f'<div style="left:[[80]]; bottom:[[80]]; width:[[380]]">{wm("100%", INK)}</div>'
              + caps("¥［　］ · 税込", "[[26]]", "position:absolute; left:[[80]]; bottom:[[170]]"),
              "100%", f"background:{TURMERIC}; color:{INK}")
 
-poster = ab(297, 420, f'<div style="left:[[70]]; right:[[70]]; top:[[80]]">{wm("100%", WHITE)}</div>'
-            + caps("<b>KOM</b>bucha + <b>BAR</b> soap", "[[22]]", f"position:absolute; left:[[70]]; top:[[250]]; color:{WHITE}")
-            + f'<p style="left:[[70]]; top:[[340]]; {JPB}; font-size:[[56]]; line-height:1.5; color:{WHITE}">発酵が生み出す美しさ。</p>'
-            f'<div style="left:[[70]]; right:[[70]]; top:[[460]]; color:{WHITE}">' + rows([("発売", "［月日］"), ("取扱", "naʻau 名古屋 · Ivycoast online"), ("価格", "¥［　］（税込）")], "[[24]]", "rgba(248,246,241,.35)", "[[14]]") + '</div>'
-            f'<div style="left:[[70]]; top:[[700]]; color:{WHITE}">{pair("[[170]]", "ffffff", "white")}</div>'
-            f'<div style="left:[[100]]; right:[[100]]; top:[[960]]">{el("sun", "100%", TURMERIC)}</div>',
+poster = ab(297, 420, f'<div style="left:0; right:0; top:0; height:[[780]]">{P("mother", 1200, "50% 40%")}</div>'
+            f'<div style="right:[[30]]; top:[[500]]; width:[[380]]; z-index:2">{el("mother", "100%", WHITE)}</div>'
+            f'<div style="left:[[70]]; top:[[860]]; width:[[440]]">{wm("100%", WHITE)}</div>'
+            + caps("<b>KOM</b>bucha + <b>BAR</b> soap", "[[20]]", f"position:absolute; left:[[70]]; top:[[1000]]; color:{WHITE}")
+            + f'<p style="left:[[70]]; top:[[1060]]; {JPB}; font-size:[[48]]; line-height:1.5; color:{WHITE}">{TAG[0]}</p>'
+            f'<div style="left:[[70]]; bottom:[[70]]; color:{WHITE}">{pair("[[150]]", "ffffff", "white")}</div>'
+            f'<div style="left:[[520]]; right:[[70]]; bottom:[[64]]; color:{WHITE}">' + rows([("発売", "［月日］"), ("取扱", "naʻau · Ivycoast"), ("価格", "¥［　］")], "[[19]]", "rgba(248,246,241,.35)", "[[10]]") + '</div>',
             "100%", f"background:{GREEN}; color:{WHITE}")
 
 print_ = ('<div class="sub" style="margin-top:0"><h3>Story cards, 55 × 91 mm</h3><p>Four cards inside each box: how a cup of tea becomes a bar of soap.</p></div>'
@@ -298,31 +314,27 @@ def post(inner, bg, fg=INK):
 p_reveal = post(f'<div style="left:[[110]]; top:[[230]]; width:[[780]]; transform:rotate(-4deg); box-shadow:0 [[30]] [[50]] rgba(60,40,30,.28)">{face_front("100%")}</div>'
                 f'<div style="left:[[70]]; right:[[70]]; bottom:[[90]]">{wm("100%", INK)}</div>' + caps("naʻau × Ivycoast · ［月日］", "[[24]]", "position:absolute; left:[[70]]; top:[[80]]"), PAPER)
 p_sun = post(f'<div style="right:[[-250]]; top:[[-220]]; width:[[900]]">{el("sun", "100%", TURMERIC)}</div>'
-             f'<p style="left:[[70]]; bottom:[[220]]; {JPB}; font-size:[[90]]; line-height:1.4; color:{WHITE}">二ヶ月、<br>待ちました。</p>'
-             f'<p class="it" style="left:[[70]]; bottom:[[150]]; font-family:var(--lat); font-size:[[40]]; color:{WHITE}">Cured for two months.</p>'
+             f'<p style="left:[[70]]; bottom:[[220]]; {JPB}; font-size:[[84]]; line-height:1.4; color:{WHITE}">{NUM[0]}</p>'
+             f'<p class="it" style="left:[[70]]; bottom:[[150]]; font-family:var(--lat); font-size:[[36]]; color:{WHITE}">{NUM[1]}</p>'
              f'<div style="left:[[70]]; bottom:[[70]]; width:[[260]]">{wm("100%", WHITE)}</div>', GREEN)
 p_mother = post(f'<div style="left:[[-120]]; bottom:[[-140]]; width:[[820]]">{el("mother", "100%", INK)}</div>'
-                f'<p style="right:[[70]]; top:[[90]]; {JPB}; font-size:[[78]]; line-height:1.45; text-align:right">SCOBYは、<br>コンブチャの<br>「母」。</p>'
-                f'<p class="it" style="right:[[70]]; top:[[440]]; font-family:var(--lat); font-size:[[36]]; text-align:right">Brewers call it the mother.</p>', WHITE)
+                f'<p style="right:[[70]]; top:[[90]]; {JPB}; font-size:[[78]]; line-height:1.45; text-align:right">{MOTHER[0]}</p>'
+                f'<p class="it" style="right:[[70]]; top:[[340]]; font-family:var(--lat); font-size:[[36]]; text-align:right">{MOTHER[1]}</p>', WHITE)
 
-def panorama():
-    S = 1000  # one slide = 1000 units of a 5000-wide strip
-    steps = [("01", "茶", "Tea"), ("02", "菌", "SCOBY"), ("03", "母", "The mother"), ("04", "日", "Cure"), ("05", "鳥", "Ivycoast")]
-    labels = "".join(f'<p style="left:[[{i * S + 70}]]; top:[[80]]; {SANS}; font-size:[[40]]; letter-spacing:.12em">{n}</p>'
-                     f'<p style="left:[[{i * S + 70}]]; top:[[140]]; {JPB}; font-size:[[110]]">{jp}</p>'
-                     + caps(en, "[[34]]", f"position:absolute; left:[[{i * S + 70}]]; top:[[290]]") for i, (n, jp, en) in enumerate(steps))
-    art_ = (f'<svg viewBox="0 0 5000 1250" style="left:0; top:0; width:[[5000]]; height:[[1250]]" aria-hidden="true"><path d="M300 1080 C900 1180 1300 700 1900 900 C2500 1100 2900 800 3500 980 C4000 1120 4300 900 4900 980" fill="none" stroke="{GREEN}" stroke-width="10" stroke-dasharray="4 26" stroke-linecap="round"/></svg>'
-            f'<div style="left:[[200]]; top:[[420]]; width:[[640]]">{el("tea", "100%", INK)}</div>'
-            f'<div style="left:[[1250]]; top:[[420]]; width:[[520]]">{el("scoby", "100%", INK)}</div>'
-            f'<div style="left:[[2250]]; top:[[300]]; width:[[640]]">{el("mother", "100%", INK)}</div>'
-            f'<div style="left:[[3300]]; top:[[330]]; width:[[520]]">{el("sun", "100%", PERSIMMON)}</div>'
-            f'<div style="left:[[4250]]; top:[[420]]; width:[[640]]">{el("bird", "100%", INK)}</div>'
-            f'<div style="left:[[4620]]; top:[[1080]]; width:[[310]]">{wm("100%", INK)}</div>')
-    import re
-    return re.sub(r"\[\[(-?\d+(?:\.\d+)?)\]\]", lambda m: f"[[{float(m.group(1)) / 5:g}]]", labels + art_)
+STEPS = [("01", "茶", "Tea", "teabowl", "50% 50%", "tea", TURMERIC, "名古屋で、お茶を仕込む。", "Tea, set to brew in Nagoya."),
+         ("02", "母", "The mother", "mother", "50% 45%", "mother", GREEN, "14日で、母が育つ。", "In fourteen days, a mother grows."),
+         ("03", "切", "Cut", "hands", "50% 70%", "bird", GREEN, "海辺の工房で、手で切る。", "Cut by hand, by the sea."),
+         ("04", "待", "Cure", "batter", "50% 50%", "sun", PERSIMMON, "そして60日、待つ。", "Then sixty days of waiting."),
+         ("05", "香", "Scent", "forest", "50% 60%", "botanical", TURMERIC, br(SCENT[0]), SCENT[1])]
 
 def slide(i):
-    return ab(4, 5, f'<div class="ab flat" style="left:[[{-i * 1000}]]; top:0; width:[[5000]]; aspect-ratio:4/1; background:transparent">{panorama()}</div>',
+    n, k, en, photo_, pos, name, col, jp, en_line = STEPS[i]
+    return ab(4, 5, f'<div style="left:0; right:0; top:0; height:[[830]]">{P(photo_, 900, pos)}</div>'
+              f'<div style="right:[[50]]; top:[[640]]; width:[[300]]; z-index:2">{el(name, "100%", col)}</div>'
+              + caps(f"{n} — {en}", "[[24]]", "position:absolute; left:[[70]]; top:[[880]]; letter-spacing:.2em")
+              + f'<p style="left:[[70]]; top:[[935]]; {JPB}; font-size:[[120]]; line-height:1">{k}</p>'
+              f'<div class="col" style="left:[[250]]; right:[[400]]; top:[[945]]; gap:[[14]]"><p style="{JPB}; font-size:[[36]]; line-height:1.55">{jp}</p>'
+              f'<p class="it" style="font-family:var(--lat); font-size:[[28]]; line-height:1.3; opacity:.75">{en_line}</p></div>',
               "100%", f"background:{WHITE}; color:{INK}", cls="flat")
 
 carousel = '<div class="caro">' + "".join(f'<div>{slide(i)}</div>' for i in range(5)) + '</div>'
@@ -345,31 +357,34 @@ def pdp():
     return ab(16, 10, f'<div style="left:0; right:0; top:0; height:[[56]]; border-bottom:1px solid #E5DCCF; display:flex; align-items:center; justify-content:space-between; padding:0 [[40]]">'
               f'{IVY("green", "[[120]]")}<span style="{SANS}; font-size:[[11]]; letter-spacing:.2em; color:{GREEN}">SHOP · JOURNAL · CART (0)</span></div>'
               f'<div class="ab flat" style="left:[[40]]; top:[[80]]; width:[[440]]; aspect-ratio:1; background:{GREEN}">'
-              f'<div style="left:50%; top:50%; width:[[700]]; transform:translate(-50%,-50%) rotate(-6deg); box-shadow:0 [[20]] [[40]] rgba(60,40,30,.25)">{face_front("100%")}</div></div>'
+              f'<div class="fill">{P("hands", 900, "50% 62%")}</div>'
+              f'<div style="right:[[24]]; bottom:[[24]]; width:[[130]]">{el("mother", "100%", WHITE)}</div></div>'
               f'<div style="left:[[40]]; top:[[530]]; width:[[440]]; display:grid; grid-template-columns:repeat(4,1fr); gap:[[8]]">'
-              + "".join(f'<div style="aspect-ratio:1; background:{bg}; display:flex; align-items:center; justify-content:center; box-shadow:inset 0 0 0 1px #E5DCCF">{el(n, "auto", fg, "height:64%; width:auto")}</div>'
-                        for n, bg, fg in (("tea", WHITE, GREEN), ("mother", GREEN, WHITE), ("sun", WHITE, PERSIMMON), ("bird", WHITE, GREEN))) + '</div>'
+              f'<div style="aspect-ratio:1; background:{GREEN}; position:relative; overflow:hidden"><div style="position:absolute; left:8%; right:8%; top:50%; transform:translateY(-50%) rotate(-4deg)">{face_front("100%")}</div></div>'
+              + "".join(f'<div style="aspect-ratio:1; position:relative; overflow:hidden">{P(k, 300, pos_)}</div>' for k, pos_ in (("mother", "50% 45%"), ("teabowl", "50% 50%"), ("forest", "50% 50%"))) + '</div>'
               f'<div class="col" style="left:[[540]]; right:[[40]]; top:[[90]]; gap:[[16]]">{wm("[[260]]", INK)}'
               + caps("naʻau × Ivycoast · Organic kombucha bar soap", "[[11]]", "position:static")
-              + f'<p style="position:static; {JPB}; font-size:[[24]]">発酵が生み出す美しさ。</p>'
-              f'<p style="position:static; font-family:var(--sans); font-size:[[12]]; line-height:1.9; color:#3E3833">名古屋の naʻau が仕込んだコンブチャの発酵液と、SCOBY の粉末を練り込み、Ivycoast が手で切り分けて二ヶ月かけて熟成させた石鹸です。</p>'
+              + f'<p style="position:static; {JPB}; font-size:[[24]]; line-height:1.5">{br(TAG[0])}</p>'
+              f'<p style="position:static; font-family:var(--sans); font-size:[[12]]; line-height:1.9; color:#3E3833">{HONEST[0]}名古屋の naʻau が仕込んだコンブチャと SCOBY を、Ivycoast が海辺の工房で練り込み、手で切り分け、60日かけて熟成させました。香りは、雨のあとの森とむいたばかりのマンダリン。</p>'
               f'<p style="position:static; {SANS}; font-size:[[22]]">¥［　］<span style="font-size:[[11]]">（税込）</span></p>'
-              + rows([("WITH", "naʻau kombucha + SCOBY"), ("MADE BY", "Ivycoast, by hand"), ("CURED", "2 months"), ("SHIPPING", "常温便 · ［　］日でお届け")], "[[11]]", pad="[[6]]") +
+              + rows([("コンブチャ", "naʻau · 愛知県名古屋市"), ("SCOBY", "naʻau の仕込みから"), ("製法", "コールドプロセス · 60日熟成"), ("香り", "シダーウッド、パチュリ、マンダリン、ホワイトセージ")], "[[11]]", pad="[[6]]") +
               f'<p style="position:static; background:{GREEN}; color:{PAPER}; text-align:center; padding:[[12]] 0; {SANS}; font-size:[[12]]; letter-spacing:.2em">カートに入れる</p></div>',
               "100%", f"background:{PAPER}; color:{INK}", cls="flat")
 
 def banner(which):
     if which == "ivy":
-        return ab(16, 6, f'<p style="left:[[60]]; top:[[70]]; {SANS}; font-size:[[14]]; letter-spacing:.2em; color:{GREEN}">NEW · COLLABORATION</p>'
-                  f'<p style="left:[[60]]; top:[[120]]; font-family:var(--lat); font-size:[[48]]; line-height:1.2; color:{GREEN}">Soap, brewed<br>in Nagoya.</p>'
-                  f'<p style="left:[[60]]; bottom:[[70]]; {SANS}; font-size:[[13]]; letter-spacing:.16em; color:{GREEN}; border-bottom:1px solid {GREEN}; padding-bottom:[[4]]">DISCOVER KOM’BAR</p>'
-                  f'<div class="ab flat" style="right:0; top:0; bottom:0; width:[[560]]; background:{TIDE}"><div style="right:[[-30]]; bottom:[[-40]]; width:[[400]]">{el("bird", "100%", GREEN)}</div>'
-                  f'<div style="left:[[60]]; top:[[60]]; width:[[300]]">{wm("100%", INK)}</div></div>',
+        return ab(16, 6, f'<p style="left:[[60]]; top:[[56]]; {SANS}; font-size:[[14]]; letter-spacing:.2em; color:{GREEN}">NEW · COLLABORATION</p>'
+                  f'<p style="left:[[60]]; top:[[96]]; font-family:var(--lat); font-size:[[52]]; line-height:1.15; color:{GREEN}">Once,<br>it was tea.</p>'
+                  f'<p style="left:[[60]]; top:[[232]]; font-family:var(--lat); font-size:[[17]]; line-height:1.5; color:{GREEN}; width:[[340]]">Kombucha and its mother, cut by hand by the sea.</p>'
+                  f'<p style="left:[[60]]; bottom:[[48]]; {SANS}; font-size:[[13]]; letter-spacing:.16em; color:{GREEN}; border-bottom:1px solid {GREEN}; padding-bottom:[[4]]">DISCOVER KOM’BAR</p>'
+                  f'<div class="ab flat" style="right:0; top:0; bottom:0; width:[[560]]"><div class="fill">{P("jar", 1000, "30% 50%")}</div>'
+                  f'<div style="left:[[-70]]; bottom:[[-30]]; width:[[260]]">{el("bird", "100%", WHITE)}</div></div>',
                   "100%", f"background:{PAPER}", cls="flat")
-    return ab(16, 6, f'<div class="ab flat" style="left:0; top:0; bottom:0; width:[[560]]; background:{TURMERIC}"><div style="left:[[-60]]; bottom:[[-120]]; width:[[520]]">{el("mother", "100%", INK)}</div></div>'
-              f'<p style="left:[[620]]; top:[[70]]; font-family:var(--sans); font-size:[[13]]; letter-spacing:.2em">NEW · コラボレーション</p>'
-              f'<p style="left:[[620]]; top:[[120]]; font-family:var(--sans); font-weight:300; font-size:[[40]]; line-height:1.5">コンブチャから、<br>石鹸ができました。</p>'
-              f'<div style="left:[[620]]; bottom:[[70]]; width:[[260]]">{wm("100%", INK)}</div>',
+    return ab(16, 6, f'<div class="ab flat" style="left:0; top:0; bottom:0; width:[[560]]"><div class="fill">{P("mother", 1000, "50% 45%")}</div><div style="right:[[-80]]; bottom:[[-40]]; width:[[300]]">{el("mother", "100%", WHITE)}</div></div>'
+              f'<p style="left:[[620]]; top:[[52]]; font-family:var(--sans); font-size:[[13]]; letter-spacing:.2em">NEW · コラボレーション</p>'
+              f'<p style="left:[[620]]; top:[[92]]; font-family:var(--sans); font-weight:500; font-size:[[34]]; line-height:1.5">{TAG[0]}</p>'
+              f'<p style="left:[[620]]; top:[[205]]; font-family:var(--sans); font-size:[[13]]; line-height:1.8; width:[[330]]">{DESCR[0]}。名古屋で仕込み、海辺の工房で切って、60日。</p>'
+              f'<div style="left:[[620]]; bottom:[[44]]; width:[[190]]">{wm("100%", INK)}</div>',
               "100%", "background:#FFFFFF; color:#1E1E1E", cls="flat")
 
 web = ('<div class="browser"><div class="browser-bar"><i></i><i></i><i></i><span>Ivycoast · KOM’BAR</span></div>' + pdp() + '</div>'
@@ -404,7 +419,7 @@ ties = ('<div class="grid g3">'
         + tie("#2B2926", f'<div style="left:[[-100]]; bottom:[[-140]]; width:[[640]]">{el("tea", "100%", "#3A3835")}</div>'
                          f'<div style="left:[[150]]; right:[[150]]; top:[[200]]; box-shadow:0 [[20]] [[40]] rgba(0,0,0,.4)">{face_front("100%")}</div>'
                          f'<div class="row" style="left:0; right:0; bottom:[[200]]; justify-content:center; gap:[[40]]; color:#EFEBE2">{L(D["lenora"], "efebe2", "[[210]]")}<span style="font-size:[[40]]">×</span>{IVY("white", "[[250]]")}</div>',
-              "Concept A · Lenora", "The most luxurious pairing; two high-contrast serifs side by side can blur, so keep naʻau on sumi and Ivycoast on its own paper.", "lenora.html")
+              "Concept A · Lenora", "Black and white with one red, so the peach box stands out most here. Keep naʻau’s mark on black and Ivycoast on its own paper.", "lenora.html")
         + tie("#FAF7F1", ''
                          f'<div style="left:[[120]]; right:[[120]]; top:[[200]]; box-shadow:0 [[20]] [[40]] rgba(58,54,49,.16)">{face_front("100%")}</div>'
                          f'<div class="row" style="left:0; right:0; bottom:[[200]]; justify-content:center; gap:[[40]]">{L(D["ogg"], "3a3631", "[[220]]")}<span style="font-size:[[40]]">×</span>{IVY("dark", "[[250]]")}</div>',
@@ -455,13 +470,19 @@ def cap(title, spec=""):
 cover = (f'<header class="cover2" style="background:{GREEN}; color:{WHITE}"><div class="wrap cover2-in">'
          f'<div class="cover2-top"><span>naʻau × Ivycoast</span><span>A proposal for both teams · 2026</span></div>'
          f'<div class="cover2-box">{face_front("100%")}</div>'
-         f'<div class="cover2-foot"><p class="cover2-jp">発酵が生み出す美しさ。</p><p class="kb2-def">{KB_DEF0}</p>'
+         f'<div class="cover2-foot"><p class="cover2-jp">{C.T(br(TAG[0]), TAG[1])}</p><p class="kb2-def">{KB_DEF0}</p>'
          f'<div class="cover2-lock">{pair("150px", "ffffff", "white")}</div></div>'
          f'</div></header>')
 
 # ---------------- 01 the idea
-idea = ('<div class="idea"><p class="idea-big">Kombucha, brewed in Nagoya.<br>Soap, cut by hand by the coast.</p>'
-        '<div class="idea-makers">'
+idea = ('<div class="idea2">'
+        f'<div class="idea2-pic">{P("mother", 1600, "50% 45%")}<div class="idea2-el">{el("mother", "100%", GREEN)}</div></div>'
+        f'<div class="idea2-txt"><p class="idea2-tag">{C.T(TAG[0], TAG[1])}</p>'
+        f'<p class="idea2-sub">{C.T(DESCR[0], "Kombucha &amp; SCOBY bar soap")}</p>'
+        f'<p class="idea2-p">{C.T(HONEST[0], HONEST[1])}</p>'
+        '<dl class="idea2-num">' + "".join(f'<div><dt>{n}</dt><dd>{C.T(j, e)}</dd></div>' for n, j, e in (("14", "naʻau で仕込む日数", "days brewing at naʻau"), ("60", "熟成させる日数", "days curing"), ("4", "香りに使う精油の数", "essential oils, nothing else"))) + '</dl>'
+        '</div></div>'
+        '<div class="idea"><div class="idea-makers">'
         f'<div>{NAAU("96px")}<p>Small-batch kombucha, brewed in Nagoya by kimy.</p></div>'
         f'<div>{IVY("dark", f"calc(96px * {IVY_K:.4f})")}<p>Australian botanicals, brought into Japanese homes for daily rituals.</p></div>'
         '</div></div>')
@@ -513,60 +534,76 @@ market = scene("#ECE7DE", "4/3",
     obj(6, 4, 52, band("01", "26.11.03", GREEN), -6, 1, "none") + obj(40, 30, 52, band("02", "26.11.24", INK), 4, 2, "none") + obj(4, 46, 52, band("03", "26.12.15", AMBER), -2, 3, "none"))
 counter_s = scene(WHITE, "3/4", obj(22, 14, 56, counter, -2, 1, "deep"))
 poster_s = scene("#ECE7DE", "3/4", obj(20, 9, 60, poster, 0, 1, "deep"))
-feed = [p_reveal, p_sun, p_mother] + [ab(3, 4, f'<div style="left:[[160]]; right:[[160]]; top:50%; transform:translateY(-50%)">{el(n, "100%", fg)}</div>', "100%", f"background:{bg}", cls="flat") for n, bg, fg in (("tea", WHITE, GREEN), ("scoby", WHITE, INK), ("bird", GREEN, WHITE))]
+gift_s = scene("#ECE7DE", "16/9", obj(8, 10, 54, kakegami(), -3, 1, "deep") + obj(58, 30, 36, mailer(), 5, 2))
+
+# ---------------- posts: a photograph, one drawn element crossing its edge, one line
+def photo_box(key, l, t, r, b_, pos="50% 50%", w=900):
+    return f'<div style="left:{l}; top:{t}; right:{r}; bottom:{b_}">{P(key, w, pos)}</div>'
+
+post_a = post(photo_box("jar", 0, 0, 0, "[[400]]", "35% 50%")
+              + f'<div style="left:[[590]]; top:[[600]]; width:[[440]]; z-index:2">{el("mother", "100%", WHITE)}</div>'
+              + f'<p style="left:[[70]]; top:[[1000]]; {JPB}; font-size:[[58]]; line-height:1.45; color:{WHITE}">{TAG[0]}</p>'
+              + f'<p class="it" style="left:[[70]]; bottom:[[70]]; font-family:var(--lat); font-size:[[32]]; color:{WHITE}">{TAG[1]}</p>'
+              + f'<div style="right:[[70]]; bottom:[[78]]; width:[[200]]">{wm("100%", WHITE)}</div>', GREEN)
+post_b = post(photo_box("mother", "[[400]]", 0, 0, 0, "45% 50%")
+              + f'<p class="vt" style="left:[[110]]; top:[[110]]; {JPB}; font-size:[[66]]; line-height:1.7; letter-spacing:.1em">{MOTHER[0]}</p>'
+              + f'<div style="left:[[210]]; top:[[760]]; width:[[400]]; z-index:2">{el("mother", "100%", GREEN)}</div>'
+              + f'<p class="it" style="left:[[70]]; bottom:[[70]]; font-family:var(--lat); font-size:[[30]]">{MOTHER[1]}</p>', WHITE)
+post_c = post(photo_box("mandarin", 0, 0, 0, 0, "50% 55%")
+              + f'<p style="left:[[70]]; top:[[100]]; {JPB}; font-size:[[50]]; line-height:1.6; color:{WHITE}">{SCENT[0]}</p>'
+              + f'<p class="it" style="left:[[70]]; top:[[290]]; font-family:var(--lat); font-size:[[30]]; color:{WHITE}; opacity:.8">{SCENT[1]}</p>'
+              + f'<div style="right:[[70]]; bottom:[[170]]; width:[[230]]">{el("lemon", "100%", TURMERIC)}</div>'
+              + caps("Cedarwood · Patchouli · Mandarin · White sage", "[[19]]", f"position:absolute; left:[[70]]; bottom:[[80]]; color:{WHITE}; opacity:.75"), "#0B0B0A")
+post_t = post(photo_box("batter", 0, 0, 0, "[[620]]", "50% 50%")
+              + f'<div style="left:[[560]]; top:[[520]]; width:[[360]]; z-index:2">{el("sun", "100%", PERSIMMON)}</div>'
+              + "".join(f'<p style="left:[[{x}]]; top:[[790]]; font-family:var(--lat); font-size:[[230]]; line-height:1">{n}</p>'
+                        f'<p style="left:[[{x + 6}]]; top:[[1050]]; {JPB}; font-size:[[38]]">{jp}</p>' for x, n, jp in ((70, "14", "日、仕込む。"), (520, "60", "日、待つ。")))
+              + f'<p class="it" style="left:[[76]]; bottom:[[70]]; font-family:var(--lat); font-size:[[28]]; opacity:.7">{NUM[1]}</p>', WHITE)
+story_o = ab(9, 16, photo_box("hands", 0, 0, 0, 0, "50% 60%", 1000)
+             + f'<div style="left:[[70]]; right:[[70]]; top:[[110]]">{wm("100%", GREEN)}</div>'
+             + f'<p style="left:[[70]]; top:[[360]]; {JPB}; font-size:[[64]]; line-height:1.5; color:{GREEN}">{TAG[0]}</p>'
+             + f'<div style="right:[[70]]; bottom:[[110]]; width:[[230]]">{el("bird", "100%", GREEN)}</div>'
+             + caps("naʻau × Ivycoast · ［月日］", "[[28]]", f"position:absolute; left:[[70]]; bottom:[[120]]; color:{GREEN}"),
+             "100%", f"background:{WHITE}", cls="flat story")
+posts_row = ('<div class="soc">' + pf(post_a, "Tagline post", "the kombucha jar; the mother drawn over the real one, crossing into green", plate=False)
+             + pf(post_b, "A soap with a mother", "the SCOBY photographed; the drawn mother laid across its edge", plate=False)
+             + pf(post_c, "The scent", "a scene, not a list; the drawn citrus beside the real one", plate=False)
+             + pf(story_o, "Story", "hands, the tagline and the bird", plate=False) + '</div>')
+
+feed = [post_a, p_reveal, post_t, post_b, ab(3, 4, f'<div style="left:[[200]]; right:[[200]]; top:50%; transform:translateY(-50%)">{el("tea", "100%", GREEN)}</div>', "100%", f"background:{WHITE}", cls="flat"), post_c]
 phone_feed = (f'<div class="phone big"><div class="phone-screen"><div class="ig-head">{wm("38%", INK)}<span>naʻau × Ivycoast</span></div>'
               f'<div class="ig-grid">' + "".join(f'<div>{p}</div>' for p in feed) + '</div></div></div>')
 feed_s = f'<div class="scene" style="background:{GREEN}; aspect-ratio:4/3; display:flex; align-items:center; justify-content:center">{phone_feed}</div>'
-gift_s = scene("#ECE7DE", "16/9", obj(8, 10, 54, kakegami(), -3, 1, "deep") + obj(58, 30, 36, mailer(), 5, 2))
-
-# ---------------- posts that layer photography, type and the printed pieces
-STONE = "#ECE7DE"
-def photo(left, top, width, ratio, subject, light="", z=1):
-    return (f'<div style="left:{left}; top:{top}; width:{width}; z-index:{z}">'
-            + still("collab", "single", ratio, cap=light, subject=subject) + '</div>')
-
-post_a = ab(3, 4, photo("[[70]]", "[[70]]", "[[700]]", "700/900", "Cutting the bars", "Ivycoast studio · morning light")
-            + f'<div style="left:[[420]]; top:[[640]]; width:[[520]]; transform:rotate(-5deg); z-index:3; box-shadow:0 [[24]] [[44]] rgba(0,0,0,.35)">{face_front("100%")}</div>'
-            + f'<div style="left:[[70]]; right:[[70]]; bottom:[[70]]; z-index:4">{wm("100%", WHITE)}</div>',
-            "100%", f"background:{GREEN}", cls="flat post")
-post_b = ab(3, 4, photo("[[0]]", "[[200]]", "[[640]]", "640/860", "The curing rack", "two months, bars on edge")
-            + f'<div style="left:[[460]]; top:[[110]]; width:[[300]]; z-index:3">{el("sun", "100%", TURMERIC)}</div>'
-            + f'<p class="vt" style="right:[[90]]; top:[[420]]; z-index:4; {JPB}; font-size:[[84]]; line-height:1.5; letter-spacing:.1em">二ヶ月、<br>待ちました。</p>'
-            + caps("KOM’BAR · Cold process", "[[24]]", "position:absolute; left:[[70]]; bottom:[[70]]; z-index:4"),
-            "100%", f"background:{WHITE}; color:{INK}", cls="flat post")
-post_c = ab(3, 4, photo("[[280]]", "[[70]]", "[[650]]", "650/820", "The brewing jar", "naʻau, Nagoya")
-            + "".join(f'<div style="left:[[{x}]]; top:[[{y}]]; width:[[240]]; transform:rotate({r}deg); z-index:{3 + k}; box-shadow:0 [[14]] [[26]] rgba(0,0,0,.25)">{card1(i)}</div>'
-                      for k, (i, x, y, r) in enumerate(((0, 60, 640, -10), (1, 230, 690, 2), (2, 400, 650, 12))))
-            + f'<p style="left:[[70]]; top:[[110]]; z-index:4; {JPB}; font-size:[[64]]; line-height:1.5">はじまりは、<br>お茶。</p>',
-            "100%", f"background:{STONE}; color:{INK}", cls="flat post")
-story_o = ab(9, 16, photo("[[0]]", "[[420]]", "100%", "1000/900", "Hands, the bar and the bottle", "both studios")
-             + f'<div style="left:[[70]]; right:[[70]]; top:[[110]]">{wm("100%", WHITE)}</div>'
-             + caps("naʻau × Ivycoast · ［月日］", "[[30]]", f"position:absolute; left:[[70]]; top:[[300]]; color:{WHITE}")
-             + f'<div style="right:[[-60]]; top:[[1100]]; width:[[620]]; z-index:3">{el("mother", "100%", WHITE)}</div>'
-             + f'<p style="left:[[70]]; bottom:[[110]]; z-index:4; {JPB}; font-size:[[60]]; line-height:1.5; color:{WHITE}">発酵が<br>生み出す美しさ。</p>',
-             "100%", f"background:{GREEN}", cls="flat story")
-posts_row = ('<div class="soc">' + pf(post_a, "Photo, piece and wordmark", "the box laid over the studio photograph; the wordmark across the foot", plate=False)
-             + pf(post_b, "Photo and vertical line", "the sun crosses the photo’s edge; the line overlaps it", plate=False)
-             + pf(post_c, "Photo and story cards", "the cards fanned over the photograph’s lower edge", plate=False)
-             + pf(story_o, "Story", "the photograph runs behind the type and the mother", plate=False) + '</div>')
-
 world = ('<h3 class="wsub">Opening the box</h3>' + opening + cap("Opening the box", "inside the lid, the brand’s closing line set vertically; tea-leaf tissue, four story cards, the bar")
          + '<h3 class="wsub">At the counter and at markets</h3><div class="two-uneven"><div>' + market + cap("Batch bands", "the bare bar, dated with a round date stamp for each cure") + '</div><div>' + counter_s + cap("Counter card, A6") + '</div></div>'
          + '<h3 class="wsub">Posts</h3>' + posts_row
          + '<h3 class="wsub">Launch</h3><div class="two-uneven rev"><div>' + poster_s + cap("Poster, A3", "for both shop windows") + '</div><div>' + feed_s + cap("The feed", "collab posts from both accounts") + '</div></div>'
-         + '<h3 class="wsub">How it’s made</h3>' + carousel + cap("Carousel, five slides", "one continuous line from tea to the coast")
+         + '<h3 class="wsub">How it’s made</h3>' + carousel + cap("Carousel, five slides", "five photographs, tea to scent; on each, one element crosses the photograph’s edge")
          + '<h3 class="wsub">Online</h3>' + web
          + '<h3 class="wsub">As a gift</h3>' + gift_s + cap("Gift set and mailer", "a white 掛け紙 band on green; the route from Nagoya to the Ivycoast studio on the mailer"))
 
 # ---------------- 05 voice
-voice = (f'<div class="voice-lead"><p class="jp">{LINES[0][0]}</p><p class="it">{LINES[0][1]}</p></div>'
-         '<div class="voice-lines">' + "".join(f'<div><p class="jp">{j}</p><p class="it">{e}</p></div>' for j, e in LINES[1:3]) + '</div>'
-         '<div class="lang"><div><p class="lang-voice"><b>Japanese first, English as a quiet second line.</b> Sensory and process-led: what it is, how it’s made, how it feels to use. Calm like Ivycoast; warm and personal like naʻau. No exclamation marks, no superlatives.</p>'
+PRINCIPLES = [
+    ("素材と、場所と、人で名づける。", "Name it by what, where and who.", "SHIRO · Flamingo Estate", f"{DESCR[0]}／naʻau（名古屋）のコンブチャ"),
+    ("本当の数字を、ひとつ。", "One true number.", "Le Labo", "14日、仕込む。60日、待つ。"),
+    ("香りは、情景で。", "Scent as a scene, not a list.", "Le Labo · Aesop", br(SCENT[0])),
+    ("時間こそ、贅沢。", "Time is the luxury.", "Aesop · SHIRO", "仕込む、育てる、切る、待つ。"),
+    ("飾らず、正直に。", "Say the plain truth.", "SHIRO", HONEST[0]),
+    ("表は静かに、裏は詳しく。", "A quiet front, a full back.", "Aesop", "表：名前と一行だけ。裏：物語、使い方、全成分。"),
+]
+VOICE_LINES = [("Tagline", TAG), ("Descriptor", DESCR), ("The mother", MOTHER), ("The numbers", NUM), ("Scent", SCENT), ("Origin", ORIGIN), ("Use", USE)]
+voice = (f'<div class="voice-lead"><p class="jp">{TAG[0]}</p><p class="it">{TAG[1]}</p></div>'
+         '<div class="vprin">' + "".join(f'<div><p class="vprin-n">{i:02d}</p><p class="vprin-h">{C.T(j, e)}</p><p class="vprin-x">{x}</p><p class="vprin-r">{C.T("参考：", "From ")}{r}</p></div>'
+                                         for i, (j, e, r, x) in enumerate(PRINCIPLES, 1)) + '</div>'
+         '<h3 class="lang-h">' + C.T("言葉の一覧", "The lines") + '</h3><div class="vlines">'
+         + "".join(f'<div><p class="vlines-k">{C.t(k)}</p><p class="jp">{br(j)}</p><p class="it">{e}</p></div>' for k, (j, e) in VOICE_LINES) + '</div>'
+         '<p class="muted" style="font-size:14px; margin-top:12px">' + C.T("14日と60日は、kimy と Ivycoast に確認のうえ使用します。数字は本当のものだけを使います。", "Fourteen and sixty days to be confirmed with kimy and Ivycoast; we only print numbers that are true.") + '</p>'
+         '<div class="lang"><div><p class="lang-voice"><b>Japanese first, English as its own line.</b> Each line is written twice, not translated: Japanese in calm です/ます or short verb-less phrases; English drier and shorter. No exclamation marks, no superlatives, no claims.</p>'
          '<h3 class="lang-h">Names</h3><dl class="facts"><dt>naʻau × Ivycoast</dt><dd>With the ʻokina, and a multiplication sign ×, not the letter x.</dd>'
-         f'<dt>KOM’BAR</dt><dd>{KB_DEF2}</dd><dt>SCOBY（スコビー）</dt><dd>Explained once as 細菌と酵母の共生培養体.</dd></dl></div>'
+         f'<dt>KOM’BAR</dt><dd>{KB_DEF2}</dd><dt>SCOBY（スコビー）</dt><dd>Explained once as 細菌と酵母の共生培養体; called 「母」 the mother, in brackets, as brewers do.</dd></dl></div>'
          '<div><h3 class="lang-h" style="margin-top:0">Words we can use, for soap</h3>'
-         '<ul class="words ok">' + "".join(f'<li class="jp">{w}</li>' for w in ("肌を清浄にする（洗浄により）", "肌を整える／肌のキメを整える", "皮膚をすこやかに保つ", "SCOBYの粉末をスクラブとして配合")) + '</ul>'
-         '<h3 class="lang-h">Words we avoid</h3><ul class="words no">' + "".join(f'<li class="jp">{w}</li>' for w in ("美白、アンチエイジング、若返る", "「発酵の力で肌が生まれ変わる」など、効能をうたう表現", "腸活・腸内環境など、飲料の健康効果と石鹸を結びつける表現", "治る、改善、医師・看護師がすすめる")) + '</ul>'
+         '<ul class="words ok">' + "".join(f'<li class="jp">{w}</li>' for w in ("肌を清浄にする（洗浄により）", "肌を整える／肌のキメを整える", "皮膚をすこやかに保つ", "SCOBYの粉末をスクラブとして配合", "香り：シダーウッド、マンダリンなど精油の名前")) + '</ul>'
+         '<h3 class="lang-h">Words we avoid</h3><ul class="words no">' + "".join(f'<li class="jp">{w}</li>' for w in ("美白、アンチエイジング、若返る", "「発酵の力で肌が生まれ変わる」など、効能をうたう表現", "腸活・腸内環境など、飲料の健康効果と石鹸を結びつける表現", "「生きた菌が肌に働く」など、菌の作用をうたう表現", "リラックス効果など、精油の効能", "治る、改善、医師・看護師がすすめる")) + '</ul>'
          '<p class="muted" style="font-size:13px; margin-top:14px">Final copy to be checked against 薬機法 by the party holding the cosmetics licence.</p></div></div>')
 
 # ---------------- 06 next steps

@@ -49,8 +49,8 @@ RESEARCH = [
 
 COVERS = [
  ("current", "#FFFFFF", "#1E1E1E", L(D["current"], "1e1e1e", "46%"), "Current identity", "kimy’s script, as it is", "kimy’s script as it is: white, ink, centred, photo-led, round sticker labels."),
- ("lenora", "#2B2926", "#EFEBE2", L(D["lenora"], "efebe2", "56%"), "Concept A · Lenora", "Bottled for one", "A made-to-order atelier: sumi, wide margins, batch numerals, labels made out to one person."),
- ("ogg", "#FAF7F1", "#3A3631", L(D["ogg"], "3a3631", "56%"), "Concept B · Ogg", "The pause", "Airy and hand-made: vertical Japanese, kimy’s handwritten notes, band labels and string tags."),
+ ("lenora", "#2B2926", "#EFEBE2", L(D["lenora"], "efebe2", "56%"), "Concept A · Lenora", "Teate, care by hand", "Black and white: linocut prints and photographs of hands at work, with one red. Craft, old knowledge and care."),
+ ("ogg", "#FAF7F1", "#3A3631", L(D["ogg"], "3a3631", "56%"), "Concept B · Ogg", "The pause", "Airy and hand-made, a little more exclusive: kimy’s notes and vertical Japanese, a deep board per flavour, photographs framed like windows."),
 ]
 
 hero = ('<header class="wrap ov-hero">'
