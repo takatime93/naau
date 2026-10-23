@@ -7,8 +7,11 @@ import sys
 sys.path.insert(0, sys.argv[2])
 import common as C
 import kombar as KB
+KB_DEF0 = C.T("<b>KOM</b>bucha + <b>BAR</b> soap · コンブチャの石けん", "<b>KOM</b>bucha + <b>BAR</b> soap")
+KB_DEF1 = C.T("KOM’BAR：<b>KOM</b>bucha（コンブチャ）＋ <b>BAR</b> soap（固形石けん）", "KOM’BAR: <b>KOM</b>bucha + <b>BAR</b> soap")
+KB_DEF2 = C.T("<b>KOM</b>bucha ＋ <b>BAR</b> soap の略。常に大文字で表記し、見出しではロゴを使います。", "<b>KOM</b>bucha + <b>BAR</b> soap. Always in capitals; set as the drawn wordmark wherever it is the headline.")
 import ink as K
-from common import D, L, ab, pf, still, sec
+from common import D, L, ab, pf, still, sec, ph
 C.SITE = sys.argv[1]
 
 PEACH, INK, PAPER, GREEN, AMBER, KRAFT, MUTE = "#F4D9C6", "#1E1E1E", "#F6F1E9", "#144948", "#9C5B22", "#CDB48E", "#6E655B"
@@ -50,7 +53,8 @@ def rows(items, size, col="rgba(30,30,30,.35)", pad="[[10]]", extra=""):
 BW, BH, BD = 90, 44, 30
 STORY = ['コンブチャは、細菌と酵母が共に働くことで生まれる、伝統的な発酵茶です。', 'その発酵を支えるのが、SCOBY（スコビー）。<br>Symbiotic Culture of Bacteria and Yeast<br>細菌と酵母の共生培養体を意味します。', '発酵が進むにつれて、SCOBYはバクテリアセルロースからなる繊細な膜を育んでいきます。大切に育てたSCOBYを細かな粉末にし、やさしいスクラブとして石鹸に取り入れました。', '発酵から生まれた素材を、手仕事によって新たなかたちへ。丁寧に仕込んだコンブチャの発酵液と、このSCOBYの粉末を組み合わせ、発酵の物語を手づくりの石鹸へとつなぎました。', '時間をかけて育まれるものの豊かさ、変化することの美しさ、そして人の手から生まれるものへの敬意を込めて。']
 CLOSE = "育てる時間。手をかけること。自然から学ぶこと。"
-LABEL = [("品名", "化粧石けん"), ("内容量", "［　］g"), ("全成分", "［確認中］"), ("使用方法", "よく泡立てて使用し、洗い流す"), ("製造販売元", "［　］"), ("原産国", "日本")]
+INGREDIENTS = "オリーブ油、ヤシ油、米油、パーム油、カカオ脂、ヒマシ油、精製水、水酸化Na、コンブチャ、コンブチャSCOBY、シダーウッド精油、パチュリ精油、マンダリン精油、ホワイトセージ精油"
+LABEL = [("品名", "化粧石けん"), ("内容量", "［　］g"), ("全成分", INGREDIENTS), ("使用方法", "よく泡立てて使用し、洗い流す"), ("製造販売元", "［　］"), ("原産国", "日本")]
 
 def face_front(w="100%"):
     """The front, from Ivycoast's own file (assets/collab/source/kombar-front.svg), centred with an even margin."""
@@ -72,7 +76,7 @@ def face_back(w="100%"):
               + f'<p style="left:[[56]]; top:[[84]]; {JPB}; font-size:[[36]]; line-height:1.3">発酵が生み出す美しさ。</p>'
               f'<p style="left:[[56]]; top:[[150]]; width:[[440]]; font-family:var(--sans); font-size:[[16]]; line-height:1.9">{STORY[0]}大切に育てたSCOBYを細かな粉末にし、やさしいスクラブとして石鹸に取り入れました。</p>'
               f'<div style="left:[[56]]; bottom:[[48]]">{pair("[[118]]")}</div>'
-              f'<div style="left:[[580]]; right:[[56]]; top:[[52]]">' + rows(LABEL, "[[13]]", pad="[[6.5]]") + '</div>'
+              f'<div style="left:[[580]]; right:[[56]]; top:[[46]]">' + rows(LABEL, "[[11.5]]", pad="[[5]]") + '</div>'
               f'<div style="right:[[56]]; bottom:[[62]]">{bars("[[150]]", "[[46]]")}</div>'
               f'<p style="right:[[56]]; bottom:[[44]]; width:[[150]]; {SANS}; font-size:[[10]]; letter-spacing:.3em; text-align:center">4 ［　　　　　　］</p>',
               w, f"background:{PEACH}; color:{INK}", cls="flat")
@@ -131,7 +135,7 @@ def dieline():
 hero = (f'<header class="kb2"><div class="wrap kb2-grid">'
         f'<div class="kb2-text"><p class="kb-eyebrow">naʻau × Ivycoast · 2026</p>'
         f'<div class="kb2-wm">{wm("100%", INK)}</div>'
-        f'<p class="kb2-def"><b>KOM</b>bucha + <b>BAR</b> soap</p>'
+        f'<p class="kb2-def">{KB_DEF0}</p>'
         f'<p class="kb-jp">発酵が生み出す美しさ。</p><p class="kb-en">A cold-process bar soap made with naʻau’s kombucha and the SCOBY that brews it.</p>'
         f'<div class="kb2-lock">{pair("128px")}</div></div>'
         f'<div class="kb2-art">{el("mother", "100%", INK)}</div>'
@@ -156,7 +160,7 @@ product = ('<div class="grid g2" style="align-items:start">'
            + pf(face_back("100%"), "Back, new", "The headline and the first lines of the story; the label in order; naʻau (Concept B), Ivycoast and KOM’BAR.", plate=False)
            + '</div><div class="grid g-wide" style="margin-top:clamp(24px,3vw,40px); align-items:center">'
            + pf(f'<div style="width:46%">{insert_card("100%")}</div>', "Story card inside the lid, 85 × 120 mm", "The full text, legible at 6 pt and above; the mother cropped off the corner.", "1/1")
-           + '<dl class="facts facts-lg"><dt>Name</dt><dd>KOM’BAR: <b>KOM</b>bucha + <b>BAR</b> soap</dd><dt>Product</dt><dd>Organic kombucha cold-processed bar soap</dd><dt>Made with</dt><dd>naʻau kombucha ferment, and SCOBY powder as a gentle scrub</dd>'
+           + '<dl class="facts facts-lg"><dt>Name</dt><dd>{KB_DEF1}</dd><dt>Product</dt><dd>Organic kombucha cold-processed bar soap</dd><dt>Made with</dt><dd>naʻau kombucha ferment, and SCOBY powder as a gentle scrub</dd>'
            '<dt>Made by</dt><dd>Ivycoast, by hand</dd><dt>Box</dt><dd>90 × 44 × 30 mm ［to confirm］</dd><dt>Weight</dt><dd>［　g］</dd><dt>全成分</dt><dd>［to confirm］</dd></dl></div>')
 
 # ====================================================================== 03 elements
@@ -187,7 +191,7 @@ type_card = ab(16, 9, f'<div style="left:[[60]]; top:[[60]]; width:[[440]]">{wm(
                f'<p style="left:[[60]]; top:[[430]]; {SANS}; font-size:[[16]]; letter-spacing:.2em; color:{MUTE}">VOICE · EB GARAMOND ITALIC, ONE LINE ONLY</p>'
                + caps("Organic kombucha cold processed bar soap", "[[24]]", f"position:absolute; left:[[60]]; top:[[480]]")
                + f'<p style="left:[[60]]; top:[[520]]; {SANS}; font-size:[[16]]; letter-spacing:.2em; color:{MUTE}">CAPTIONS · INTER, TRACKED CAPITALS</p>'
-               f'<div style="right:[[60]]; top:[[60]]; width:[[360]]">' + rows([("WITH", "kombucha + SCOBY"), ("MADE BY", "Ivycoast"), ("CURED", "［　］ weeks"), ("WEIGHT", "［　］ g")], "[[17]]", pad="[[8]]") + '</div>'
+               f'<div style="right:[[60]]; top:[[60]]; width:[[360]]">' + rows([("WITH", "kombucha + SCOBY"), ("MADE BY", "Ivycoast"), ("CURED", "2 months"), ("WEIGHT", "［　］ g")], "[[17]]", pad="[[8]]") + '</div>'
                f'<p style="right:[[60]]; top:[[250]]; width:[[360]]; {SANS}; font-size:[[16]]; letter-spacing:.2em; color:{MUTE}">DETAILS · INTER, RULED ROWS</p>'
                f'<div style="right:[[-30]]; bottom:[[-110]]; width:[[250]]">{el("tea", "100%", GREEN)}</div>',
                "100%", f"background:{PAPER}; color:{INK}", cls="flat")
@@ -223,10 +227,10 @@ def mailer():
               "100%", "background:transparent", cls="flat")
 
 def mailer_inside():
+    """Inside the lid: the brand's own closing line, as the first thing read on opening."""
     return ab(4, 3, f'<div class="fill" style="background:{TURMERIC}"></div><div style="left:[[-60]]; bottom:[[-200]]; width:[[600]]">{el("sun", "100%", INK)}</div>'
-              f'<p style="right:[[80]]; top:[[110]]; {JPB}; font-size:[[56]]; line-height:1.5; text-align:right; white-space:nowrap">ひらいてくれて、<br>ありがとう。</p>'
-              f'<p class="it" style="right:[[80]]; top:[[320]]; font-family:var(--lat); font-size:[[30]]; text-align:right">Thank you for opening this.</p>'
-              f'<div style="right:[[80]]; bottom:[[70]]">{lockup("[[120]]", "[[150]]", "[[10]]", "flex-end")}</div>',
+              f'<p class="vt" style="right:[[90]]; top:[[80]]; {JPB}; font-size:[[50]]; line-height:1.9; letter-spacing:.12em">育てる時間。<br>手をかけること。<br>自然から学ぶこと。</p>'
+              f'<div style="right:[[80]]; bottom:[[70]]">{lockup("[[120]]")}</div>',
               "100%", "background:transparent", cls="flat")
 
 def tissue():
@@ -260,7 +264,7 @@ def story_card(no, name, word, line_jp, line_en, bg, fg, ew=640, w="23%"):
 
 CARD_ARGS = [("01", "tea", "Tea", "はじまりは、お茶。", "It begins with tea.", WHITE, GREEN, 640),
              ("02", "mother", "The mother", "SCOBYは、コンブチャの母。", "The SCOBY is the mother.", WHITE, INK, 600),
-             ("03", "sun", "Time", "石鹸になるまで、数週間。", "Weeks of curing.", WHITE, PERSIMMON, 640),
+             ("03", "sun", "Time", "石鹸になるまで、二ヶ月。", "Two months of curing.", WHITE, PERSIMMON, 640),
              ("04", "bird", "Ivycoast", "海辺の工房で、手で切る。", "Cut by hand by the coast.", WHITE, GREEN, 700)]
 card1 = lambda i: story_card(*CARD_ARGS[i], w="100%")
 
@@ -294,8 +298,8 @@ def post(inner, bg, fg=INK):
 p_reveal = post(f'<div style="left:[[110]]; top:[[230]]; width:[[780]]; transform:rotate(-4deg); box-shadow:0 [[30]] [[50]] rgba(60,40,30,.28)">{face_front("100%")}</div>'
                 f'<div style="left:[[70]]; right:[[70]]; bottom:[[90]]">{wm("100%", INK)}</div>' + caps("naʻau × Ivycoast · ［月日］", "[[24]]", "position:absolute; left:[[70]]; top:[[80]]"), PAPER)
 p_sun = post(f'<div style="right:[[-250]]; top:[[-220]]; width:[[900]]">{el("sun", "100%", TURMERIC)}</div>'
-             f'<p style="left:[[70]]; bottom:[[220]]; {JPB}; font-size:[[90]]; line-height:1.4; color:{WHITE}">四週間、<br>待ちました。</p>'
-             f'<p class="it" style="left:[[70]]; bottom:[[150]]; font-family:var(--lat); font-size:[[40]]; color:{WHITE}">Cured for four weeks.</p>'
+             f'<p style="left:[[70]]; bottom:[[220]]; {JPB}; font-size:[[90]]; line-height:1.4; color:{WHITE}">二ヶ月、<br>待ちました。</p>'
+             f'<p class="it" style="left:[[70]]; bottom:[[150]]; font-family:var(--lat); font-size:[[40]]; color:{WHITE}">Cured for two months.</p>'
              f'<div style="left:[[70]]; bottom:[[70]]; width:[[260]]">{wm("100%", WHITE)}</div>', GREEN)
 p_mother = post(f'<div style="left:[[-120]]; bottom:[[-140]]; width:[[820]]">{el("mother", "100%", INK)}</div>'
                 f'<p style="right:[[70]]; top:[[90]]; {JPB}; font-size:[[78]]; line-height:1.45; text-align:right">SCOBYは、<br>コンブチャの<br>「母」。</p>'
@@ -348,9 +352,9 @@ def pdp():
               f'<div class="col" style="left:[[540]]; right:[[40]]; top:[[90]]; gap:[[16]]">{wm("[[260]]", INK)}'
               + caps("naʻau × Ivycoast · Organic kombucha bar soap", "[[11]]", "position:static")
               + f'<p style="position:static; {JPB}; font-size:[[24]]">発酵が生み出す美しさ。</p>'
-              f'<p style="position:static; font-family:var(--sans); font-size:[[12]]; line-height:1.9; color:#3E3833">名古屋の naʻau が仕込んだコンブチャの発酵液と、SCOBY の粉末を練り込み、Ivycoast が手で切り分けて数週間寝かせた石鹸です。</p>'
+              f'<p style="position:static; font-family:var(--sans); font-size:[[12]]; line-height:1.9; color:#3E3833">名古屋の naʻau が仕込んだコンブチャの発酵液と、SCOBY の粉末を練り込み、Ivycoast が手で切り分けて二ヶ月かけて熟成させた石鹸です。</p>'
               f'<p style="position:static; {SANS}; font-size:[[22]]">¥［　］<span style="font-size:[[11]]">（税込）</span></p>'
-              + rows([("WITH", "naʻau kombucha + SCOBY"), ("MADE BY", "Ivycoast, by hand"), ("CURED", "［　］ weeks"), ("SHIPPING", "常温便 · ［　］日でお届け")], "[[11]]", pad="[[6]]") +
+              + rows([("WITH", "naʻau kombucha + SCOBY"), ("MADE BY", "Ivycoast, by hand"), ("CURED", "2 months"), ("SHIPPING", "常温便 · ［　］日でお届け")], "[[11]]", pad="[[6]]") +
               f'<p style="position:static; background:{GREEN}; color:{PAPER}; text-align:center; padding:[[12]] 0; {SANS}; font-size:[[12]]; letter-spacing:.2em">カートに入れる</p></div>',
               "100%", f"background:{PAPER}; color:{INK}", cls="flat")
 
@@ -383,7 +387,7 @@ language = ('<div class="lang">'
             '<div><p class="lang-voice"><b>Japanese first, English as a quiet second line.</b> Sensory and process-led: what it is, how it’s made, how it feels to use. Calm like Ivycoast; warm and personal like naʻau. No exclamation marks, no superlatives.</p>'
             '<h3 class="lang-h">Key lines</h3><div class="lines">' + "".join(f'<div><p class="jp">{j}</p><p class="it">{e}</p></div>' for j, e in LINES) + '</div>'
             '<h3 class="lang-h">Names</h3><dl class="facts"><dt>naʻau × Ivycoast</dt><dd>With the ʻokina, and a multiplication sign ×, not the letter x.</dd>'
-            '<dt>KOM’BAR</dt><dd><b>KOM</b>bucha + <b>BAR</b> soap. Always in capitals; set as the drawn wordmark wherever it is the headline.</dd><dt>SCOBY（スコビー）</dt><dd>Explained once as 細菌と酵母の共生培養体.</dd></dl></div>'
+            f'<dt>KOM’BAR</dt><dd>{KB_DEF2}</dd><dt>SCOBY（スコビー）</dt><dd>Explained once as 細菌と酵母の共生培養体.</dd></dl></div>'
             '<div><h3 class="lang-h" style="margin-top:0">Words we can use, for soap</h3><p class="muted" style="font-size:15px; margin-bottom:10px">Soap is a cosmetic, so claims stay inside the approved cosmetic effects.</p>'
             '<ul class="words ok">' + "".join(f'<li class="jp">{w}</li>' for w in ("肌を清浄にする（洗浄により）", "肌を整える／肌のキメを整える", "皮膚をすこやかに保つ", "SCOBYの粉末をスクラブとして配合")) + '</ul>'
             '<h3 class="lang-h">Words we avoid</h3><ul class="words no">' + "".join(f'<li class="jp">{w}</li>' for w in ("美白、アンチエイジング、若返る", "「発酵の力で肌が生まれ変わる」など、効能をうたう表現", "腸活・腸内環境など、飲料の健康効果と石鹸を結びつける表現", "治る、改善、医師・看護師がすすめる")) + '</ul>'
@@ -445,13 +449,13 @@ def chapter(n, title, desc, content, bg="var(--page)", fg="var(--ink)", sid="", 
             f'<header class="chap-h"><p class="chap-l"><span>{n}</span>{title}</p>' + (f'<p class="chap-d">{desc}</p>' if desc else '') + f'</header>{content}</div></section>')
 
 def cap(title, spec=""):
-    return f'<p class="scap"><b>{title}</b>{(" — " + spec) if spec else ""}</p>'
+    return f'<p class="scap"><b>{C.t(title)}</b>{(" — " + C.t(spec)) if spec else ""}</p>'
 
 # ---------------- cover
 cover = (f'<header class="cover2" style="background:{GREEN}; color:{WHITE}"><div class="wrap cover2-in">'
          f'<div class="cover2-top"><span>naʻau × Ivycoast</span><span>A proposal for both teams · 2026</span></div>'
          f'<div class="cover2-box">{face_front("100%")}</div>'
-         f'<div class="cover2-foot"><p class="cover2-jp">発酵が生み出す美しさ。</p><p class="kb2-def"><b>KOM</b>bucha + <b>BAR</b> soap</p>'
+         f'<div class="cover2-foot"><p class="cover2-jp">発酵が生み出す美しさ。</p><p class="kb2-def">{KB_DEF0}</p>'
          f'<div class="cover2-lock">{pair("150px", "ffffff", "white")}</div></div>'
          f'</div></header>')
 
@@ -466,6 +470,18 @@ idea = ('<div class="idea"><p class="idea-big">Kombucha, brewed in Nagoya.<br>So
 def lay(x, y, w, inner, label):
     return obj(x, y, w, inner + f'<p class="lay-l">{label}</p>', 0, 1)
 
+# ---------------- how it's made: Ivycoast's cold-process copy, adapted for KOM'BAR (no CBD superfat)
+PROCESS_JP = [
+    "コールドプロセスという方法で。熱を加えず、近道もしない。植物油は反応そのものが生む穏やかな熱だけで変化し、そのままの力を保ちます。",
+    "そして、時間に委ねます。二ヶ月間の熟成を経て、やさしく、しっとりとした使い心地の石鹸が完成します。",
+    "配合はシンプルに。植物由来のオイル、水酸化ナトリウム、精製水、そして naʻau のコンブチャと SCOBY。合成香料も、添加物も、防腐剤も、着色料も使いません。香りは四つの精油だけ。",
+]
+PROCESS = ('<div class="proc"><p class="proc-lead">ゆっくりと。<span>それが、私たちの石鹸のつくり方です。</span></p>'
+           '<div class="proc-body">' + "".join(f'<p>{t}</p>' for t in PROCESS_JP) +
+           '<p class="it">Slowly. Cold process: no added heat, no shortcuts, two months of curing. Plant oils, sodium hydroxide and water, '
+           'with naʻau’s kombucha and SCOBY. Nothing synthetic; the scent is four essential oils.</p></div></div>')
+INGR_BLOCK = (f'<div class="ingr"><p class="ingr-h">Ingredients / 全成分</p><p class="jp">{INGREDIENTS}</p></div>')
+
 # all panels at one scale: 90 mm = 43% of the scene width
 MM = 43 / 90
 # front and back large, one end beside them at true scale; the lid and base live on the dieline
@@ -476,9 +492,11 @@ product_scene = scene("#ECE7DE", "16/11",
 card_scene = scene(GREEN, "4/5", obj(12, 7, 76, insert_card("100%"), 0, 1, "deep"))
 product2 = (product_scene + cap("The box", "the front as Ivycoast designed it; a new back; one element on each end. Lid and base on the dieline below") +
             '<div class="two-uneven rev" style="margin-top:clamp(28px,4vw,56px)"><div>' + card_scene + cap("Story card inside the lid, 85 × 120 mm", "the full text") + '</div>'
-            '<dl class="facts facts-lg" style="align-self:center"><dt>Name</dt><dd>KOM’BAR: <b>KOM</b>bucha + <b>BAR</b> soap</dd><dt>Product</dt><dd>Organic kombucha cold-processed bar soap</dd>'
-            '<dt>Made with</dt><dd>naʻau kombucha ferment, and SCOBY powder as a gentle scrub</dd><dt>Made by</dt><dd>Ivycoast, by hand</dd>'
-            '<dt>Box</dt><dd>90 × 44 × 30 mm ［to confirm］</dd><dt>Weight</dt><dd>［　g］</dd><dt>全成分</dt><dd>［to confirm］</dd></dl></div>'
+            f'<dl class="facts facts-lg" style="align-self:center"><dt>Name</dt><dd>{KB_DEF1}</dd><dt>Product</dt><dd>Organic kombucha cold-processed bar soap</dd>'
+            '<dt>Made with</dt><dd>naʻau kombucha, and SCOBY powder as a gentle scrub</dd><dt>Made by</dt><dd>Ivycoast, by hand</dd>'
+            '<dt>Method</dt><dd>Cold process, cured for two months</dd><dt>Scent</dt><dd>Cedarwood, patchouli, mandarin and white sage essential oils</dd>'
+            '<dt>Box</dt><dd>90 × 44 × 30 mm ［to confirm］</dd><dt>Weight</dt><dd>［　g］</dd></dl></div>'
+            + PROCESS + INGR_BLOCK +
             '<div style="margin-top:clamp(40px,5vw,72px); background:#F6F1E9; padding:clamp(20px,4vw,56px)">' + dieline() + '</div>' + cap("Dieline", "to confirm with Ivycoast’s printer"))
 
 # ---------------- 03 the artwork system
@@ -501,8 +519,40 @@ phone_feed = (f'<div class="phone big"><div class="phone-screen"><div class="ig-
 feed_s = f'<div class="scene" style="background:{GREEN}; aspect-ratio:4/3; display:flex; align-items:center; justify-content:center">{phone_feed}</div>'
 gift_s = scene("#ECE7DE", "16/9", obj(8, 10, 54, kakegami(), -3, 1, "deep") + obj(58, 30, 36, mailer(), 5, 2))
 
-world = ('<h3 class="wsub">Opening the box</h3>' + opening + cap("Opening the box", "turmeric inside the lid, tea-leaf tissue, four story cards, the bar")
+# ---------------- posts that layer photography, type and the printed pieces
+STONE = "#ECE7DE"
+def photo(left, top, width, ratio, subject, light="", z=1):
+    return (f'<div style="left:{left}; top:{top}; width:{width}; z-index:{z}">'
+            + still("collab", "single", ratio, cap=light, subject=subject) + '</div>')
+
+post_a = ab(3, 4, photo("[[70]]", "[[70]]", "[[700]]", "700/900", "Cutting the bars", "Ivycoast studio · morning light")
+            + f'<div style="left:[[420]]; top:[[640]]; width:[[520]]; transform:rotate(-5deg); z-index:3; box-shadow:0 [[24]] [[44]] rgba(0,0,0,.35)">{face_front("100%")}</div>'
+            + f'<div style="left:[[70]]; right:[[70]]; bottom:[[70]]; z-index:4">{wm("100%", WHITE)}</div>',
+            "100%", f"background:{GREEN}", cls="flat post")
+post_b = ab(3, 4, photo("[[0]]", "[[200]]", "[[640]]", "640/860", "The curing rack", "two months, bars on edge")
+            + f'<div style="left:[[460]]; top:[[110]]; width:[[300]]; z-index:3">{el("sun", "100%", TURMERIC)}</div>'
+            + f'<p class="vt" style="right:[[90]]; top:[[420]]; z-index:4; {JPB}; font-size:[[84]]; line-height:1.5; letter-spacing:.1em">二ヶ月、<br>待ちました。</p>'
+            + caps("KOM’BAR · Cold process", "[[24]]", "position:absolute; left:[[70]]; bottom:[[70]]; z-index:4"),
+            "100%", f"background:{WHITE}; color:{INK}", cls="flat post")
+post_c = ab(3, 4, photo("[[280]]", "[[70]]", "[[650]]", "650/820", "The brewing jar", "naʻau, Nagoya")
+            + "".join(f'<div style="left:[[{x}]]; top:[[{y}]]; width:[[240]]; transform:rotate({r}deg); z-index:{3 + k}; box-shadow:0 [[14]] [[26]] rgba(0,0,0,.25)">{card1(i)}</div>'
+                      for k, (i, x, y, r) in enumerate(((0, 60, 640, -10), (1, 230, 690, 2), (2, 400, 650, 12))))
+            + f'<p style="left:[[70]]; top:[[110]]; z-index:4; {JPB}; font-size:[[64]]; line-height:1.5">はじまりは、<br>お茶。</p>',
+            "100%", f"background:{STONE}; color:{INK}", cls="flat post")
+story_o = ab(9, 16, photo("[[0]]", "[[420]]", "100%", "1000/900", "Hands, the bar and the bottle", "both studios")
+             + f'<div style="left:[[70]]; right:[[70]]; top:[[110]]">{wm("100%", WHITE)}</div>'
+             + caps("naʻau × Ivycoast · ［月日］", "[[30]]", f"position:absolute; left:[[70]]; top:[[300]]; color:{WHITE}")
+             + f'<div style="right:[[-60]]; top:[[1100]]; width:[[620]]; z-index:3">{el("mother", "100%", WHITE)}</div>'
+             + f'<p style="left:[[70]]; bottom:[[110]]; z-index:4; {JPB}; font-size:[[60]]; line-height:1.5; color:{WHITE}">発酵が<br>生み出す美しさ。</p>',
+             "100%", f"background:{GREEN}", cls="flat story")
+posts_row = ('<div class="soc">' + pf(post_a, "Photo, piece and wordmark", "the box laid over the studio photograph; the wordmark across the foot", plate=False)
+             + pf(post_b, "Photo and vertical line", "the sun crosses the photo’s edge; the line overlaps it", plate=False)
+             + pf(post_c, "Photo and story cards", "the cards fanned over the photograph’s lower edge", plate=False)
+             + pf(story_o, "Story", "the photograph runs behind the type and the mother", plate=False) + '</div>')
+
+world = ('<h3 class="wsub">Opening the box</h3>' + opening + cap("Opening the box", "inside the lid, the brand’s closing line set vertically; tea-leaf tissue, four story cards, the bar")
          + '<h3 class="wsub">At the counter and at markets</h3><div class="two-uneven"><div>' + market + cap("Batch bands", "the bare bar, dated with a round date stamp for each cure") + '</div><div>' + counter_s + cap("Counter card, A6") + '</div></div>'
+         + '<h3 class="wsub">Posts</h3>' + posts_row
          + '<h3 class="wsub">Launch</h3><div class="two-uneven rev"><div>' + poster_s + cap("Poster, A3", "for both shop windows") + '</div><div>' + feed_s + cap("The feed", "collab posts from both accounts") + '</div></div>'
          + '<h3 class="wsub">How it’s made</h3>' + carousel + cap("Carousel, five slides", "one continuous line from tea to the coast")
          + '<h3 class="wsub">Online</h3>' + web
@@ -513,7 +563,7 @@ voice = (f'<div class="voice-lead"><p class="jp">{LINES[0][0]}</p><p class="it">
          '<div class="voice-lines">' + "".join(f'<div><p class="jp">{j}</p><p class="it">{e}</p></div>' for j, e in LINES[1:3]) + '</div>'
          '<div class="lang"><div><p class="lang-voice"><b>Japanese first, English as a quiet second line.</b> Sensory and process-led: what it is, how it’s made, how it feels to use. Calm like Ivycoast; warm and personal like naʻau. No exclamation marks, no superlatives.</p>'
          '<h3 class="lang-h">Names</h3><dl class="facts"><dt>naʻau × Ivycoast</dt><dd>With the ʻokina, and a multiplication sign ×, not the letter x.</dd>'
-         '<dt>KOM’BAR</dt><dd><b>KOM</b>bucha + <b>BAR</b> soap. Always in capitals.</dd><dt>SCOBY（スコビー）</dt><dd>Explained once as 細菌と酵母の共生培養体.</dd></dl></div>'
+         f'<dt>KOM’BAR</dt><dd>{KB_DEF2}</dd><dt>SCOBY（スコビー）</dt><dd>Explained once as 細菌と酵母の共生培養体.</dd></dl></div>'
          '<div><h3 class="lang-h" style="margin-top:0">Words we can use, for soap</h3>'
          '<ul class="words ok">' + "".join(f'<li class="jp">{w}</li>' for w in ("肌を清浄にする（洗浄により）", "肌を整える／肌のキメを整える", "皮膚をすこやかに保つ", "SCOBYの粉末をスクラブとして配合")) + '</ul>'
          '<h3 class="lang-h">Words we avoid</h3><ul class="words no">' + "".join(f'<li class="jp">{w}</li>' for w in ("美白、アンチエイジング、若返る", "「発酵の力で肌が生まれ変わる」など、効能をうたう表現", "腸活・腸内環境など、飲料の健康効果と石鹸を結びつける表現", "治る、改善、医師・看護師がすすめる")) + '</ul>'

@@ -17,7 +17,7 @@ WM_SHAPES = re.findall(r'<(?:path|polygon) class="cls-1" (d|points)="([^"]+)"/>'
 # name: (shape indices, Japanese, English, what it stands for)
 ELEMENTS = {
     "mother":  ([0, 8, 9, 13] + list(range(48, 59)), "母", "The mother", "The woman holding the SCOBY, which brewers call the mother. The heart of the artwork."),
-    "sun":     ([10, 20, 21, 23, 24, 25, 26, 27, 28, 30, 37], "日", "Sun", "Time. Kombucha ferments for weeks; the soap cures for weeks."),
+    "sun":     ([10, 20, 21, 23, 24, 25, 26, 27, 28, 30, 37], "日", "Sun", "Time. Kombucha ferments for weeks; the soap cures for two months."),
     "bird":    ([2], "鳥", "Bird", "The coast, and Ivycoast’s own bird."),
     "tea":     ([44, 7, 15, 17, 18], "茶", "Tea leaves", "Where kombucha begins: the tea plant, from the branch at the top to the sprig and leaves at its foot."),
     "gut":     ([4, 6], "腸", "The gut", "Healthy intestines: naʻau is Hawaiian for the gut, so this is the name, drawn. A shape only; on soap it is never captioned with gut-health words."),

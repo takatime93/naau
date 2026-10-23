@@ -76,8 +76,11 @@ palettes = '<div class="rows">' + "".join(
     f'<div class="prow"><div class="prow-h"><p class="eyebrow">{letter} · {used}</p><h3><span class="jp">{jp}</span> {en}</h3><p class="muted">{mood}</p></div>{chips(cs)}</div>'
     for letter, jp, en, used, mood, cs in PALETTES) + '</div>'
 
+# a descriptor under the new wordmarks, set small in a face close to each: Bodoni Moda for Lenora's high contrast, Cormorant for Ogg's calligraphic serif
+SUB = {"lenora": '<span class="wm-sub wm-lenora">KOMBUCHA</span>', "ogg": '<span class="wm-sub wm-ogg">KOMBUCHA</span>'}
+
 dirs = ('<div class="ov-dirs">' + "".join(
-    f'<a href="{k}.html" class="dcard"><div class="dcard-img" style="background:{bg}; color:{fg}">{L(D[k], fg.lstrip("#").lower(), "48%")}</div>'
+    f'<a href="{k}.html" class="dcard"><div class="dcard-img" style="background:{bg}; color:{fg}">{L(D[k], fg.lstrip("#").lower(), "48%")}{SUB.get(k, "")}</div>'
     f'<h3>{lab}</h3><p class="muted">{s}</p></a>'
     for k, bg, fg, logo, lab, e, s in COVERS) + '</div>'
     '<a href="collab.html" class="ov-collab"><span>Collaboration</span><b>naʻau × Ivycoast — KOM’BAR</b><span class="link">View →</span></a>')

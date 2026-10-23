@@ -32,6 +32,7 @@ python3 build_index.py .. .
 python3 build_collab.py .. .
 ```
 
+- The site is Japanese first, with an EN toggle in the navigation (remembered per visitor). Every presentation string lives in `ja.py`, keyed by its English; untranslated strings can be listed by building with `NAAU_MISSING=/tmp/missing.txt`. Concept artwork keeps its own designed language.
 - `common.py` holds the shared pieces: navigation, section headers, artboards and the still-life scenes.
 - `kombar.py` takes the KOM'BAR artwork apart into ten named elements and loads the KOM'BAR wordmark (KOMbucha + BAR soap); `python3 kombar.py` also writes each element to `assets/collab/elements/`.
 - `ink.py` holds the hand-made marks: block-print motifs, the fine-line camellia, stamps and seals, the postage-stamp frame and the red-pen loop.

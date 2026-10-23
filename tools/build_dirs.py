@@ -204,7 +204,7 @@ def p_dir():
     hero = (f'<header class="wrap" style="padding-top:clamp(56px,8vw,110px); display:flex; flex-direction:column; align-items:center; text-align:center; gap:26px">'
             f'<p class="eyebrow">Concept A · Lenora</p>{hero_ab}'
             f'<h1 style="margin:14px 0 0; font-weight:400; font-size:clamp(30px,3.6vw,46px); line-height:1.15">Bottled for one</h1>'
-            f'<p style="max-width:620px; color:var(--muted)">A made-to-order atelier in mixed media: the mark printed on real creased paper, details typed on slips and taped on, names written in pencil, a vermilion 一本 seal pressed across the pieces. The drop from the wordmark becomes the count of fermenting days, one per day, filled when the batch is bottled; every label is made out to one person and stamped with a vermilion 一本 seal, the only colour besides the amber glass.</p></header>')
+            f'<p style="max-width:620px; color:var(--muted)">A made-to-order atelier in mixed media: the mark printed on creased paper, the details typed on a slip and taped on, the owner’s name in pencil, and a vermilion 一本 seal pressed across. Every bottle is made out to one person.</p></header>')
 
     idn = '<div class="grid g3">' + "".join([
         pf(ab(4, 3, f'<div style="left:50%; top:50%; transform:translate(-50%,-50%) rotate(-3deg); width:[[400]]">' + torn(3, 4, label_mm(), "100%", f"{KIN_P}; color:{INK}") + '</div>',
