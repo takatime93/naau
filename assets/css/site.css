@@ -466,3 +466,44 @@ details.borrowed summary { cursor: pointer; font-size: 16px; }
 .cover2-top span, .cover2 .kb2-def { color: #F8F6F1; }
 .cover2-box { box-shadow: 0 2px 2px rgba(0,0,0,.15), 0 30px 50px -20px rgba(0,0,0,.45), 0 70px 110px -50px rgba(0,0,0,.45); }
 .ab.clear::after { display: none; }
+
+/* overview v3: the work first */
+.ov-hero { padding-top: clamp(80px, 11vw, 160px); padding-bottom: clamp(48px, 6vw, 80px); }
+.ov-hero h1 { margin: 22px 0 0; font-weight: 400; font-size: clamp(40px, 5.4vw, 76px); line-height: 1.05; letter-spacing: -.01em; max-width: 900px; }
+.ov-sub { margin-top: 22px; max-width: 520px; color: var(--muted); font-size: 18px; }
+.ov-sec { padding-bottom: clamp(24px, 4vw, 48px); }
+.ov-dirs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(16px, 2vw, 28px); }
+@media (max-width: 760px) { .ov-dirs { grid-template-columns: minmax(0, 1fr); } }
+.ov-dirs .dcard-img { aspect-ratio: 4 / 5; }
+.ov-dirs h3 { margin-top: 10px; }
+.ov-dirs .muted { font-size: 15px; }
+.ov-collab { margin-top: clamp(16px, 2vw, 28px); display: flex; align-items: baseline; gap: 18px; padding: 26px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); text-decoration: none; }
+.ov-collab span:first-child { font-family: Inter, sans-serif; font-size: 12px; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); }
+.ov-collab b { font-weight: 400; font-size: clamp(20px, 2vw, 26px); }
+.ov-collab .link { margin-left: auto; }
+details.appx { border-top: 1px solid var(--rule); }
+details.appx:last-child { border-bottom: 1px solid var(--rule); }
+details.appx summary { cursor: pointer; padding: 22px 0; font-size: 19px; list-style: none; display: flex; justify-content: space-between; }
+details.appx summary::-webkit-details-marker { display: none; }
+details.appx summary::after { content: "+"; color: var(--muted); }
+details.appx[open] summary::after { content: "−"; }
+details.appx > *:not(summary) { margin-bottom: 40px; }
+
+/* ---------------------------------------------------------------- polish: captions, phone menu, palette chips */
+:root { --muted: #5E5850; }
+.d-ogg, .d-collab { --muted: #625A50; }
+.d-current { --muted: #5F5F5F; }
+.pf figcaption, .scap { font-size: 14px; }
+.pf figcaption span { line-height: 1.5; }
+.sitenav .ns { display: none; }
+@media (max-width: 640px) {
+  .sitenav .nl { display: none; }
+  .sitenav .ns { display: inline; }
+  .sitenav .wrap { gap: 6px 16px; }
+  .sitenav ul { gap: 4px 14px; }
+  .sitenav li a { font-size: 12px; letter-spacing: .04em; }
+  .sitenav .brand span { display: none; }
+  .swatches { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); height: auto; }
+  .sw { min-height: 76px; }
+  .prow .swatches { height: auto; }
+}

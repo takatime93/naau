@@ -53,16 +53,11 @@ COVERS = [
  ("ogg", "#FAF7F1", "#3A3631", L(D["ogg"], "3a3631", "56%"), "Concept B · Ogg", "The pause", "Airy and hand-made: vertical Japanese, kimy’s handwritten notes, band labels and string tags."),
 ]
 
-hero = ('<header class="wrap" style="padding-top:clamp(56px,8vw,112px)">'
+hero = ('<header class="wrap ov-hero">'
         '<p class="eyebrow">Brand concepts for naʻau kombucha · Nagoya · 2026</p>'
-        '<div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr)); gap:16px 64px; align-items:end; margin-top:18px">'
-        '<h1 style="margin:0; font-weight:400; font-size:clamp(42px,6vw,84px); line-height:1.02; letter-spacing:-.01em">Three ways<br>naʻau could look</h1>'
-        '<div style="display:flex; flex-direction:column; gap:14px; padding-bottom:8px"><p class="jp" style="font-size:clamp(18px,1.8vw,22px); line-height:1.8">飲むだけじゃない。<br>自分の身体に気づく、kombucha。</p>'
-        '<p class="muted" style="max-width:480px">One direction keeps the brand naʻau has today; two are new. Each is shown on packaging, print, social and a working shop, and follows research on how small craft brands earn trust.</p></div></div>'
-        '<div class="covers">' +
-        "".join(f'<a href="{k}.html" class="cover" style="background:{bg}; color:{fg}"><span class="cover-n">{lab}</span>{logo}<span class="cover-go">View →</span></a>'
-                for k, bg, fg, logo, lab, *_ in COVERS) +
-        '</div></header>')
+        '<h1>Three ways naʻau could look</h1>'
+        '<p class="ov-sub">One keeps the brand naʻau has today; two are new. Each is shown on packaging, print, social and a working shop.</p>'
+        '</header>')
 
 heard = ('<div class="grid g3">' + "".join(
     f'<div class="heard"><span class="heard-n">{n}</span><h3>{t}</h3><p>{b}</p></div>' for n, t, b in [
@@ -81,12 +76,11 @@ palettes = '<div class="rows">' + "".join(
     f'<div class="prow"><div class="prow-h"><p class="eyebrow">{letter} · {used}</p><h3><span class="jp">{jp}</span> {en}</h3><p class="muted">{mood}</p></div>{chips(cs)}</div>'
     for letter, jp, en, used, mood, cs in PALETTES) + '</div>'
 
-dirs = ('<div class="grid g3">' + "".join(
+dirs = ('<div class="ov-dirs">' + "".join(
     f'<a href="{k}.html" class="dcard"><div class="dcard-img" style="background:{bg}; color:{fg}">{L(D[k], fg.lstrip("#").lower(), "48%")}</div>'
-    f'<p class="eyebrow">{e}</p><h3>{lab}</h3><p class="muted">{s}</p><span class="link">View the direction →</span></a>'
+    f'<h3>{lab}</h3><p class="muted">{s}</p></a>'
     for k, bg, fg, logo, lab, e, s in COVERS) + '</div>'
-    '<a href="collab.html" class="collab-band"><img src="assets/collab/kombar-artwork.svg" alt="KOM’BAR artwork"><div><p class="eyebrow" style="color:#6E655B">Collaboration · KOM’BAR</p>'
-    '<h3>naʻau × Ivycoast</h3><p>The kombucha soap we make together: the assets we plan, the language both sites use, and how it sits with each direction.</p><span class="link">View the collaboration →</span></div></a>')
+    '<a href="collab.html" class="ov-collab"><span>Collaboration</span><b>naʻau × Ivycoast — KOM’BAR</b><span class="link">View →</span></a>')
 
 decisions = '<ol class="decide">' + "".join(f'<li><span>{i:02d}</span><p>{t}</p></li>' for i, t in enumerate([
     "Choose a direction, and a palette for it.",
@@ -95,12 +89,14 @@ decisions = '<ol class="decide">' + "".join(f'<li><span>{i:02d}</span><p>{t}</p>
     "Send scans of kimy’s handwriting and plan a photography day: hands, tea, the pour, the brewing table.",
     "Choose the shop platform (BASE handles クール便 and PayPay) and set up LINE."], 1)) + '</ol>'
 
+appendix = ('<details class="appx"><summary>What we heard</summary>' + heard + '</details>'
+            '<details class="appx"><summary>What the research says</summary>' + research + '</details>'
+            '<details class="appx"><summary>Colour options: five palettes</summary>' + palettes + '</details>')
+
 body = (C.nav("index") + hero +
-        sec("01", "What we heard", "From kimy, about the name, the maker and the feeling.", heard) +
-        sec("02", "What the research says", "Everything in the three directions follows these findings.", research) +
-        sec("03", "Colour options", "Japanese natural-dye colours, plus the plain white naʻau uses today. Every text colour passes WCAG AA; any palette can go with any direction.", palettes) +
-        sec("04", "The directions", "Three distinct directions, each with packaging, print, social and working web pages, plus the collaboration with Ivycoast.", dirs) +
-        sec("05", "Decisions for naʻau", "What we need from naʻau to move one direction forward.", decisions) +
-        '<footer class="site"><div class="wrap">Concepts by Ivycoast for naʻau kombucha. Text in ［brackets］ is for naʻau to fill in. Lenora and Ogg wordmarks are shown from unlicensed settings for discussion only; photography is shown as direction.</div></footer>')
+        f'<section class="wrap ov-sec">{dirs}</section>' +
+        sec("01", "Decisions for naʻau", "", decisions) +
+        sec("02", "Background", "The brief, the research and the palettes behind the directions.", appendix) +
+        '<footer class="site"><div class="wrap">Concepts by Ivycoast for naʻau kombucha. Text in ［brackets］ is for naʻau to fill in. Lenora and Ogg wordmarks are shown from unlicensed settings for discussion only.</div></footer>')
 C.page("index.html", "naʻau kombucha — brand concepts", "", body, extra_head='<meta name="description" content="Brand concepts for naʻau kombucha, Nagoya.">')
 print("index written")

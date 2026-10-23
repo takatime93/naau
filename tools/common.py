@@ -37,8 +37,9 @@ def L(d, color, width, small=False, style=""):
 
 # ------------------------------------------------------------------ page chrome
 def nav(active):
+    short = {"index": "Overview", "current": "Current", "lenora": "A · Lenora", "ogg": "B · Ogg", "collab": "Collab"}
     items = [("index", "Overview")] + [(k, D[k]["nav"]) for k in ORDER] + [("collab", "naʻau × Ivycoast")]
-    lis = "".join(f'<li><a href="{f}.html"' + (' aria-current="page"' if f == active else '') + f'>{t}</a></li>' for f, t in items)
+    lis = "".join(f'<li><a href="{f}.html"' + (' aria-current="page"' if f == active else '') + f'><span class="nl">{t}</span><span class="ns">{short[f]}</span></a></li>' for f, t in items)
     return (f'<nav class="sitenav" aria-label="Concept sections"><div class="wrap"><a class="brand" href="index.html">naʻau <span>brand concepts</span></a>'
             f'<ul>{lis}</ul></div></nav>')
 
@@ -51,7 +52,7 @@ def page(fname, title, cls, body, script="", extra_head=""):
 def sec(num, title, desc, content, cls="", sid=""):
     idattr = f' id="{sid}"' if sid else ""
     return (f'<section class="sec {cls}"{idattr}><div class="wrap"><header class="sh"><span class="sh-n">{num}</span><h2>{title}</h2>'
-            f'<p>{desc}</p></header>{content}</div></section>')
+            + (f'<p>{desc}</p>' if desc else '') + f'</header>{content}</div></section>')
 
 def pf(inner, title, spec="", ratio=None, plate=True, style="", pstyle=""):
     """A plate (asset on its backdrop) with a two-line caption."""

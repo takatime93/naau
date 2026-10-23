@@ -51,7 +51,7 @@ def s_dir():
     idn = '<div class="grid g3">' + "".join([
         pf(ab(4, 3, f'<div class="fill" style="display:flex; align-items:center; justify-content:center">{L(S, "1e1e1e", "40%")}</div>', "100%", cls="flat"), "Plain", "The lockup, centred and small, on white."),
         pf(ab(4, 3, ph("current", "pour", "0", "0", "100%", "4/3.4") + f'<div style="left:0; right:0; bottom:0; height:[[110]]; background:#fff; display:flex; align-items:center; justify-content:center">{L(S, "1e1e1e", "16%", small=True)}</div>', "100%", cls="flat"), "Photo-led", "The photograph carries the colour; the mark sits beneath it."),
-        pf(ab(4, 3, ph("current", "single", "0", "0", "100%", "4/3", zoom=1.4) + f'<div style="right:[[50]]; bottom:[[44]]">{L(S, "1e1e1e", "[[150]]", small=True)}</div>', "100%", cls="flat"), "Signature", "The script small in a corner, like a signature on a print."),
+        pf(ab(4, 3, f'<div style="left:50%; top:50%; width:[[380]]; transform:translate(-50%,-50%) rotate(-4deg); filter:drop-shadow(0 [[10]] [[18]] rgba(0,0,0,.12))">{s_tile("［フレーバー］", "1/1", "transparent", "100%")}</div>', "100%", "background:#F1F1EF", cls="flat"), "Sticker", "The round sticker is the brand’s main surface: the script, small, on white."),
     ]) + '</div>'
     pal = (chips([("White", "#FFFFFF", "Ground", 3), ("Ink", "#1E1E1E", "Text · 16.9:1", 2), ("Grey", "#6B6B6B", "Small text · 5.3:1", 1), ("Mist", "#F1F1EF", "Photo backdrops", 2), ("Amber glass", "#8E4E1F", "From the bottle only", 1.2)]),
            "Plain white and ink, as naʻau looks today.")
@@ -82,9 +82,10 @@ def s_dir():
     prt = ('<div class="grid g2">' + pf(fl_f + fl_b, "A5 workshop flyer", "White and centred, one photograph; details in the standard order on the back.", "4/3") +
            pf(card_f + card_b, "Shop card, 91 × 55 mm", "White on both sides.", "4/3", pstyle="flex-direction:column; gap:7%") + '</div>')
     posts = [
-        (ab(3, 4, ph("current", "single", "[[70]]", "[[70]]", "[[860]]", "1/1.08", zoom=1.9) + '<p style="left:0; right:0; bottom:[[90]]; text-align:center; font-family:var(--sans); font-size:[[36]]; letter-spacing:.16em">No. 027 · ［フレーバー］</p>', "100%", cls="flat post"), "Batch post", "Photograph first, one line beneath."),
+        (ab(3, 4, f'<div style="left:[[200]]; top:[[230]]; width:[[600]]; filter:drop-shadow(0 [[14]] [[24]] rgba(0,0,0,.12))">{s_tile("［フレーバー］", "1/1", "transparent", "100%")}</div>' + '<p style="left:0; right:0; bottom:[[90]]; text-align:center; font-family:var(--sans); font-size:[[36]]; letter-spacing:.16em">No. 027 · ［フレーバー］</p>', "100%", "background:#F1F1EF", cls="flat post"), "Batch post", "This week’s sticker, one line beneath."),
         (ab(3, 4, f'<div class="fill col" style="align-items:center; justify-content:center; gap:[[80]]"><p style="position:static; font-family:var(--sans); font-weight:300; font-size:[[50]]; line-height:2.1; text-align:center">飲むだけじゃない。<br>自分の身体に気づく、kombucha。</p>{L(S, "1e1e1e", "[[200]]", small=True)}</div>', "100%", cls="flat post", style="outline:1px solid var(--rule)"), "Words post", "Small centred type on white."),
-        (ab(3, 4, f'<div style="left:50%; top:46%; transform:translate(-50%,-50%); width:[[620]]">{sticker.replace(fitw(1, 1, .7), "100%")}</div>', "100%", "background:#F1F1EF", cls="flat post"), "Label post", "The sticker, life size, on mist."),
+        (ab(3, 4, "".join(f'<div style="left:[[{x}]]; top:[[{y}]]; width:[[380]]; transform:rotate({r}deg); filter:drop-shadow(0 [[10]] [[18]] rgba(0,0,0,.12))">{s_tile(fl, "1/1", "transparent", "100%")}</div>' for x, y, r, fl in ((90, 170, -6, "［フレーバー］"), (500, 420, 4, "［限定］"), (150, 760, 2, "［フレーバー］"))),
+              "100%", "background:#FFFFFF; outline:1px solid var(--rule)", cls="flat post"), "Range post", "The three stickers, scattered on white."),
     ]
     story = ab(9, 16, f'<div class="fill col" style="align-items:center; justify-content:center; gap:[[90]]; text-align:center">{L(S, "1e1e1e", "[[300]]", small=True)}'
                f'<p style="position:static; font-family:var(--sans); font-size:[[64]]; line-height:1.9">今日のおなか、<br>どうですか？</p><div style="position:static; display:flex; gap:[[24]]">' +
@@ -103,17 +104,17 @@ def s_footer():
             f'{L(S, "1e1e1e", "90px", small=True)}<div style="display:flex; flex-wrap:wrap; justify-content:center; gap:10px 24px">{C.legal_links()}</div><span style="color:#6B6B6B">© 2026 naʻau kombucha · concept mockup</span></div></footer>')
 
 def s_home():
-    cards = "".join(f'<a href="current-product.html" style="text-align:center; display:flex; flex-direction:column; gap:12px">{still("current", "single", "4/5", label="current", zoom=2.2, flavours=(f,) * 3)}'
+    cards = "".join(f'<a href="current-product.html" style="text-align:center; display:flex; flex-direction:column; gap:12px">{s_tile(f.replace("［3本セット］", "［セット］"))}'
                     f'<span style="font-family:var(--sans); font-size:14px">{f}</span><span style="font-family:var(--sans); font-size:13px; color:#6B6B6B">¥［　］（税込）</span></a>'
                     for f in ("［フレーバー］", "［フレーバー］", "［限定］", "［3本セット］"))
-    insta = "".join(still("current", k, "1/1", zoom=z) for k, z in (("pour", 2.2), ("range", 2.4), ("glass", 2.0), ("single", 2.6), ("jar", 2.0), ("pour", 3)))
+    insta = "".join(s_tile(f, "1/1", bg, "62%") for f, bg in (("［フレーバー］", "#F1F1EF"), ("［限定］", "#FFFFFF"), ("［フレーバー］", "#EDEBE6"), ("［フレーバー］", "#FFFFFF"), ("［限定］", "#F1F1EF"), ("［セット］", "#EDEBE6")))
     main = (f'<main>{still("current", "range", "16/7", zoom=1.4)}'
             f'<section style="text-align:center; padding:clamp(64px,9vw,120px) 0"><div class="wrap"><p class="jp" style="font-family:var(--sans); font-weight:300; font-size:clamp(20px,2.2vw,26px); line-height:2.1">飲むだけじゃない。<br>自分の身体に気づく、kombucha。</p>'
             f'<p style="margin:20px auto 0; max-width:520px; font-family:var(--sans); font-size:14px; line-height:2.1; color:#6B6B6B">naʻau（ナアウ）は、ハワイ語で「腸・心・内なる声」。名古屋の台所で、ひと瓶ずつ仕込んでいます。</p></div></section>'
             f'<section style="padding:0 0 clamp(64px,9vw,120px)"><div class="wrap"><p style="text-align:center; font-family:var(--sans); font-size:12px; letter-spacing:.26em; margin-bottom:32px">THIS WEEK</p>'
             f'<div class="grid g4">{cards}</div></div></section>'
             f'<section id="about" style="padding:clamp(64px,9vw,120px) 0; border-top:1px solid #E4E4E1"><div class="wrap" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr)); gap:clamp(32px,6vw,80px); align-items:center">'
-            f'{still("current", "jar", "4/5", zoom=1.9)}<div style="display:flex; flex-direction:column; gap:20px; font-family:var(--sans)"><p style="font-size:12px; letter-spacing:.26em">ABOUT</p>'
+            f'<div style="aspect-ratio:4/5; background:#F1F1EF; display:flex; align-items:center; justify-content:center">{L(S, "1e1e1e", "46%")}</div><div style="display:flex; flex-direction:column; gap:20px; font-family:var(--sans)"><p style="font-size:12px; letter-spacing:.26em">ABOUT</p>'
             f'<p style="font-size:20px; font-weight:300">名前は、直感で決めました。</p>'
             f'<p style="font-size:14px; line-height:2.1; color:#4A4A4A">大好きなハワイの言葉で「直感」は naʻau。腸と感情、内なる声を感じるという意味もあると知って、これしかないと決めました。</p>'
             f'<p style="font-size:13px; color:#6B6B6B">kimy — 看護師として働きながら、コンブチャを仕込んでいます。</p></div></div></section>'
@@ -126,9 +127,9 @@ def s_home():
     return f'<div class="shop" style="background:#fff; color:#1E1E1E">{s_header()}{main}{s_footer()}</div>'
 
 def s_product():
-    thumbs = "".join(still("current", k, "1/1", zoom=z) for k, z in (("single", 2.4), ("pour", 2.2), ("glass", 2.2), ("range", 2.0)))
+    thumbs = "".join(s_tile(f, "1/1", "#F1F1EF", "66%") for f in ("［フレーバー］", "［フレーバー］", "［限定］")) + still("current", "pour", "1/1")
     main = (f'<main><section style="padding:clamp(28px,5vw,64px) 0 clamp(64px,9vw,120px)"><div class="wrap" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr)); gap:clamp(28px,5vw,72px); align-items:start">'
-            f'<div style="display:flex; flex-direction:column; gap:8px">{still("current", "single", "1/1", zoom=1.9)}<div style="display:grid; grid-template-columns:repeat(4,1fr); gap:8px">{thumbs}</div></div>'
+            f'<div style="display:flex; flex-direction:column; gap:8px">{s_tile("［フレーバー］", "1/1", "#F1F1EF", "52%")}<div style="display:grid; grid-template-columns:repeat(4,1fr); gap:8px">{thumbs}</div></div>'
             f'<div style="display:flex; flex-direction:column; gap:18px; font-family:var(--sans)">'
             f'<p style="font-size:11px; letter-spacing:.22em; color:#6B6B6B">NO. 027 · 330 ML</p><h1 style="margin:0; font-weight:300; font-size:26px">［フレーバー］</h1>'
             f'<p style="font-size:19px">¥［　］<span style="font-size:12px">（税込）</span></p><p style="font-size:14px; line-height:2.1; color:#3A3A3A">紅茶と［素材］を、酵母と酢酸菌でゆっくり発酵させました。［味わいの説明］。</p>'
@@ -181,13 +182,12 @@ def slip(left, top, w, ratio, inner, rot=-1.5):
 
 def label_mm(no="027"):
     """The front label as mixed media: the mark printed on creased kinari, a typed slip taped on, the name in pencil, the seal across both."""
-    rows_ = specrows([("TEA", "［茶葉］"), ("FERMENTED", "14 DAYS"), ("BOTTLED", "2026 · 10 · 22")], "[[46]]", "rgba(43,41,38,.4)", "[[18]]")
     return (f'<p class="mono" style="left:[[90]]; top:[[90]]; font-size:[[30]]; letter-spacing:.24em; opacity:.7">NO. {no}</p>'
             f'<p class="mono" style="right:[[90]]; top:[[90]]; font-size:[[30]]; letter-spacing:.24em; opacity:.7">330 ML</p>'
             f'<div style="left:50%; top:[[290]]; transform:translateX(-50%); width:[[700]]">{L(P, "2b2926", "100%", style="mix-blend-mode:multiply")}</div>'
             f'<p style="left:0; right:0; top:[[520]]; text-align:center; font-family:var(--lat); font-style:italic; font-size:[[58]]">kombucha</p>'
-            + slip("[[120]]", "[[700]]", "[[640]]", "640/290", f'<div style="left:[[50]]; right:[[50]]; top:[[30]]">{rows_}</div>', -1.8)
-            + tape("[[70]]", "[[680]]", "[[170]]", -9)
+            + slip("[[150]]", "[[740]]", "[[600]]", "600/110", f'<p class="mono" style="left:0; right:0; top:50%; transform:translateY(-50%); text-align:center; font-size:[[40]]; letter-spacing:.2em">14 DAYS · 26.10.22</p>', -1.8)
+            + tape("[[110]]", "[[722]]", "[[110]]", -32)
             + f'<p class="hand" style="left:[[130]]; top:[[1060]]; font-size:[[78]]; color:#5E5953; transform:rotate(-2deg)">［お名前］様</p>'
             + seal("[[170]]", "right:[[90]]; top:[[930]]; transform:rotate(-7deg); mix-blend-mode:multiply; opacity:.92"))
 
@@ -197,9 +197,9 @@ def side(text, pos, size="[[20]]", font="'IBM Plex Mono', monospace"):
 
 def p_dir():
     hero_ab = ab(16, 10, f'<div style="left:50%; top:44%; transform:translate(-50%,-50%); width:[[560]]">{L(P, "efebe2", "100%")}</div>'
-                 + slip("[[330]]", "[[470]]", "[[340]]", "340/56", f'<p class="mono" style="left:0; right:0; top:50%; transform:translateY(-50%); text-align:center; font-size:[[34]]; letter-spacing:.3em; color:{INK}">NO. 027 · BOTTLED FOR ONE</p>', -1.2)
-                 + tape("[[318]]", "[[462]]", "[[70]]", -12)
-                 + seal("[[52]]", "left:[[662]]; top:[[470]]; transform:rotate(-8deg)"),
+                 + slip("[[250]]", "[[470]]", "[[500]]", "500/64", f'<p class="mono" style="left:0; right:0; top:50%; transform:translateY(-50%); text-align:center; font-size:[[44]]; letter-spacing:.2em; white-space:nowrap; color:{INK}">NO. 027 · BOTTLED FOR ONE</p>', -1.2)
+                 + tape("[[232]]", "[[458]]", "[[50]]", -38)
+                 + seal("[[56]]", "left:[[738]]; top:[[476]]; transform:rotate(-8deg)"),
                  "min(100%,980px)", f"{SUMI_P}; color:{KIN}", cls="flat")
     hero = (f'<header class="wrap" style="padding-top:clamp(56px,8vw,110px); display:flex; flex-direction:column; align-items:center; text-align:center; gap:26px">'
             f'<p class="eyebrow">Concept A · Lenora</p>{hero_ab}'
@@ -296,7 +296,7 @@ def p_shell(content):
             f'<div class="jp" style="display:flex; flex-wrap:wrap; justify-content:center; gap:8px 24px; font-size:13px">{C.legal_links()}</div><span class="eyebrow" style="color:#A39E95">© 2026 naʻau kombucha · concept mockup</span></div></footer></div>')
 
 def p_home():
-    cards = "".join(f'<a href="lenora-product.html" style="display:flex; flex-direction:column; gap:14px">{still("lenora", "single", "4/5", zoom=2.3, flavours=(f,) * 3)}'
+    cards = "".join(f'<a href="lenora-product.html" style="display:flex; flex-direction:column; gap:14px">{p_tile(n)}'
                     f'<div style="display:flex; justify-content:space-between; align-items:baseline; border-top:1px solid #3A3835; padding-top:12px"><span style="font-size:30px; line-height:1">{n}</span><span class="jp">{f}</span></div>'
                     f'<span style="font-size:14px; color:#A39E95">¥［　］（税込）· fermented {dd} days</span></a>'
                     for f, n, dd in zip(FL, ("027", "028", "029"), ("14", "11", "18")))
@@ -313,15 +313,15 @@ def p_home():
                "".join(f'<div style="display:flex; flex-direction:column; align-items:center; gap:10px; border-top:1px solid #3A3835; padding-top:28px"><span style="font-size:40px; line-height:1">{n}</span><span style="font-family:\'Shippori Mincho B1\'; font-size:22px; font-weight:700">{a}</span><span style="font-style:italic; color:#A39E95">{b}</span></div>'
                        for n, a, b in [("i", "味わう", "Taste this week’s batches."), ("ii", "選ぶ", "Choose by how you feel."), ("iii", "名を入れる", "Your name goes on the label.")]) + '</div></section>'
                f'<section style="padding:0 0 clamp(64px,9vw,120px)"><div class="wrap" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr)); gap:clamp(32px,6vw,80px); align-items:center">'
-               f'{still("lenora", "jar", "4/5", zoom=1.9)}<div style="display:flex; flex-direction:column; gap:18px"><p class="eyebrow" style="color:#A39E95">About naʻau</p><p style="font-family:\'Shippori Mincho B1\'; font-size:clamp(24px,2.6vw,32px); font-weight:700; line-height:1.6">名前は、直感で決めました。</p>'
+               f'{still("lenora", "jar", "4/5")}<div style="display:flex; flex-direction:column; gap:18px"><p class="eyebrow" style="color:#A39E95">About naʻau</p><p style="font-family:\'Shippori Mincho B1\'; font-size:clamp(24px,2.6vw,32px); font-weight:700; line-height:1.6">名前は、直感で決めました。</p>'
                f'<p class="jp" style="line-height:2.1; color:#D8D2C8">大好きなハワイの言葉で「直感」は naʻau。腸と感情、内なる声を感じるという意味もあると知って、これしかないと決めました。</p>'
                f'<p class="jp" style="font-size:13px; color:#A39E95">kimy — 看護師として働きながら、名古屋でコンブチャを仕込んでいます。</p></div></div></section>')
     return p_shell(content)
 
 def p_product():
     content = (f'<section style="padding:clamp(28px,5vw,64px) 0 clamp(64px,9vw,120px)"><div class="wrap" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr)); gap:clamp(28px,5vw,64px); align-items:start">'
-               f'<div style="display:flex; flex-direction:column; gap:8px">{still("lenora", "single", "1/1", zoom=1.9)}<div style="display:grid; grid-template-columns:repeat(3,1fr); gap:8px">'
-               + "".join(still("lenora", k, "1/1", zoom=z) for k, z in (("pour", 2.2), ("range", 2.0), ("jar", 2.0))) + '</div></div>'
+               f'<div style="display:flex; flex-direction:column; gap:8px">{p_tile("027", "1/1", "46%")}<div style="display:grid; grid-template-columns:repeat(3,1fr); gap:8px">'
+               + p_tile("028", "1/1", "56%", 2) + p_tile("029", "1/1", "56%", -1) + still("lenora", "pour", "1/1") + '</div></div>'
                f'<div style="background:{KIN}; color:{INK}; padding:clamp(24px,3.5vw,44px); display:flex; flex-direction:column; gap:18px">'
                f'<div style="display:flex; justify-content:space-between; align-items:baseline"><span style="font-size:60px; line-height:1">027</span><div style="display:flex; align-items:center; gap:14px"><span class="mono" style="font-size:12px; letter-spacing:.2em; color:{MUTE}">330 ML</span>{K.hanko("34px")}</div></div>'
                f'<h1 style="margin:0; font-family:\'Shippori Mincho B1\'; font-size:clamp(26px,2.6vw,34px); font-weight:700">［フレーバー］</h1>'
@@ -378,9 +378,9 @@ def m_dir():
             f'<p style="max-width:520px; color:var(--muted)">Airy and hand-made. Asymmetric layouts with room to breathe, vertical Japanese, an ochre block, and kimy’s handwriting on cards that overlap the page. A small card asks how you feel before you open the bottle.</p></div>'
             f'<div style="position:relative; padding:0 0 40px 52px"><div style="aspect-ratio:4/5; background:{NERI}; display:flex; align-items:center; justify-content:center"><div style="width:62%">{K.scoby("100%", MI)}</div></div>'
             f'<p class="vt jp" style="position:absolute; left:0; top:0; font-size:clamp(17px,1.6vw,21px); letter-spacing:.34em; line-height:2">からだの声に、耳を澄ます。</p>'
-            f'<div style="position:absolute; left:20px; bottom:0">' + note('<span class="pen" style="font-size:19px">今日もゆっくり、<br>自分の声を聴いてね。<br>— kimy</span>', "min(60vw,250px)", size="16px", pad="18px 20px") + '</div></div></header>')
+            f'<div style="position:absolute; left:0; bottom:-18px">' + note('今日もゆっくり。<br>— kimy', "min(46vw,170px)", rot=-2, size="14px", pad="14px 16px") + '</div></div></header>')
     idn = '<div class="grid g3">' + "".join([
-        pf(ab(4, 3, f'<p class="vt jp" style="right:[[70]]; top:[[60]]; font-size:[[44]]; letter-spacing:.34em; line-height:2">からだの声に、耳を澄ます。</p><div style="left:[[70]]; bottom:[[70]]">{L(M, "3a3631", "[[330]]")}</div>', "100%", f"background:{GO}; color:{MI}", cls="flat"), "Quiet", "A small mark low, vertical text high, air between. The default."),
+        pf(ab(4, 3, f'<p class="vt jp" style="right:[[70]]; top:[[60]]; font-size:[[38]]; letter-spacing:.24em; line-height:2; white-space:nowrap">からだの声に、耳を澄ます。</p><div style="left:[[70]]; bottom:[[70]]">{L(M, "3a3631", "[[330]]")}</div>', "100%", f"background:{GO}; color:{MI}", cls="flat"), "Quiet", "A small mark low, vertical text high, air between. The default."),
         pf(ab(4, 3, f'<div style="left:[[90]]; top:[[90]]">' + note("今日もゆっくり、<br>自分の声を聴いてね。<br>— kimy", "[[640]]", size="[[48]]", pad="[[56]]") + f'</div><div style="right:[[70]]; bottom:[[70]]">{L(M, "3a3631", "[[280]]")}</div>', "100%", f"background:{NERI}; color:{MI}", cls="flat"), "Note", "kimy’s handwriting on a card that overlaps the page."),
         pf(ab(4, 3, f'<p class="jp" style="left:[[70]]; top:[[70]]; font-size:[[64]]; font-weight:600; line-height:1.6">今日のおなか、<br>どうですか？</p><div style="left:[[-40]]; bottom:[[-120]]; width:[[1080]]">{L(M, "3a3631", "100%")}</div>', "100%", f"background:{ODO}; color:{MI}", cls="flat"), "Ochre", "The mark large and cropped, for social and the shop sign."),
     ]) + '</div>'
@@ -414,7 +414,7 @@ def m_dir():
             pf(tag("［お名前］さんへ<br>ゆっくり、どうぞ。", "30%", "[[120]]") + f'<div style="position:absolute; left:12%; bottom:12%">{K.moon("64px", 1, MI)}</div>', "String tag", "Tied at the neck, written by kimy for each order.", "1/1") +
             pf(notebook(fitw(1, 105 / 148, .84)), "Fermentation slip", "In every order: the batch’s fourteen days, marked by kimy in red pen.", "1/1") + '</div>'
             + '<div class="grid g-wide" style="margin-top:clamp(20px,3vw,36px)">'
-            + pf(f'<div style="position:absolute; inset:7% 5%; color:{MI}">{K.calendar("100%", MI, 14, 7)}</div>', "Wrapping paper", "Neri tissue printed as a half-month: a moon waxing from new to full, one for each day the batch ferments.", "2.4/1.25", pstyle=f"background:{NERI}")
+            + pf(f'<div style="position:absolute; inset:7% 5%; color:{MI}">{K.moon_paper("100%", MI)}</div>', "Wrapping paper", "Neri tissue printed with small moons in a half-drop repeat, waxing along each row as a batch does.", "2.4/1.25", pstyle=f"background:{NERI}")
             + pf(wrapc.replace('top:24%', 'top:20%') + f'<div style="position:absolute; right:9%; bottom:10%; width:24%; transform:rotate(-10deg)">{badge("100%")}</div>', "Gift box", "One ochre band, sealed with kimy’s stamp.", "1.2/1")
             + '</div>')
     a5w = fitw(4 / 3, 148 / 210, .82)
@@ -466,7 +466,7 @@ def m_shell(content):
             f'<div class="wrap"><p class="eyebrow" style="margin-top:32px">© 2026 naʻau kombucha · concept mockup</p></div></footer></div>')
 
 def m_home():
-    cards = "".join(f'<a href="ogg-product.html" style="display:flex; flex-direction:column; gap:12px; margin-top:{off}px">{still("ogg", "single", "3/4", zoom=2.3, flavours=(f,) * 3)}'
+    cards = "".join(f'<a href="ogg-product.html" style="display:flex; flex-direction:column; gap:12px; margin-top:{off}px">{m_tile(f)}'
                     f'<span class="hand" style="font-size:18px">{f}</span><span style="font-size:14px">¥［　］（税込）</span></a>'
                     for f, off in zip(FL, (0, 72, 28)))
     content = (f'<section style="padding:clamp(16px,3vw,40px) 0 clamp(64px,9vw,120px)"><div class="wrap" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr)); gap:clamp(28px,5vw,64px); align-items:end">'
@@ -482,7 +482,7 @@ def m_home():
                "".join(f'<p class="jp" style="padding:12px 0; border-bottom:1px dashed #CDBFA6; font-size:16px">{q}</p>' for q in ("よく眠れた？", "おなかの調子は？", "今日の気分は？")) +
                '</div></div></section>'
                f'<section style="padding:clamp(64px,9vw,120px) 0"><div class="wrap" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr)); gap:clamp(32px,6vw,80px); align-items:center">'
-               f'<div style="margin-top:40px; position:relative">{still("ogg", "jar", "4/5", zoom=1.9)}<div style="position:absolute; right:10px; bottom:-26px; width:128px; transform:rotate(-10deg)">{badge("100%")}</div></div>'
+               f'<div style="margin-top:40px; position:relative"><div style="aspect-ratio:4/5; background:#EDE4CD; display:flex; align-items:center; justify-content:center"><div style="width:58%">{K.scoby("100%", "#3A3631")}</div></div><div style="position:absolute; right:10px; bottom:-26px; width:128px; transform:rotate(-10deg)">{badge("100%")}</div></div>'
                f'<div style="display:flex; flex-direction:column; gap:18px"><p class="jp" style="font-size:clamp(24px,2.6vw,32px); line-height:1.6">名前は、直感で決めました。</p>'
                f'<p class="jp" style="line-height:2.1">直感kombucha、instinct kombucha、gut feeling kombucha。どれも違う。大好きなハワイの言葉で「直感」は naʻau。</p>'
                f'<p class="hand" style="font-size:18px">これしかない！と、秒で決定。— kimy</p><p class="jp" style="font-size:13px; color:#7A7268">看護師として働きながら、名古屋でコンブチャを仕込んでいます。</p></div></div></section>')
@@ -490,7 +490,7 @@ def m_home():
 
 def m_product():
     content = (f'<section style="padding:clamp(16px,3vw,40px) 0 clamp(64px,9vw,120px)"><div class="wrap" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr)); gap:clamp(32px,5vw,72px); align-items:start">'
-               f'<div style="position:relative; padding-bottom:40px">{still("ogg", "single", "4/5", zoom=1.9)}<div style="position:absolute; right:-6px; bottom:0; width:96px">{tag("［お名前］さんへ<br>ゆっくり、どうぞ。", "100%", "12px")}</div>'
+               f'<div style="position:relative; padding-bottom:40px">{m_tile("［フレーバー］", "4/5", "86%")}<div style="position:absolute; right:-6px; bottom:0; width:96px">{tag("［お名前］さんへ<br>ゆっくり、どうぞ。", "100%", "12px")}</div>'
                f'<div style="margin-top:28px; display:flex; flex-direction:column; gap:10px"><p class="pen" style="font-size:19px">この瓶のノート ↓</p>{notebook("min(100%,340px)", "transform:rotate(-1.5deg)")}</div></div>'
                f'<div style="display:flex; gap:22px"><p class="vt jp" style="font-size:28px; letter-spacing:.2em">［フレーバー］</p><div style="flex:1; display:flex; flex-direction:column; gap:18px">'
                f'<span class="hand" style="font-size:17px">No. 027 · 14日発酵 · 330 ml</span><p style="font-size:26px">¥［　］<small style="font-size:14px">（税込）</small></p>'
@@ -501,6 +501,22 @@ def m_product():
                + C.commerce(f"background:{NERI}; padding:14px 16px; font-size:13px; line-height:1.9") + f'<div>{C.accordions("#DDD3C3")}</div>'
                f'<p class="jp" style="font-size:11px; color:#7A7268">※本品は清涼飲料水です。医薬品ではありません。</p></div></div></div></section>')
     return m_shell(content)
+
+
+# ---------------------------------------------------------------- product tiles: the label itself, not a placeholder
+def s_tile(fl="［フレーバー］", ratio="4/5", bg="#F1F1EF", w="56%"):
+    st = ab(1, 1, f'<div class="fill col" style="align-items:center; justify-content:center; gap:[[46]]">{L(S, "1e1e1e", "62%")}<span style="position:static; font-family:var(--sans); font-size:[[40]]; letter-spacing:.24em">{fl}· 330 ml</span></div>', "100%", "border-radius:50%")
+    return f'<div style="aspect-ratio:{ratio}; background:{bg}; display:flex; align-items:center; justify-content:center"><div style="width:{w}; filter:drop-shadow(0 10px 18px rgba(0,0,0,.12))">{st}</div></div>'
+
+def p_tile(no="027", ratio="4/5", w="58%", rot=-2):
+    return (f'<div class="ab flat" style="width:100%; aspect-ratio:{ratio}; {SUMI_P}"><div style="left:50%; top:50%; width:{w}; transform:translate(-50%,-50%) rotate({rot}deg)">'
+            + torn(3, 4, label_mm(no), "100%", f"{KIN_P}; color:{INK}") + '</div></div>')
+
+def m_tile(fl="［フレーバー］", ratio="3/4", w="80%", bg="#EDE4CD", rot=-2):
+    b = ab(2.6, 1, f'<span class="vt jp" style="left:[[70]]; top:50%; transform:translateY(-50%); font-size:[[130]]; line-height:1">間</span>'
+           f'<div class="col" style="left:[[230]]; right:[[200]]; top:50%; transform:translateY(-50%); align-items:center; gap:[[16]]">{L(M, "3a3631", "100%")}<span class="hand" style="font-size:[[48]]">{fl}</span></div>'
+           f'<span class="vt hand" style="right:[[70]]; top:50%; transform:translateY(-50%); font-size:[[40]]; white-space:nowrap">10/22 kimy</span>', "100%", "background:#FAF7F1; color:#3A3631")
+    return f'<div style="aspect-ratio:{ratio}; background:{bg}; display:flex; align-items:center; justify-content:center"><div style="width:{w}; transform:rotate({rot}deg)">{b}</div></div>'
 
 # ====================================================================== write
 for d, build, home, product in ((S, s_dir, s_home, s_product), (P, p_dir, p_home, p_product), (M, m_dir, m_home, m_product)):

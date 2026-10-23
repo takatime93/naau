@@ -175,14 +175,15 @@ def moon(w, f, ink="currentColor"):
     body = f'<g filter="url(#lino)"><circle cx="100" cy="100" r="70" fill="none" stroke="{ink}" stroke-width="5"/><g fill="{ink}">{lit}</g></g>'
     return _svg("0 0 200 200", body, w)
 
-def calendar(w, ink="currentColor", days=14, cols=7):
+def calendar(w, ink="currentColor", days=14, cols=7, numbers=True):
     """Fourteen days as a waxing moon, new to full: the half-month a batch takes."""
     cells = ""
     for d in range(days):
         x, y = (d % cols) * 120, (d // cols) * 150
-        cells += (f'<g transform="translate({x + 10} {y + 10}) scale(.5)">{moon("200px", (d + 1) / days, ink).replace("<svg ", "<svg width=\"200\" height=\"200\" ")}</g>'
-                  f'<text x="{x + 60}" y="{y + 132}" text-anchor="middle" font-family="\'IBM Plex Mono\', monospace" font-size="13" letter-spacing="2" fill="{ink}">{d + 1:02d}</text>')
-    return _svg(f"0 0 {cols * 120} {(days + cols - 1) // cols * 150}", cells, w, label="fourteen days as moon phases")
+        cells += f'<g transform="translate({x + 10} {y + 10}) scale(.5)">{moon("200px", ((d % 14) + 1) / 14, ink).replace("<svg ", "<svg width=\"200\" height=\"200\" ")}</g>'
+        if numbers:
+            cells += f'<text x="{x + 60}" y="{y + 132}" text-anchor="middle" font-family="\'IBM Plex Mono\', monospace" font-size="13" letter-spacing="2" fill="{ink}">{d + 1:02d}</text>'
+    return _svg(f"0 0 {cols * 120} {(days + cols - 1) // cols * 150 - (0 if numbers else 30)}", cells, w, label="fourteen days as moon phases")
 
 # ------------------------------------------------------------------ the Japanese round date stamp (日付印)
 def date_stamp(w, top="名古屋", date="26.10.22", bottom="CURE 01", ink="currentColor"):
@@ -194,3 +195,13 @@ def date_stamp(w, top="名古屋", date="26.10.22", bottom="CURE 01", ink="curre
     return _svg("0 0 120 120", body, w, label=f"date stamp {date}")
 
 MOTIFS.update({"scoby": scoby})
+
+def moon_paper(w, ink="currentColor", cols=12, rows=5):
+    """Tissue paper: small waxing moons in a half-drop repeat, the phase advancing along each row."""
+    cells = ""
+    for r in range(rows):
+        for c in range(cols):
+            x = c * 100 + (50 if r % 2 else 0)
+            f = ((c + r * 3) % 14 + 1) / 14
+            cells += f'<g transform="translate({x} {r * 90}) scale(.28)">{moon("200px", f, ink).replace("<svg ", '<svg width="200" height="200" ')}</g>'
+    return _svg(f"-20 -20 {cols * 100 + 40} {rows * 90 + 30}", cells, w, label="tissue printed with small moons")

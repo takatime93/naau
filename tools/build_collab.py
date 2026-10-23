@@ -83,7 +83,7 @@ def insert_card(w="100%"):
     return ab(85, 120, caps("Kombucha soap", "[[22]]", "position:absolute; left:[[80]]; top:[[80]]; letter-spacing:.24em")
               + f'<div style="right:[[80]]; top:[[72]]; width:[[300]]">{wm("100%", INK)}</div>'
               f'<p style="left:[[80]]; top:[[170]]; {JPB}; font-size:[[60]]; line-height:1.35">発酵が生み出す美しさ。</p>'
-              f'<div style="left:[[80]]; right:[[80]]; top:[[300]]; font-family:var(--sans); font-size:[[25]]; line-height:1.9">{paras}</div>'
+              f'<div style="left:[[80]]; right:[[80]]; top:[[290]]; font-family:var(--sans); font-size:[[27]]; line-height:1.85">{paras}</div>'
               f'<p style="left:[[80]]; top:[[1050]]; {JPB}; font-size:[[28]]; letter-spacing:.06em; line-height:1.7">育てる時間。<br>手をかけること。<br>自然から学ぶこと。</p>'
               f'<div style="right:[[-70]]; bottom:[[-60]]; width:[[380]]">{el("mother", "100%", INK)}</div>'
               f'<div style="left:[[80]]; bottom:[[70]]">{pair("[[170]]")}</div>',
@@ -164,7 +164,7 @@ FIELDS = [(PEACH, INK), (GREEN, PEACH), (PAPER, INK), (INK, PEACH), (KRAFT, INK)
           (PAPER, GREEN), (PEACH, GREEN), (GREEN, PAPER), (PAPER, AMBER)]
 def tile(i, name):
     _, jp, en, meaning = KB.ELEMENTS[name]
-    bg, fg = [(GREEN, WHITE), (TURMERIC, INK), (PERSIMMON, WHITE), (TIDE, INK)][i % 4]
+    bg, fg = (TURMERIC, INK) if name == "sun" else [(GREEN, WHITE), (WHITE, GREEN)][i % 2]
     return (f'<figure class="kel"><div class="kel-card" style="background:{bg}; color:{fg}"><span class="kel-n">{i + 1:02d}</span><span class="kel-jp">{jp}</span>'
             f'<div class="kel-art">{el(name, "auto", fg, "height:100%; width:auto; max-width:100%")}</div></div>'
             f'<figcaption><b>{en}</b><span>{meaning}</span></figcaption></figure>')
@@ -174,8 +174,8 @@ elements = ('<p class="lead-p">The illustration stays whole on the front of the 
             '<p class="muted" style="font-size:14px; margin-top:18px">Element files: <code>assets/collab/elements/01-mother.svg</code> to <code>10-ginger.svg</code>, cut from the original artwork without redrawing; the tea leaves and the sprig are set side by side as one element. Meanings are proposals for both teams to agree.</p>')
 
 # ====================================================================== 04 colour, type, space
-PAL = [("White", WHITE, "Ground, cards, the web.", 3), ("Coast green", GREEN, "Ivycoast. The anchor.", 2), ("Turmeric", TURMERIC, "Kombucha, warm.", 1.4),
-       ("Persimmon", PERSIMMON, "Accent, sparingly.", 1), ("Tide", TIDE, "The coast.", 1.2), ("Ink", INK, "Artwork and text.", 1.2), ("Peach", PEACH, "The soap box only.", .8)]
+PAL = [("White", WHITE, "Ground, cards, the web.", 3), ("Coast green", GREEN, "Ivycoast. Carries the page.", 3), ("Turmeric", TURMERIC, "The one accent.", 1),
+       ("Ink", INK, "Artwork and text.", 1), ("Persimmon", PERSIMMON, "The sun only.", .5), ("Tide", TIDE, "Ivycoast web only.", .5), ("Peach", PEACH, "The soap box only.", .6)]
 pairs = "".join(f'<div class="pair-sw" style="background:{bg}; color:{fg}">{el(e, "auto", fg, "height:62%; width:auto")}<span>{lab}</span></div>' for bg, fg, e, lab in [
     (PEACH, INK, "lemon", "Ink on peach · 13.4:1"), (GREEN, PEACH, "bird", "Peach on green · 8.6:1"), (PAPER, GREEN, "tea", "Green on paper · 10.1:1"),
     (INK, PEACH, "scoby", "Peach on ink · 13.4:1"), (KRAFT, INK, "ginger", "Ink on kraft · 9.5:1"), (AMBER, PAPER, "sun", "Paper on amber · 5.6:1")])
@@ -299,7 +299,7 @@ p_sun = post(f'<div style="right:[[-250]]; top:[[-220]]; width:[[900]]">{el("sun
              f'<div style="left:[[70]]; bottom:[[70]]; width:[[260]]">{wm("100%", WHITE)}</div>', GREEN)
 p_mother = post(f'<div style="left:[[-120]]; bottom:[[-140]]; width:[[820]]">{el("mother", "100%", INK)}</div>'
                 f'<p style="right:[[70]]; top:[[90]]; {JPB}; font-size:[[78]]; line-height:1.45; text-align:right">SCOBYは、<br>コンブチャの<br>「母」。</p>'
-                f'<p class="it" style="right:[[70]]; top:[[440]]; font-family:var(--lat); font-size:[[36]]; text-align:right">Brewers call it the mother.</p>', PERSIMMON)
+                f'<p class="it" style="right:[[70]]; top:[[440]]; font-family:var(--lat); font-size:[[36]]; text-align:right">Brewers call it the mother.</p>', WHITE)
 
 def panorama():
     S = 1000  # one slide = 1000 units of a 5000-wide strip
@@ -340,11 +340,11 @@ social = ('<div class="soc">' + pf(p_reveal, "Reveal", "Collab post from both ac
 def pdp():
     return ab(16, 10, f'<div style="left:0; right:0; top:0; height:[[56]]; border-bottom:1px solid #E5DCCF; display:flex; align-items:center; justify-content:space-between; padding:0 [[40]]">'
               f'{IVY("green", "[[120]]")}<span style="{SANS}; font-size:[[11]]; letter-spacing:.2em; color:{GREEN}">SHOP · JOURNAL · CART (0)</span></div>'
-              f'<div class="ab flat" style="left:[[40]]; top:[[80]]; width:[[440]]; aspect-ratio:1; background:{TIDE}">'
+              f'<div class="ab flat" style="left:[[40]]; top:[[80]]; width:[[440]]; aspect-ratio:1; background:{GREEN}">'
               f'<div style="left:50%; top:50%; width:[[700]]; transform:translate(-50%,-50%) rotate(-6deg); box-shadow:0 [[20]] [[40]] rgba(60,40,30,.25)">{face_front("100%")}</div></div>'
               f'<div style="left:[[40]]; top:[[530]]; width:[[440]]; display:grid; grid-template-columns:repeat(4,1fr); gap:[[8]]">'
               + "".join(f'<div style="aspect-ratio:1; background:{bg}; display:flex; align-items:center; justify-content:center; box-shadow:inset 0 0 0 1px #E5DCCF">{el(n, "auto", fg, "height:64%; width:auto")}</div>'
-                        for n, bg, fg in (("tea", WHITE, GREEN), ("mother", TURMERIC, INK), ("sun", PERSIMMON, WHITE), ("bird", GREEN, WHITE))) + '</div>'
+                        for n, bg, fg in (("tea", WHITE, GREEN), ("mother", GREEN, WHITE), ("sun", WHITE, PERSIMMON), ("bird", WHITE, GREEN))) + '</div>'
               f'<div class="col" style="left:[[540]]; right:[[40]]; top:[[90]]; gap:[[16]]">{wm("[[260]]", INK)}'
               + caps("naʻau × Ivycoast · Organic kombucha bar soap", "[[11]]", "position:static")
               + f'<p style="position:static; {JPB}; font-size:[[24]]">発酵が生み出す美しさ。</p>'
@@ -401,7 +401,7 @@ ties = ('<div class="grid g3">'
                          f'<div style="left:[[150]]; right:[[150]]; top:[[200]]; box-shadow:0 [[20]] [[40]] rgba(0,0,0,.4)">{face_front("100%")}</div>'
                          f'<div class="row" style="left:0; right:0; bottom:[[200]]; justify-content:center; gap:[[40]]; color:#EFEBE2">{L(D["lenora"], "efebe2", "[[210]]")}<span style="font-size:[[40]]">×</span>{IVY("white", "[[250]]")}</div>',
               "Concept A · Lenora", "The most luxurious pairing; two high-contrast serifs side by side can blur, so keep naʻau on sumi and Ivycoast on its own paper.", "lenora.html")
-        + tie("#FAF7F1", f'<div style="right:[[-80]]; top:[[-60]]; width:[[520]]">{el("sun", "100%", "#E6D9BF")}</div>'
+        + tie("#FAF7F1", ''
                          f'<div style="left:[[120]]; right:[[120]]; top:[[200]]; box-shadow:0 [[20]] [[40]] rgba(58,54,49,.16)">{face_front("100%")}</div>'
                          f'<div class="row" style="left:0; right:0; bottom:[[200]]; justify-content:center; gap:[[40]]">{L(D["ogg"], "3a3631", "[[220]]")}<span style="font-size:[[40]]">×</span>{IVY("dark", "[[250]]")}</div>',
               "Concept B · Ogg", "The warmest fit: Ogg’s calligraphic serif and Ivycoast’s flared serif feel related but distinct.", "ogg.html")
@@ -468,12 +468,13 @@ def lay(x, y, w, inner, label):
 
 # all panels at one scale: 90 mm = 43% of the scene width
 MM = 43 / 90
-product_scene = scene(TIDE, "16/11",
-    lay(5, 6, 43, face_front("100%"), "Front") + lay(52, 6, 43, face_back("100%"), "Back") +
-    lay(5, 47, 43, face_top("100%"), "Lid") + lay(5, 75, 43, face_bottom("100%"), "Base") +
-    lay(57.2, 47, 30 * MM, face_end("bird"), "End") + lay(75.5, 47, 30 * MM, face_end("mother"), "End"))
-card_scene = scene(TURMERIC, "1/1", obj(22, 9, 56, insert_card("100%"), 0, 1, "deep"))
-product2 = (product_scene + cap("Every side of the box", "the front as Ivycoast designed it; a new back; one element on each end; the wordmark on the lid") +
+# front and back large, one end beside them at true scale; the lid and base live on the dieline
+MM = 56 / 90
+product_scene = scene("#ECE7DE", "16/11",
+    lay(5, 6, 56, face_front("100%"), "Front") + lay(66, 6, 30 * MM, face_end("mother"), "End") +
+    lay(5, 53, 56, face_back("100%"), "Back"))
+card_scene = scene(GREEN, "4/5", obj(12, 7, 76, insert_card("100%"), 0, 1, "deep"))
+product2 = (product_scene + cap("The box", "the front as Ivycoast designed it; a new back; one element on each end. Lid and base on the dieline below") +
             '<div class="two-uneven rev" style="margin-top:clamp(28px,4vw,56px)"><div>' + card_scene + cap("Story card inside the lid, 85 × 120 mm", "the full text") + '</div>'
             '<dl class="facts facts-lg" style="align-self:center"><dt>Name</dt><dd>KOM’BAR: <b>KOM</b>bucha + <b>BAR</b> soap</dd><dt>Product</dt><dd>Organic kombucha cold-processed bar soap</dd>'
             '<dt>Made with</dt><dd>naʻau kombucha ferment, and SCOBY powder as a gentle scrub</dd><dt>Made by</dt><dd>Ivycoast, by hand</dd>'
@@ -490,15 +491,15 @@ opening = scene(GREEN, "16/9",
     obj(44, 6, 50, tissue(), 2, 2, "paper") +
     obj(50, 22, 14, card1(0), -12, 4) + obj(60, 20, 14, card1(1), -3, 5) + obj(70, 23, 14, card1(2), 6, 6) + obj(80, 30, 14, card1(3), 14, 7) +
     obj(16, 58, 34, face_front("100%"), -6, 8, "deep"))
-market = scene(TURMERIC, "4/3",
+market = scene("#ECE7DE", "4/3",
     obj(6, 4, 52, band("01", "26.11.03", GREEN), -6, 1, "none") + obj(40, 30, 52, band("02", "26.11.24", INK), 4, 2, "none") + obj(4, 46, 52, band("03", "26.12.15", AMBER), -2, 3, "none"))
 counter_s = scene(WHITE, "3/4", obj(22, 14, 56, counter, -2, 1, "deep"))
-poster_s = scene(INK, "3/4", obj(20, 9, 60, poster, 0, 1, "deep"))
-feed = [p_reveal, p_sun, p_mother] + [ab(3, 4, f'<div style="left:[[160]]; right:[[160]]; top:50%; transform:translateY(-50%)">{el(n, "100%", fg)}</div>', "100%", f"background:{bg}", cls="flat") for n, bg, fg in (("tea", WHITE, GREEN), ("scoby", TURMERIC, INK), ("bird", GREEN, WHITE))]
+poster_s = scene("#ECE7DE", "3/4", obj(20, 9, 60, poster, 0, 1, "deep"))
+feed = [p_reveal, p_sun, p_mother] + [ab(3, 4, f'<div style="left:[[160]]; right:[[160]]; top:50%; transform:translateY(-50%)">{el(n, "100%", fg)}</div>', "100%", f"background:{bg}", cls="flat") for n, bg, fg in (("tea", WHITE, GREEN), ("scoby", WHITE, INK), ("bird", GREEN, WHITE))]
 phone_feed = (f'<div class="phone big"><div class="phone-screen"><div class="ig-head">{wm("38%", INK)}<span>naʻau × Ivycoast</span></div>'
               f'<div class="ig-grid">' + "".join(f'<div>{p}</div>' for p in feed) + '</div></div></div>')
-feed_s = f'<div class="scene" style="background:{TIDE}; aspect-ratio:4/3; display:flex; align-items:center; justify-content:center">{phone_feed}</div>'
-gift_s = scene(TIDE, "16/9", obj(8, 10, 54, kakegami(), -3, 1, "deep") + obj(58, 30, 36, mailer(), 5, 2))
+feed_s = f'<div class="scene" style="background:{GREEN}; aspect-ratio:4/3; display:flex; align-items:center; justify-content:center">{phone_feed}</div>'
+gift_s = scene("#ECE7DE", "16/9", obj(8, 10, 54, kakegami(), -3, 1, "deep") + obj(58, 30, 36, mailer(), 5, 2))
 
 world = ('<h3 class="wsub">Opening the box</h3>' + opening + cap("Opening the box", "turmeric inside the lid, tea-leaf tissue, four story cards, the bar")
          + '<h3 class="wsub">At the counter and at markets</h3><div class="two-uneven"><div>' + market + cap("Batch bands", "the bare bar, dated with a round date stamp for each cure") + '</div><div>' + counter_s + cap("Counter card, A6") + '</div></div>'
