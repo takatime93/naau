@@ -168,12 +168,14 @@ def chips(items, note=""):
     return f'<div class="swatches">{bars}</div>' + (f'<p class="swnote">{t(note)}</p>' if note else "")
 
 def previews(d):
+    """The home page in a browser and the product page on a phone; each frame is a link to the working page."""
     k = d["key"]
+    go = T("サイトを開く →", "Open the site →")
     return ('<div class="pv">'
-            f'<figure class="pf pv-desk"><div class="browser"><div class="browser-bar"><i></i><i></i><i></i><span>［website］</span></div>'
-            f'<div class="browser-view" data-fit="1440"><iframe src="{k}-home.html" title="Home page preview" loading="lazy" tabindex="-1" style="width:1440px; height:2000px"></iframe></div></div>'
+            f'<figure class="pf pv-desk"><a class="pv-go" href="{k}-home.html" aria-label="{d["name"]}: home page"><div class="browser"><div class="browser-bar"><i></i><i></i><i></i><span>naau / {k}-home</span><b class="pv-chip">{go}</b></div>'
+            f'<div class="browser-view" data-fit="1440"><iframe src="{k}-home.html" title="Home page preview" loading="lazy" tabindex="-1" style="width:1440px; height:2000px"></iframe></div></div></a>'
             f'<figcaption><b>{T("ホームページ", "Home page")}</b><span>{T("レスポンシブで、実際に動きます。", "Responsive and working.")} <a href="{k}-home.html">{T("全画面で見る →", "Open full size →")}</a></span></figcaption></figure>'
-            f'<figure class="pf pv-phone"><div class="phone"><div class="phone-view" data-fit="390"><iframe src="{k}-product.html" title="Product page preview" loading="lazy" tabindex="-1" style="width:390px; height:1690px"></iframe></div></div>'
+            f'<figure class="pf pv-phone"><a class="pv-go" href="{k}-product.html" aria-label="{d["name"]}: product page"><div class="phone"><div class="phone-view" data-fit="390"><iframe src="{k}-product.html" title="Product page preview" loading="lazy" tabindex="-1" style="width:390px; height:1690px"></iframe></div></div></a>'
             f'<figcaption><b>{T("商品ページ（スマートフォン）", "Product page, on a phone")}</b><span>{T("税込価格、クール便の送料とお届け日をカートの横に。", "Price with tax, クール便 cost and date beside the cart.")} <a href="{k}-product.html">{T("開く →", "Open →")}</a></span></figcaption></figure>'
             '</div>')
 

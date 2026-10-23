@@ -897,3 +897,13 @@ html[lang="ja"] body { text-autospace: normal; text-spacing-trim: normal; }
 
 .lx-prints { position: absolute; z-index: 2; left: 50%; bottom: clamp(28px, 5vw, 64px); display: flex; gap: clamp(10px, 1.4vw, 20px); }
 .lx-prints > div { width: clamp(26px, 2.8vw, 40px); }
+
+/* website previews: the whole frame opens the working page */
+.pv-go { display: block; color: inherit; text-decoration: none; border-radius: 10px; }
+.pv-go .browser, .pv-go .phone { transition: transform .25s ease, box-shadow .25s ease; }
+.pv-go:hover .browser, .pv-go:hover .phone, .pv-go:focus-visible .browser, .pv-go:focus-visible .phone { transform: translateY(-4px); box-shadow: 0 0 0 1px var(--ink), 0 30px 60px -24px rgba(0, 0, 0, .45); }
+.pv-go:focus-visible { outline: 2px solid var(--ink); outline-offset: 6px; }
+.browser-bar span { font-family: 'IBM Plex Mono', monospace; }
+.pv-chip { margin-left: auto; padding: 4px 12px; border-radius: 999px; background: var(--ink); color: var(--page); font-weight: 500; font-size: 12px; letter-spacing: .04em; white-space: nowrap; }
+.browser-bar span { margin: 0 auto 0 0; transform: none; padding-left: 14px; }
+
