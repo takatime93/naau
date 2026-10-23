@@ -42,15 +42,15 @@ RESEARCH = [
                        "Saturated blue reads ‘competent’ and corporate; warm off-white and warm ink read hand-made."],
   [("Marozzo et al. 2020", "https://openaccess.city.ac.uk/id/eprint/23205/"), ("Matte matters", "https://research.wu.ac.at/de/publications/matte-matters-when-matte-packaging-increases-perceptions-of-food--7/")]),
  ("Words", ["No health-effect claims on a normal food: avoid 便秘解消, 腸内環境改善, 免疫力UP.",
-            "kimy’s nursing background belongs in her bio, never beside product benefits, and never as ‘監修’.",
+            "No health professional’s endorsement or ‘監修’ beside product benefits.",
             "Check with 名古屋市保健所 before any label says 非加熱 (unheated)."],
   [("Saitama guidance", "https://www.pref.saitama.lg.jp/documents/19134/620443.pdf")]),
 ]
 
 COVERS = [
- ("current", "#FFFFFF", "#1E1E1E", L(D["current"], "1e1e1e", "46%"), "Current identity", "kimy’s script, as it is", "kimy’s script as it is: white, ink, centred, photo-led, round sticker labels."),
+ ("current", "#FFFFFF", "#1E1E1E", L(D["current"], "1e1e1e", "46%"), "Current identity", "The script logo, as it is", "The script logo as it is: white, ink, centred, photo-led, round sticker labels."),
  ("lenora", "#2B2926", "#EFEBE2", L(D["lenora"], "efebe2", "56%"), "Concept A · Lenora", "Teate, care by hand", "Black and white: linocut prints and photographs of hands at work, with one red. Craft, old knowledge and care."),
- ("ogg", "#FAF7F1", "#3A3631", L(D["ogg"], "3a3631", "56%"), "Concept B · Ogg", "The pause", "Airy and hand-made, a little more exclusive: kimy’s notes and vertical Japanese, a deep board per flavour, photographs framed like windows."),
+ ("ogg", "#FAF7F1", "#3A3631", L(D["ogg"], "3a3631", "56%"), "Concept B · Ogg", "The pause", "Airy and hand-made, a little more exclusive: handwritten notes and vertical Japanese, a deep board per flavour, photographs framed like windows."),
 ]
 
 hero = ('<header class="wrap ov-hero">'
@@ -61,8 +61,8 @@ hero = ('<header class="wrap ov-hero">'
 
 heard = ('<div class="grid g3">' + "".join(
     f'<div class="heard"><span class="heard-n">{n}</span><h3>{t}</h3><p>{b}</p></div>' for n, t, b in [
-        ("i", "The name", "naʻau is Hawaiian for the gut, the heart and the inner voice. kimy chose it in a second, after 直感kombucha, instinct kombucha and gut feeling kombucha all felt wrong."),
-        ("ii", "The maker", "kimy is a nurse and gut-health advisor who brews kombucha in Nagoya and teaches it in workshops. Her voice is warm, direct and a little playful."),
+        ("i", "The name", "naʻau is Hawaiian for the gut, the heart and the inner voice. It was chosen in a second, after 直感kombucha, instinct kombucha and gut feeling kombucha all felt wrong."),
+        ("ii", "The voice", "Small-batch kombucha from Nagoya, taught in workshops. Warm, direct and a little playful."),
         ("iii", "The feeling", "Grounded, trustworthy and hand-made; quiet rather than corporate. Kombucha is not everything, but it can be where you begin to listen to your body.")]) + '</div>')
 
 def src(srcs):
@@ -89,7 +89,7 @@ decisions = '<ol class="decide">' + "".join(f'<li><span>{i:02d}</span><p>{t}</p>
     "Choose a direction, and a palette for it.",
     "If Concept A or B: license the font for logo use (Lenora needs the Logo and Merchandise add-ons; Ogg’s desktop licence covers logos) and confirm trademark registration in Japan in writing with the foundry.",
     "Confirm with 名古屋市保健所 how the kombucha may be described (heated or not) and the 一括表示 wording.",
-    "Send scans of kimy’s handwriting and plan a photography day: hands, tea, the pour, the brewing table.",
+    "Send scans of the handwriting for the notes and plan a photography day: hands, tea, the pour, the brewing table.",
     "Choose the shop platform (BASE handles クール便 and PayPay) and set up LINE."], 1)) + '</ol>'
 
 appendix = ('<details class="appx"><summary>What we heard</summary>' + heard + '</details>'

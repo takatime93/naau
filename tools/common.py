@@ -194,15 +194,14 @@ def accordions(border):
     return "".join(f'<details style="border-top:1px solid {border}"><summary class="jp">{t}</summary><p class="jp">{c}</p></details>'
                    for t, c in [("原材料・アレルゲン", "［原材料名］／アレルゲン：［　］"),
                                 ("保存方法・賞味期限", "要冷蔵（10℃以下）。振らずに静かに開けてください。沈殿物は原料由来のものです。"),
-                                ("配送・返品", "クール便（冷蔵）でお届けします。送料 ¥［　］。日時指定ができます。生ものにつき、お客様都合の返品はお受けできません。"),
-                                ("作り手について", "kimy — 看護師として働きながら、名古屋でコンブチャを仕込んでいます。")])
+                                ("配送・返品", "クール便（冷蔵）でお届けします。送料 ¥［　］。日時指定ができます。生ものにつき、お客様都合の返品はお受けできません。")])
 
 # ------------------------------------------------------------------ photography: shot cards, not drawings
 # Where a photograph belongs we show what the photograph should be: subject, light and props, set in type.
 SHOTS = {
  "current": dict(bg="#EDECE8", ink="#6B6B6B", light="Soft daylight · white table · amber glass"),
  "lenora":  dict(bg="#2A2826", ink="#A39E95", light="One shaft of evening light · dark wood"),
- "ogg":     dict(bg="#E5D9C3", ink="#6E655B", light="Shōji light · pale oak · kimy’s hands"),
+ "ogg":     dict(bg="#E5D9C3", ink="#6E655B", light="Shōji light · pale oak · the handwritings"),
  "collab":  dict(bg="#D7DAD4", ink="#59605A", light="Daylight · peach paper · both studios"),
 }
 SUBJECT = {"range": "The range, three bottles", "pour": "The pour", "single": "One bottle, close", "jar": "The brewing jar",
@@ -233,6 +232,7 @@ PHOTOS = {
     "grind":    ("1492552085122-36706c238263", "Katherine Hanlon", "bd_fCZhy_W8"),
     "teafield": ("1562558742-ec7adb76fe11", "Kevin Ma", "ppEq6JGLOUE"),
     "kettle":   ("1531876066433-09d3a1f79fac", "五玄土 ORIENTO", "fLZeuI-OFBc"),
+    "brewjar":  ("1617854307432-13950e24ba07", "Prchi Palwe", "pdUh5igZjDQ"),
     # Concept B · Ogg: warm light, paper, persimmon, moss and amber, some shown out of focus for mood
     "shoji":    ("1767839507904-46980ac12d53", "Perry Merrity II", "jHl9eZSC9Ac"),
     "wall":     ("1529047033375-f402d3da24ca", "Alexander Possingham", "RIQ96s3Uzso"),
@@ -264,6 +264,7 @@ def credits(html):
     return ('<p class="credits">' + T("仮の写真：", "Stand-in photographs: ") + ", ".join(names) + " / Unsplash</p>") if names else ""
 
 BW = "filter:grayscale(1) contrast(1.18) brightness(.94)"
+BW_FLIP = BW + "; transform:scaleX(-1)"   # mirrored, so the subject sits left of the type
 TONE = {"current": "", "lenora": BW,
         "ogg": "", "collab": ""}
 PICK = {("current", "range"): "shelf", ("current", "pour"): "teabowl", ("current", "jar"): "jar", ("current", "single"): "jar",

@@ -9,7 +9,7 @@ A static site presenting three brand directions for naʻau kombucha (Nagoya), pr
 | `index.html` | Overview: what we heard, research findings, colour options, the directions, decisions needed |
 | `current.html` | Current identity: naʻau's script logo as it is, white and minimal |
 | `lenora.html` | Concept A · Lenora, 手当て (care by hand): black and white, linocut prints and black-and-white photographs of hands at work, with bengara red as the one tint |
-| `ogg.html` | Concept B · Ogg, 間 (the pause): airy and hand-made with kimy's notes and vertical Japanese, made a little more exclusive with a deep board per flavour (ōdo, kakishibu, koke), photographs framed like windows and light out of focus |
+| `ogg.html` | Concept B · Ogg, 間 (the pause): airy and hand-made with handwritten notes and vertical Japanese, made a little more exclusive with a deep board per flavour (ōdo, kakishibu, koke), photographs framed like windows and light out of focus |
 | `*-home.html`, `*-product.html` | Responsive home and product page mockups for each direction |
 | `collab.html` | naʻau × Ivycoast: KOM'BAR, planned assets, website language, how it ties to each direction |
 
@@ -45,7 +45,7 @@ python3 build_collab.py .. .
 
 - The Lenora and Ogg wordmarks are images made from unlicensed font settings, shown for discussion. License the fonts before any real use, or keep the page unlisted.
 - Text in ［brackets］ is placeholder content for naʻau to fill in: flavours, prices, dates, address, ingredients.
-- Handwriting in Concept B uses stand-in fonts (Klee One, and Yomogi for the red pen) until kimy's handwriting is scanned.
+- Handwriting in Concept B uses stand-in fonts (Klee One, and Yomogi for the red pen) until the real handwriting is scanned.
 - The prints, camellia and seals are drawn for the concept; final versions would be cut, drawn and carved by hand.
 
 ## Textures

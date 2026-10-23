@@ -166,7 +166,7 @@ intro = ('<section class="wrap kb-intro">'
 # ====================================================================== 01 brands, 02 product (unchanged in substance)
 brands = (f'<div class="meet">{pair("min(30vw,200px)")}'
           '<div class="meet-cols"><p><span>Ivycoast</span>Australian botanicals, brought into Japanese homes for daily rituals.</p>'
-          '<p><span>naʻau</span>Small-batch kombucha, brewed in Nagoya by kimy.</p></div>'
+          '<p><span>naʻau</span>Small-batch kombucha, brewed in Nagoya.</p></div>'
           '<p class="meet-line">Where they meet: 儀式 ritual, 時間 time, 素材 materials, 手 hands.</p></div>')
 
 product = ('<div class="grid g2" style="align-items:start">'
@@ -429,7 +429,7 @@ ties = ('<div class="grid g3">'
 # ====================================================================== 11 borrowed
 BORROWED = [
     ("Wine and chocolate labels set like spec sheets", "Plain facts in ruled rows", "Our rows hold the Japanese cosmetic label in its legal order, on the back only; the front stays Ivycoast’s illustration."),
-    ("Kombucha back labels that speak plainly", "A plain, personal voice", "Our back carries the founders’ own story of fermentation, in their words, with no jokes and no claims."),
+    ("Kombucha back labels that speak plainly", "A plain, personal voice", "Our back carries the brand’s own story of fermentation, in their words, with no jokes and no claims."),
     ("Food cartons with a picture on each end", "Every panel of the box has a job", "Our ends tell one story in order, 01 tea to 04 Ivycoast, with elements cut from our own artwork."),
     ("Cut-paper cards and flat-colour labels", "One shape on one colour", "Our shapes are cut from the KOM’BAR artwork, never drawn new; the colours come from the two brands."),
     ("Kraft shipping boxes with one big mark", "A plain material, one idea", "Our lid draws the route from naʻau in Nagoya to the Ivycoast studio, with a peach address label."),
@@ -445,7 +445,7 @@ borrowed = ('<p class="lead-p">We looked at a wide set of packaging and print. F
 roles = ('<div class="roles">' + "".join(
     f'<div class="{cls}"><h3>{t}</h3><ul>{"".join(f"<li>{i}</li>" for i in items)}</ul></div>' for cls, t, items in [
         ("", "Ivycoast", ["Soap formulation and production", "Cosmetics licences (化粧品製造業・製造販売業) or a licensed OEM", "Box dieline, 全成分 and barcode", "Product page on Ivycoast"]),
-        ("", "naʻau", ["Kombucha ferment and SCOBY supply", "The naming story and kimy’s voice", "Product page on the naʻau shop", "Counter card and workshop tie-in"]),
+        ("", "naʻau", ["Kombucha ferment and SCOBY supply", "The naming story and the brand voice", "Product page on the naʻau shop", "Counter card and workshop tie-in"]),
         ("together", "Together", ["Agree the ten elements and their meanings", "A photography day in both studios", "Launch posts as Instagram collab posts", "One shared copy deck, checked against 薬機法", "Launch date: ［　］"])]) + '</div>')
 
 # ====================================================================== scenes: printed pieces as objects on a surface
@@ -483,7 +483,7 @@ idea = ('<div class="idea2">'
         '<dl class="idea2-num">' + "".join(f'<div><dt>{n}</dt><dd>{C.T(j, e)}</dd></div>' for n, j, e in (("14", "naʻau で仕込む日数", "days brewing at naʻau"), ("60", "熟成させる日数", "days curing"), ("4", "香りに使う精油の数", "essential oils, nothing else"))) + '</dl>'
         '</div></div>'
         '<div class="idea"><div class="idea-makers">'
-        f'<div>{NAAU("96px")}<p>Small-batch kombucha, brewed in Nagoya by kimy.</p></div>'
+        f'<div>{NAAU("96px")}<p>Small-batch kombucha, brewed in Nagoya.</p></div>'
         f'<div>{IVY("dark", f"calc(96px * {IVY_K:.4f})")}<p>Australian botanicals, brought into Japanese homes for daily rituals.</p></div>'
         '</div></div>')
 
@@ -597,7 +597,7 @@ voice = (f'<div class="voice-lead"><p class="jp">{TAG[0]}</p><p class="it">{TAG[
                                          for i, (j, e, r, x) in enumerate(PRINCIPLES, 1)) + '</div>'
          '<h3 class="lang-h">' + C.T("言葉の一覧", "The lines") + '</h3><div class="vlines">'
          + "".join(f'<div><p class="vlines-k">{C.t(k)}</p><p class="jp">{br(j)}</p><p class="it">{e}</p></div>' for k, (j, e) in VOICE_LINES) + '</div>'
-         '<p class="muted" style="font-size:14px; margin-top:12px">' + C.T("14日と60日は、kimy と Ivycoast に確認のうえ使用します。数字は本当のものだけを使います。", "Fourteen and sixty days to be confirmed with kimy and Ivycoast; we only print numbers that are true.") + '</p>'
+         '<p class="muted" style="font-size:14px; margin-top:12px">' + C.T("14日と60日は、naʻau と Ivycoast に確認のうえ使用します。数字は本当のものだけを使います。", "Fourteen and sixty days to be confirmed with naʻau and Ivycoast; we only print numbers that are true.") + '</p>'
          '<div class="lang"><div><p class="lang-voice"><b>Japanese first, English as its own line.</b> Each line is written twice, not translated: Japanese in calm です/ます or short verb-less phrases; English drier and shorter. No exclamation marks, no superlatives, no claims.</p>'
          '<h3 class="lang-h">Names</h3><dl class="facts"><dt>naʻau × Ivycoast</dt><dd>With the ʻokina, and a multiplication sign ×, not the letter x.</dd>'
          f'<dt>KOM’BAR</dt><dd>{KB_DEF2}</dd><dt>SCOBY（スコビー）</dt><dd>Explained once as 細菌と酵母の共生培養体; called 「母」 the mother, in brackets, as brewers do.</dd></dl></div>'

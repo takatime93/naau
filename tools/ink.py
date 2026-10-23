@@ -160,7 +160,7 @@ def drops(w, days=14, filled=14, ink="currentColor", label=True):
                  f'<text x="{(days - 1) * gap + 20}" y="46" text-anchor="end" font-family="\'IBM Plex Mono\', monospace" font-size="9" letter-spacing="2" fill="{ink}" opacity=".7">{days:02d} · BOTTLED</text>')
     return _svg(f"-1 0 {(days - 1) * gap + 22} {50 if label else 30}", body, w, label=f"{filled} of {days} days")
 
-# ------------------------------------------------------------------ Concept B: what is in kimy's jar, and the days it takes
+# ------------------------------------------------------------------ Concept B: what is in the jar, and the days it takes
 def scoby(w, ink="currentColor"):
     shape = '<path d="M100 18 C150 16 186 52 184 100 C186 150 148 184 100 182 C50 186 14 148 16 100 C14 52 52 18 100 18Z"/>'
     rings = "".join(f'<path d="M100 {100 - r} C{100 + r * 1.1} {100 - r * .96} {100 + r * 1.02} {100 + r * 1.06} 100 {100 + r} C{100 - r * 1.08} {100 + r} {100 - r * .98} {100 - r * 1.04} 100 {100 - r}Z" stroke-width="{2.4 + (i % 2)}" fill="none"/>'
