@@ -161,33 +161,64 @@ def specrows(rows, size, col, pad="[[14]]", extra=""):
 def seal(w, style="", text="一本"):
     return f'<div style="position:absolute; {style}">{K.hanko(w, text)}</div>'
 
+# Mixed media: real paper scans under the print, real torn edges, tape cut from a scan.
+TEX = "assets/textures/"
+KIN_P = f"background:{KIN} url({TEX}paper-crease.jpg) center/cover; background-blend-mode:multiply"
+SUMI_P = f"background:#33302C url({TEX}paper-crease.jpg) center/cover; background-blend-mode:multiply"
+SLIP_P = f"background:#F7F3EA url({TEX}paper-crease.jpg) center/180%; background-blend-mode:multiply"
+KRAFT_P = f"background:url({TEX}kraft.jpg) center/cover"
+
+def torn(rw, rh, inner, width, style, edge="b"):
+    """A paper piece with a real torn edge (traced from a scan) and a soft paper shadow."""
+    return f'<div class="mm-drop" style="width:{width}">' + ab(rw, rh, inner, "100%", style, cls=f"flat mm-torn-{edge}") + '</div>'
+
+def tape(left, top, w, rot):
+    return f'<img class="mm-tape" src="{TEX}tape.jpg" alt="" style="left:{left}; top:{top}; width:{w}; transform:rotate({rot}deg)">'
+
+def slip(left, top, w, ratio, inner, rot=-1.5):
+    return (f'<div class="ab flat" style="left:{left}; top:{top}; width:{w}; aspect-ratio:{ratio}; {SLIP_P}; transform:rotate({rot}deg); '
+            f'box-shadow:0 1px 1px rgba(0,0,0,.12), 0 3px 6px rgba(0,0,0,.08)">{inner}</div>')
+
+def label_mm(no="027"):
+    """The front label as mixed media: the mark printed on creased kinari, a typed slip taped on, the name in pencil, the seal across both."""
+    rows_ = specrows([("TEA", "［茶葉］"), ("FERMENTED", "14 DAYS"), ("BOTTLED", "2026 · 10 · 22")], "[[46]]", "rgba(43,41,38,.4)", "[[18]]")
+    return (f'<p class="mono" style="left:[[90]]; top:[[90]]; font-size:[[30]]; letter-spacing:.24em; opacity:.7">NO. {no}</p>'
+            f'<p class="mono" style="right:[[90]]; top:[[90]]; font-size:[[30]]; letter-spacing:.24em; opacity:.7">330 ML</p>'
+            f'<div style="left:50%; top:[[290]]; transform:translateX(-50%); width:[[700]]">{L(P, "2b2926", "100%", style="mix-blend-mode:multiply")}</div>'
+            f'<p style="left:0; right:0; top:[[520]]; text-align:center; font-family:var(--lat); font-style:italic; font-size:[[58]]">kombucha</p>'
+            + slip("[[120]]", "[[700]]", "[[640]]", "640/290", f'<div style="left:[[50]]; right:[[50]]; top:[[30]]">{rows_}</div>', -1.8)
+            + tape("[[70]]", "[[680]]", "[[170]]", -9)
+            + f'<p class="hand" style="left:[[130]]; top:[[1060]]; font-size:[[78]]; color:#5E5953; transform:rotate(-2deg)">［お名前］様</p>'
+            + seal("[[170]]", "right:[[90]]; top:[[930]]; transform:rotate(-7deg); mix-blend-mode:multiply; opacity:.92"))
+
 def side(text, pos, size="[[20]]", font="'IBM Plex Mono', monospace"):
     return (f'<span class="vt" style="position:absolute; {pos}; top:50%; transform:translateY(-50%); font-family:{font}; font-size:{size}; letter-spacing:.32em; '
             f'text-transform:uppercase; opacity:.75; white-space:nowrap">{text}</span>')
 
 def p_dir():
-    hero_ab = ab(16, 10, f'<div style="left:50%; top:46%; transform:translate(-50%,-50%); width:[[560]]">{L(P, "efebe2", "100%")}</div>'
-                 f'<p class="mono" style="left:0; right:0; top:[[470]]; text-align:center; font-size:[[13]]; letter-spacing:.4em; opacity:.6">NO. 027 · BOTTLED FOR ONE</p>'
-                 + seal("[[44]]", "left:50%; bottom:[[44]]; transform:translateX(-50%)"),
-                 "min(100%,980px)", f"background:{SUMI}; color:{KIN}", cls="flat")
+    hero_ab = ab(16, 10, f'<div style="left:50%; top:44%; transform:translate(-50%,-50%); width:[[560]]">{L(P, "efebe2", "100%")}</div>'
+                 + slip("[[330]]", "[[470]]", "[[340]]", "340/56", f'<p class="mono" style="left:0; right:0; top:50%; transform:translateY(-50%); text-align:center; font-size:[[34]]; letter-spacing:.3em; color:{INK}">NO. 027 · BOTTLED FOR ONE</p>', -1.2)
+                 + tape("[[318]]", "[[462]]", "[[70]]", -12)
+                 + seal("[[52]]", "left:[[662]]; top:[[470]]; transform:rotate(-8deg)"),
+                 "min(100%,980px)", f"{SUMI_P}; color:{KIN}", cls="flat")
     hero = (f'<header class="wrap" style="padding-top:clamp(56px,8vw,110px); display:flex; flex-direction:column; align-items:center; text-align:center; gap:26px">'
             f'<p class="eyebrow">Concept A · Lenora</p>{hero_ab}'
             f'<h1 style="margin:14px 0 0; font-weight:400; font-size:clamp(30px,3.6vw,46px); line-height:1.15">Bottled for one</h1>'
-            f'<p style="max-width:620px; color:var(--muted)">A made-to-order atelier. Sumi grounds, strict symmetry and wide, quiet margins: no frames, no ornament. The mark does the work. The drop from the wordmark becomes the count of fermenting days, one per day, filled when the batch is bottled; every label is made out to one person and stamped with a vermilion 一本 seal, the only colour besides the amber glass.</p></header>')
+            f'<p style="max-width:620px; color:var(--muted)">A made-to-order atelier in mixed media: the mark printed on real creased paper, details typed on slips and taped on, names written in pencil, a vermilion 一本 seal pressed across the pieces. The drop from the wordmark becomes the count of fermenting days, one per day, filled when the batch is bottled; every label is made out to one person and stamped with a vermilion 一本 seal, the only colour besides the amber glass.</p></header>')
 
     idn = '<div class="grid g3">' + "".join([
-        pf(ab(4, 3, frame(f'<span class="eyebrow" style="font-size:[[22]]; color:{MUTE}">Listen to your naʻau</span>{L(P, "2b2926", "58%")}<div style="width:[[330]]">{K.drops("100%", 14, 14, INK)}</div>'
-                          + seal("[[73]]", "right:[[54]]; bottom:[[46]]"), inner_pad="[[50]] [[70]] [[56]]"), "100%", f"background:{KIN}; color:{INK}", cls="flat"),
-           "Centred", "The mark on kinari, the day count beneath, wide margins. The default."),
+        pf(ab(4, 3, f'<div style="left:50%; top:50%; transform:translate(-50%,-50%) rotate(-3deg); width:[[400]]">' + torn(3, 4, label_mm(), "100%", f"{KIN_P}; color:{INK}") + '</div>',
+              "100%", f"{SUMI_P}", cls="flat"),
+           "On paper", "Printed, typed, taped, written and stamped: five hands on one label."),
         pf(ab(4, 3, f'<div class="fill col" style="align-items:flex-start; justify-content:space-between; padding:[[64]] [[70]]"><span class="mono" style="font-size:[[20]]; letter-spacing:.3em; opacity:.7">NOW POURING</span>'
                     f'<span style="font-family:var(--lat); font-size:[[260]]; line-height:.85">027</span>'
                     f'<div style="width:100%; display:flex; justify-content:space-between; align-items:flex-end; gap:[[40]]">' + specrows([("TEA", "［茶葉］"), ("DAYS", "14")], "[[20]]", "rgba(239,235,226,.4)", "[[10]]", "flex:1") +
-                    f'{L(P, "efebe2", "[[230]]")}</div></div>' + seal("[[80]]", "right:[[70]]; top:[[60]]"), "100%", f"background:{INK}; color:{KIN}", cls="flat"),
+                    f'{L(P, "efebe2", "[[230]]")}</div></div>' + seal("[[80]]", "right:[[70]]; top:[[60]]"), "100%", f"{SUMI_P}; color:{KIN}", cls="flat"),
            "Numeral", "The batch number as the headline, details typed beneath."),
         pf(ab(4, 3, f'<div style="left:[[40]]; bottom:[[-90]]">{K.tea_branch("[[420]]", KIN, 1.0)}</div>'
                     f'<div class="col" style="right:[[70]]; bottom:[[64]]; align-items:flex-end; gap:[[18]]">{L(P, "efebe2", "[[300]]")}'
                     f'<span class="mono" style="font-size:[[16]]; letter-spacing:.3em; opacity:.6">CAMELLIA SINENSIS · 茶の花</span></div>' + seal("[[74]]", "right:[[70]]; top:[[60]]"),
-                    "100%", f"background:{SUMI}; color:{KIN}", cls="flat"),
+                    "100%", f"{SUMI_P}; color:{KIN}", cls="flat"),
            "Botanical", "The tea flower drawn large and cropped; the mark small in the corner."),
     ]) + '</div>'
     pal = (chips([("Sumi", "#2B2926", "Ground · 12.2:1 on kinari", 3), ("Kinari", "#EFEBE2", "Labels, type on sumi", 2), ("Keshizumi", "#524E4D", "Rules", 1), ("Usuzumi", "#A39E95", "Captions on sumi", 1),
@@ -198,54 +229,54 @@ def p_dir():
                 ("Details", '<p class="mono" style="font-size:15px; letter-spacing:.08em; line-height:1.9">NO. 027 · 330 ML<br>FERMENTED 14 DAYS</p>', "IBM Plex Mono, typed details"),
                 ("Drop and seal", f'<div style="display:flex; flex-direction:column; gap:14px; color:{KIN}"><div style="width:180px">{K.drops("100%", 14, 9, KIN, label=False)}</div>{K.hanko("40px")}</div>', "Day count from the ʻokina · 一本 seal")])
     lw = fitw(1, .75, .82)
-    front = ab(3, 4, frame(spread(["No. 027", "330 ml"], "[[30]]", "opacity:.75") + f'<div style="width:[[200]]; margin-top:[[30]]">{K.drop("100%", INK, sw=.5)}</div>{L(P, "2b2926", "72%")}'
-                           f'<span style="font-family:var(--lat); font-style:italic; font-size:[[54]]; margin-top:[[-16]]">kombucha</span>'
-                           + specrows([("TEA", "［茶葉］"), ("FERMENTED", "14 DAYS"), ("BOTTLED", "2026 · 10 · 22"), ("FOR", '<span class="jp">［お名前］様</span>')], "[[30]]", "rgba(43,41,38,.45)", "[[13]]")
-                           + seal("[[153]]", "right:[[60]]; bottom:[[150]]"), inner_pad="[[76]] [[64]] [[70]]"), lw, f"background:{KIN}; color:{INK}")
+    front = torn(3, 4, label_mm(), lw, f"{KIN_P}; color:{INK}")
     back = ab(3, 4, frame(f'<dl style="position:static; text-align:left; font-family:var(--jp); font-size:[[40]]; line-height:1.75; column-gap:[[36]]; width:100%">{C.ichi_rows()}</dl>'
                           f'<p class="jp" style="position:static; font-size:[[38]]; line-height:1.7; text-align:left">{C.HANDLING}</p>'
-                          + specrows([("No.", "＿＿＿"), ("瓶詰め", "＿＿＿")], "[[32]]", "rgba(43,41,38,.45)", "[[12]]"), inner_pad="[[80]] [[64]]"), lw, f"background:{KIN}; color:{INK}")
-    gift = ab(4, 3, f'<div class="fill" style="background:{INK}"></div>'
-              f'<div style="left:[[90]]; top:50%; transform:translateY(-50%); width:[[150]]">{K.drop("100%", KIN, sw=.35)}</div>'
-              f'<div class="ab flat" style="left:50%; top:50%; transform:translate(-50%,-50%); width:[[330]]; aspect-ratio:3/4; background:{KIN}; color:{INK}; box-shadow:0 10px 24px rgba(0,0,0,.4)">'
-              + frame(f'<span class="eyebrow" style="font-size:[[60]]; color:{MUTE}">Made out to</span><span class="jp" style="font-size:[[120]]">［お名前］様</span>{L(P, "2b2926", "62%")}', pad="[[60]]", inner_pad="[[120]] [[60]]") + '</div>'
-              + seal("[[102]]", "right:[[120]]; bottom:[[110]]"), "78%")
-    trio = "".join(f'<div style="width:20%; transform:rotate({r}deg)">{front.replace(lw, "100%").replace("No. 027", "No. " + n)}</div>' for r, n in ((-2, "027"), (1.5, "028"), (-1, "029")))
-    pack = (pf(trio, "The range", "Three batches, each label made out to its owner, typed and sealed by hand.", "21/9", pstyle="gap:5%") +
+                          + specrows([("No.", "＿＿＿"), ("瓶詰め", "＿＿＿")], "[[32]]", "rgba(43,41,38,.45)", "[[12]]"), inner_pad="[[80]] [[64]]"), lw, f"{KIN_P}; color:{INK}")
+    gift = ab(4, 3, f'<div class="fill" style="{KRAFT_P}"></div>'
+              f'<div style="left:50%; top:50%; transform:translate(-50%,-50%) rotate(-4deg); width:[[330]]">'
+              + torn(3, 4, f'<p class="mono" style="left:0; right:0; top:[[160]]; text-align:center; font-size:[[44]]; letter-spacing:.3em; opacity:.7">MADE OUT TO</p>'
+                     f'<p class="hand" style="left:0; right:0; top:[[420]]; text-align:center; font-size:[[120]]; color:#5E5953; transform:rotate(-2deg)">［お名前］様</p>'
+                     f'<div style="left:50%; top:[[850]]; transform:translateX(-50%); width:[[600]]">{L(P, "2b2926", "100%", style="mix-blend-mode:multiply")}</div>',
+                     "100%", f"{KIN_P}; color:{INK}") + '</div>'
+              + tape("[[390]]", "[[95]]", "[[130]]", 6)
+              + seal("[[110]]", "left:[[560]]; top:[[520]]; transform:rotate(-10deg)"), "78%")
+    trio = "".join(f'<div style="width:20%; transform:rotate({r}deg)">{torn(3, 4, label_mm(n), "100%", f"{KIN_P}; color:{INK}")}</div>' for r, n in ((-2, "027"), (1.5, "028"), (-1, "029")))
+    pack = (pf(trio, "The range", "Three batches: the mark printed, the details typed on a slip and taped on, the owner written in pencil, the seal pressed across.", "21/9", pstyle="gap:5%") +
             '<div class="grid g3" style="margin-top:clamp(20px,3vw,36px)">' +
-            pf(front, "Front label", "Typed batch details, the owner’s name, the seal pressed by hand at the counter.", "1/1") +
+            pf(front, "Front label", "Creased kinari with a torn foot. The slip is typed at the counter, the name written in pencil, the seal pressed across the slip’s edge.", "1/1") +
             pf(back, "Back label", "一括表示 on the same symmetric grid, 8 pt minimum.", "1/1") +
-            pf(gift, "Gift box", "Sumi board, one drop in hairline, a framed card made out to the recipient.", "1/1") + '</div>')
+            pf(gift, "Gift box", "Kraft wrap, a torn card made out in pencil, taped on and sealed.", "1/1") + '</div>')
     a5w = fitw(4 / 3, 148 / 210, .82)
     fl_f = ab(148, 210, frame(spread(["An evening", "at the counter"], "[[24]]", "opacity:.7") + f'<div style="width:[[300]]">{K.tea_branch("100%", KIN, 1.1)}</div>' +
                               f'<span style="font-family:var(--lat); font-size:[[230]]; line-height:.85">027</span><p style="font-family:{SHIP}; font-weight:700; font-size:[[62]]; line-height:1.6">仕込みと、<br>試飲の会。</p>{L(P, "efebe2", "50%")}'
-                              + seal("[[112]]", "right:[[60]]; bottom:[[70]]"), pad="[[56]]", inner_pad="[[90]] [[60]] [[90]]"), a5w, f"background:{INK}; color:{KIN}")
+                              + seal("[[112]]", "right:[[60]]; bottom:[[70]]"), pad="[[56]]", inner_pad="[[90]] [[60]] [[90]]"), a5w, f"{SUMI_P}; color:{KIN}")
     fl_b = ab(148, 210, frame(spread(["Details", "No. 027"], "[[26]]", f"color:{MUTE}") +
                               specrows([("日時", "［月日（曜）時間］"), ("場所", "名古屋市［　］"), ("定員", "［　］名（先着順）"), ("内容", "仕込みの体験と試飲"), ("参加費", "¥［　］（税込）"), ("申込", "Instagram DM / LINE")], "[[34]]", "rgba(43,41,38,.4)", "[[20]]", "font-family:var(--jp)") +
                               f'<div style="display:flex; gap:[[40]]">' + "".join(f'<span class="mono" style="width:[[150]]; aspect-ratio:1; border:1px solid currentColor; display:flex; align-items:center; justify-content:center; font-size:[[24]]; letter-spacing:.2em">{q}</span>' for q in ("LINE", "IG")) + '</div>',
-                              pad="[[56]]", inner_pad="[[110]] [[80]] [[100]]"), a5w, f"background:{KIN}; color:{INK}")
+                              pad="[[56]]", inner_pad="[[110]] [[80]] [[100]]"), a5w, f"{KIN_P}; color:{INK}")
     cw = fitw(4 / 3, 91 / 55, .34)
-    card_f = ab(91, 55, frame(f'{L(P, "efebe2", "50%")}', pad="[[40]]", just="center") + seal("[[80]]", "right:[[90]]; bottom:[[80]]"), cw, f"background:{INK}; color:{KIN}")
+    card_f = ab(91, 55, frame(f'{L(P, "efebe2", "50%")}', pad="[[40]]", just="center") + seal("[[80]]", "right:[[90]]; bottom:[[80]]"), cw, f"{SUMI_P}; color:{KIN}")
     card_b = ab(91, 55, frame(f'<span class="mono" style="font-size:[[26]]; letter-spacing:.3em; color:{MUTE}">BOTTLED FOR</span><span class="jp" style="font-size:[[66]]">［お名前］様</span><span class="mono" style="font-size:[[28]]; letter-spacing:.14em">2026 · 10 · 22</span>', pad="[[40]]", inner_pad="[[50]]")
-                + seal("[[89]]", "right:[[80]]; bottom:[[70]]"), cw, f"background:{KIN}; color:{INK}")
+                + seal("[[89]]", "right:[[80]]; bottom:[[70]]"), cw, f"{KIN_P}; color:{INK}")
     prt = ('<div class="grid g2">' + pf(fl_f + fl_b, "A5 invitation", "A tasting-and-brewing evening, framed like a card; details typed on kinari.", "4/3") +
            pf(card_f + card_b, "Shop card and gift card, 91 × 55 mm", "The back is made out by hand and sealed at the counter.", "4/3", pstyle="flex-direction:column; gap:7%") + '</div>')
     posts = [
         (ab(3, 4, f'<div class="fill col" style="justify-content:space-between; padding:[[80]] [[80]] [[90]]"><span class="mono" style="font-size:[[26]]; letter-spacing:.3em; opacity:.7">NOW POURING</span>'
                   f'<span style="font-family:var(--lat); font-size:[[400]]; line-height:.8; margin-left:[[-14]]">027</span>'
                   + specrows([("TEA", "［茶葉］"), ("FERMENTED", "14 DAYS"), ("BOTTLED", "TO ORDER")], "[[28]]", "rgba(239,235,226,.35)", "[[16]]") +
-                  f'<div style="display:flex; justify-content:space-between; align-items:flex-end">{L(P, "efebe2", "[[300]]")}{K.hanko("[[120]]")}</div></div>', "100%", f"background:{INK}; color:{KIN}", cls="flat post"),
+                  f'<div style="display:flex; justify-content:space-between; align-items:flex-end">{L(P, "efebe2", "[[300]]")}{K.hanko("[[120]]")}</div></div>', "100%", f"{SUMI_P}; color:{KIN}", cls="flat post"),
          "Batch post", "The number is the headline; the details are typed."),
         (ab(3, 4, f'<div style="left:[[-30]]; bottom:[[-80]]">{K.tea_branch("[[620]]", KIN, 1.0)}</div>'
                   f'<p class="vt" style="right:[[90]]; top:[[90]]; font-family:{SHIP}; font-weight:700; font-size:[[62]]; line-height:1.9; letter-spacing:.12em">一本の、<br>自分のための時間。</p>'
                   f'<div style="right:[[90]]; bottom:[[80]]">{L(P, "efebe2", "[[260]]")}</div>' + seal("[[90]]", "right:[[110]]; bottom:[[190]]"),
-                  "100%", f"background:{SUMI}; color:{KIN}", cls="flat post"),
+                  "100%", f"{SUMI_P}; color:{KIN}", cls="flat post"),
          "Words post", "The tea flower rising from the bottom edge; one line, set vertically."),
-        (ab(3, 4, f'<div style="left:50%; top:50%; transform:translate(-50%,-50%) rotate(-4deg); width:[[600]]; box-shadow:0 [[30]] [[60]] rgba(0,0,0,.5)">{front.replace(lw, "100%")}</div>', "100%", f"background:{SUMI}", cls="flat post"), "Label post", "One label, made out to one person, on sumi."),
+        (ab(3, 4, f'<div style="left:50%; top:50%; transform:translate(-50%,-50%) rotate(-4deg); width:[[600]]; box-shadow:0 [[30]] [[60]] rgba(0,0,0,.5)">{front.replace(lw, "100%")}</div>', "100%", f"{SUMI_P}", cls="flat post"), "Label post", "One label, made out to one person, on sumi."),
     ]
     story = ab(9, 16, frame(f'<span class="mono" style="font-size:[[30]]; letter-spacing:.3em; color:#A39E95">INVITATION</span><div style="width:[[110]]">{K.drop("100%", KIN, sw=.5)}</div><p style="font-family:{SHIP}; font-weight:700; font-size:[[72]]; line-height:1.8">今日のおなか、<br>どうですか？</p>'
                             f'<div style="width:80%; display:flex; flex-direction:column; gap:[[24]]">' + "".join(f'<span class="jp" style="border:1px solid #6E6860; padding:[[24]] 0; font-size:[[42]]">{w}</span>' for w in ("軽い", "重い", "ふつう")) + f'</div>{L(P, "efebe2", "42%")}'
-                            + seal("[[128]]", "right:[[60]]; bottom:[[60]]"), pad="[[70]]", inner_pad="[[110]] [[70]] [[110]]"), "100%", f"background:{INK}; color:{KIN}", cls="flat story")
+                            + seal("[[128]]", "right:[[60]]; bottom:[[60]]"), pad="[[70]]", inner_pad="[[110]] [[70]] [[110]]"), "100%", f"{SUMI_P}; color:{KIN}", cls="flat story")
     nts = notes(["The wordmark is shown from your Lenora setting with a redrawn water-drop ʻokina. License Lenora with Superior Type’s Logo and Merchandise add-ons, then reset it as vector.",
                  "Borrowed, not copied: from references we took fine line work and stamped labels as principles. Our version counts fermenting days with the drop from our own wordmark, and seals each label with a 一本 hanko.",
                  "The camellia (tea flower) is drawn for this concept; a final version would be drawn by hand, then the 一本 seal carved as a real hanko so every label is stamped at the counter."])

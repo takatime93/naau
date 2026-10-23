@@ -8,7 +8,7 @@ A static site presenting three brand directions for naʻau kombucha (Nagoya), pr
 |---|---|
 | `index.html` | Overview: what we heard, research findings, colour options, the directions, decisions needed |
 | `current.html` | Current identity: naʻau's script logo as it is, white and minimal |
-| `lenora.html` | Concept A · Lenora: sumi, framed atelier, camellia and seal (palette A, Sumi & Kinari) |
+| `lenora.html` | Concept A · Lenora: sumi, mixed media on real paper scans, typed slips, pencil and the 一本 seal (palette A, Sumi & Kinari) |
 | `ogg.html` | Concept B · Ogg: airy and hand-made, block prints and kimy's notes (palette D, Gofun & Ōdo) |
 | `*-home.html`, `*-product.html` | Responsive home and product page mockups for each direction |
 | `collab.html` | naʻau × Ivycoast: KOM'BAR, planned assets, website language, how it ties to each direction |
@@ -44,3 +44,7 @@ python3 build_collab.py .. .
 - Text in ［brackets］ is placeholder content for naʻau to fill in: flavours, prices, dates, address, ingredients.
 - Handwriting in Concept B uses stand-in fonts (Klee One, and Yomogi for the red pen) until kimy's handwriting is scanned.
 - The prints, camellia and seals are drawn for the concept; final versions would be cut, drawn and carved by hand.
+
+## Textures
+
+`assets/textures/` holds real material scans from [ambientCG](https://ambientcg.com), released under CC0 1.0 (no attribution required): Paper003 (creased paper), Paper006 (kraft), Cardboard001 (torn corrugated board; also the source of the traced torn edge in `tear-edge.png`) and CardboardSet001 (the tape strip). They were resized and recoloured for the site.

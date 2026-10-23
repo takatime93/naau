@@ -455,3 +455,14 @@ details.borrowed summary { cursor: pointer; font-size: 16px; }
 .sh p { margin-top: 14px; max-width: 520px; font-size: 18px; }
 .sub h3 { font-family: Inter, sans-serif; font-size: 12px; letter-spacing: .22em; text-transform: uppercase; font-weight: 400; color: var(--muted); }
 .sub { margin-top: clamp(72px, 9vw, 120px); }
+
+/* ---------------------------------------------------------------- mixed media (Concept A) */
+.mm-drop { filter: drop-shadow(0 1px 1px rgba(0,0,0,.18)) drop-shadow(0 10px 14px rgba(0,0,0,.22)); }
+.mm-drop > .ab { box-shadow: none !important; }
+.mm-torn-b { -webkit-mask: linear-gradient(#000, #000) top / 100% 95% no-repeat, url(../textures/tear-edge.png) bottom / 100% 6% no-repeat;
+             mask: linear-gradient(#000, #000) top / 100% 95% no-repeat, url(../textures/tear-edge.png) bottom / 100% 6% no-repeat; }
+.mm-tape { position: absolute; opacity: .9; z-index: 3; }
+.d-collab { --peach: #A9C9D8; }
+.cover2-top span, .cover2 .kb2-def { color: #F8F6F1; }
+.cover2-box { box-shadow: 0 2px 2px rgba(0,0,0,.15), 0 30px 50px -20px rgba(0,0,0,.45), 0 70px 110px -50px rgba(0,0,0,.45); }
+.ab.clear::after { display: none; }
